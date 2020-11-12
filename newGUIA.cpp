@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "vars.h"
-#include "GUICompClass.h"
+#include "GUICompClassA.h"
 TextBox t1(0,1,0,3,false,0,0,1);
 
 

@@ -1,5 +1,5 @@
-#include "RenderingFunction.h"
-#include "classes.h"
+#include "Headers/RenderingFunction.h"
+#include "Headers/classes.h"
 class GUIcomponent
 {
     bool active;

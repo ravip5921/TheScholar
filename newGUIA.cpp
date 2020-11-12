@@ -3,8 +3,8 @@
 #include <GL/glut.h> //lib glut
 #include <iostream>
 #include <vector>
-#include "vars.h"
-#include "GUICompClassA.h"
+#include "Headers/vars.h"
+#include "Headers/GUICompClassA.h"
 Color c2(0,0,1);
 
 Coord_Rect p(0,1,3,0);

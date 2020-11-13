@@ -32,7 +32,7 @@ public:
         width = xw-x;
         height = yh -y;
     }*/
-    bool liesInside(int x1, int y1) //checks to see if x,y lies inside given rectangular box
+    bool liesInside(float x1, float y1) //checks to see if x,y lies inside given rectangular box
     {
         //if(x>x1 && x<x2&& y>y1 && y<y2)
         if ((x1 >= x && x1 <= (x + width)) && (y1 >= y && y1 <= (y + height)))
@@ -56,7 +56,7 @@ class Color
     float r;
     float g;
     float b;
-
+    float a=DIM_FACTOR;
 public:
     Color(float _r, float _g, float _b)
     {
@@ -74,4 +74,33 @@ public:
     {
         glColor3f(r, g, b);
     }
+    void dimColor()
+    {
+        float r1=0;
+        float g1=0;
+        float b1=0;
+        if(r-a>=0)
+            r1=r-a;
+        if(g-a>=0)
+            g1=g-a;
+        if(b-a>=0)
+            b1=b-a;
+        glColor3f(r1,g1,b1);
+      // glColor3f(0,0,0);
+    }
+    void briColor()
+    {
+        float r1=1;
+        float g1=1;
+        float b1=1;
+        if(r+a<=1)
+            r1=r+a;
+        if(g+a<=1)
+            g1=g+a;
+        if(b+a<=1)
+            b1=b+a;
+        glColor3f(r1,g1,b1);
+    }
 };
+
+

@@ -2,6 +2,7 @@
 //#include "./classes.h"
 class GUIcomponent
 {
+    protected:
     bool active;
 
 public:
@@ -46,7 +47,7 @@ class TextBox : public GUIcomponent
 {
 protected:
     bool selected;
-    bool showTxt;
+    // bool showTxt;
     std::string textField;
     Coord_Rect position;
     Color boxC;
@@ -65,24 +66,31 @@ public:
     {
         textField = _text;
     }
-    void showText(bool show)
-    {
-        showTxt = show;
-    }
+    //void showText(bool show)
+
+    //  showTxt = show;
     void render()
     {
-        boxC.applyColor();
+        setActive(selected);
+        if (isActive())
+        {
+            boxC.applyColor();
+        }
+        else
+        {
+            boxC.dimColor();
+        }
         glDrawP(position);
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
         //draw rectangular box of textbox based on position
         //if active draw one kind of box if not active draw another kind
-        if (selected || showTxt)
-        {
-            textC.applyColor();
-            // printText(textField,position.x+0.1,position.y+0.2,position.x+position.width,GLUT_BITMAP_HELVETICA_12);
-            printTextInBox(textField, position, GLUT_BITMAP_HELVETICA_12);
-        }
+        //if (selected || showTxt)
+        // {
+        // textC.applyColor();
+        // printText(textField,position.x+0.1,position.y+0.2,position.x+position.width,GLUT_BITMAP_HELVETICA_12);
+        printTextInBox(textField, position, GLUT_BITMAP_HELVETICA_12);
+        //}
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -94,7 +102,7 @@ public:
                 // userName = textField;
                 // std::cout<<userName;
             }
-            else if (key >= 36 && key <= 126 || key==SPACE_KEY)
+            else if (key >= 36 && key <= 126 || key == SPACE_KEY)
             {
                 textField.push_back(key);
             }
@@ -124,28 +132,92 @@ public:
 
 class PasswordBox : public TextBox
 {
-    bool showPass;
+    bool showpass;
 
 public:
     PasswordBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : TextBox(pos, box, txt, _selected)
     {
 
-        showPass = false;
+        showpass = false;
     }
     /*
     void keyboardHandler(unsigned char key,int x,int y) //NEED TO MODIFY ACCORDING TO PASSWORD STANDARDS
     {
     }*/
+    void showPass(bool _showPass)
+    {
+        showpass = _showPass;
+    }
+    bool isShowing()
+    {
+        return showpass;
+    }
     void render()
     {
-        boxC.applyColor();
+        setActive(selected);
+        if (isActive())
+        {
+            boxC.applyColor();
+        }
+        else
+        {
+            boxC.dimColor();
+        }
         glDrawP(position);
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
-        if (selected || showPass)
-        {
-            textC.applyColor();
+        // if (selected || showPass)
+        //{
+        if (showpass)
+            printTextInBox(textField, position, GLUT_BITMAP_HELVETICA_12);
+        else
             printTextPass(TextBox::textField, TextBox::position, GLUT_BITMAP_TIMES_ROMAN_24);
+        //}
+    }
+};
+class CheckBox : public GUIcomponent
+{
+    bool selected;
+    Coord_Rect dimensions;
+    Color colr;
+
+public:
+    CheckBox(Coord_Rect _dimensions, Color _colr=Color(1,1,1),bool _selected=false):dimensions(_dimensions),colr(_colr)
+    {
+        selected = _selected;
+    }
+    CheckBox(float x,float y,Color _colr=Color(1,1,1),bool _selected=false):dimensions(x,y,CHECK_BOX_DIMENSION,CHECK_BOX_DIMENSION),colr(_colr)
+    {
+        selected = _selected;
+    }
+     void setActive(bool _active) { active = _active;
+     selected=active; }
+    void render()
+    {
+        colr.applyColor();
+        glDrawRecOutlineCoordBox(dimensions);
+        if(selected)
+        {
+            glRasterPos2f(dimensions.x+0.09,dimensions.y+0.11);
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,'x');
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,'/');
         }
+
+       // DrawCircle(0, 0, .1, 20);
+    }
+    void keyboardHandler(unsigned char key,int x,int y)
+    {
+        //selected=true;
+
+        /*if(key=='/')
+            selected=true;
+        else if(key=='.')
+            selected=false;*/
+    }
+    void mouseHandler(int button,int state,int x,int y)
+    {
+        std::cout<<dimensions.x<<" "<<toFloatX(x);
+        if(dimensions.liesInside(toFloatX(x),toFloatY(y)))
+            setActive(true);
     }
 };

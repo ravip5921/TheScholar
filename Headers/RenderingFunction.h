@@ -1,4 +1,5 @@
 #include "./Classes.h"
+//#include <cmath>
 void glDrawP(float x, float y, float w, float h)
 {
     glBegin(GL_POLYGON);
@@ -18,6 +19,20 @@ void glDrawP(Coord_Rect p)
     glVertex2f(p.x, p.yh);
     glEnd();
 }
+/*void DrawCircle(float cx, float cy, float r, int num_segments)
+{
+    glBegin(GL_LINE_LOOP);
+    for (int ii = 0; ii < num_segments; ii++)
+    {
+        float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments); //get the current angle
+
+        float x = r * cosf(theta); //calculate the x component
+        float y = r * sinf(theta); //calculate the y component
+
+        glVertex2f(x + cx, y + cy); //output vertex
+    }
+    glEnd();
+}*/
 void printText(float x, float y, const char *text, void *font, float r, float g, float b)
 {
     glColor3f(r, g, b);
@@ -80,17 +95,17 @@ void printTextInBox(std::string tex, Coord_Rect pos, void *font)
 void printTextPass(std::string tex, Coord_Rect pos, void *font)
 {
     // glColor3f(0,0,0);
-    float GAP = CHAR_WIDTH * 1.5;   //PADDING
+    float GAP = CHAR_WIDTH * 1.5; //PADDING
     pos.x += GAP;
     pos.y += GAP;
     //pos.xw -= GAP;
     //float max_x = pos.xw -GAP;
-    int max_Len = ((pos.width)/CHAR_WIDTH) -6.5;  //To Stop Overflow caused by error in CHAR_WIDTH
+    int max_Len = ((pos.width) / CHAR_WIDTH) - 6.5; //To Stop Overflow caused by error in CHAR_WIDTH
     glRasterPos2d(pos.x, pos.y);
-    for (int j=0; j<max_Len && j<tex.size();j++)
+    for (int j = 0; j < max_Len && j < tex.size(); j++)
     {
         glutBitmapCharacter(font, CHAR_MASK);
-//        std::cout<<i<<'\t';
+        //        std::cout<<i<<'\t';
     }
     //glColor3f(0,0,0);
     glutPostRedisplay();
@@ -147,6 +162,22 @@ void glDrawRecOutlineTextBox(Coord_Rect pos)
     pos.y += PADDING;
     pos.xw -= PADDING;
     pos.yh -= PADDING;
+    glBegin(GL_LINES);
+    glVertex2f(pos.x, pos.y); //BottomLine
+    glVertex2f(pos.xw, pos.y);
+
+    glVertex2f(pos.xw, pos.y); //RightLine
+    glVertex2f(pos.xw, pos.yh);
+
+    glVertex2f(pos.xw, pos.yh); //TopLine
+    glVertex2f(pos.x, pos.yh);
+
+    glVertex2f(pos.x, pos.yh); //LeftLine
+    glVertex2f(pos.x, pos.y);
+    glEnd();
+}
+void glDrawRecOutlineCoordBox(Coord_Rect pos)
+{
     glBegin(GL_LINES);
     glVertex2f(pos.x, pos.y); //BottomLine
     glVertex2f(pos.xw, pos.y);

@@ -19,7 +19,7 @@ void glDrawP(Coord_Rect p)
     glVertex2f(p.x, p.yh);
     glEnd();
 }
-/*void DrawCircle(float cx, float cy, float r, int num_segments)
+void DrawCircle(float cx, float cy, float r, int num_segments)
 {
     glBegin(GL_LINE_LOOP);
     for (int ii = 0; ii < num_segments; ii++)
@@ -32,7 +32,7 @@ void glDrawP(Coord_Rect p)
         glVertex2f(x + cx, y + cy); //output vertex
     }
     glEnd();
-}*/
+}
 void printText(float x, float y, const char *text, void *font, float r, float g, float b)
 {
     glColor3f(r, g, b);

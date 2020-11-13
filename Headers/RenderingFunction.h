@@ -21,10 +21,9 @@ void printText(float x, float y,const char * text,void *font,float r,float g, fl
     glColor3f(1.0,1.0,0.0);
     glutPostRedisplay();
     }
-    std::string& value()
-{
-    return name;
-}
+   // std::string& value()
+    //  return userName;
+
 void printText(std::string tex,double x,double y,float max_x,void * font)
     {
      // glColor3f(0,0,0);

@@ -16,4 +16,4 @@ const int lx=-0.7;
 const int ly=-8;
 const float CHAR_WIDTH = 0.2667;
 int mainWindowIndex;
-std::string name;
+std::string userName="";

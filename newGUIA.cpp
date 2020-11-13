@@ -5,11 +5,10 @@
 #include <vector>
 #include "Headers/vars.h"
 #include "Headers/GUICompClassA.h"
-Color c2(0,0,1);
-
+Color BoxCol(0,1,0);
+Color TextCol(0,0,1);
 Coord_Rect p(0,1,3,0);
-//TextBox t1(0,1,0,3,0,0,1,false);
-TextBox t1(p,c2,false);
+TextBox t1(p,BoxCol,TextCol,false);
 
 void mousePressed(int button, int state,int x, int y);
 void keyPressed(unsigned char key,int x,int y);
@@ -78,5 +77,7 @@ void mousePressed(int button, int state,int x, int y)
 void keyPressed(unsigned char key,int x,int y)
 {
     t1.keyboardHandler(key,x,y);
+
+    //std::cout<<userName;
 }
 

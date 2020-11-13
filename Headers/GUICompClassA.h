@@ -1,5 +1,5 @@
-#include "Headers/RenderingFunction.h"
-#include "Headers/classes.h"
+#include "./RenderingFunction.h"
+#include "./classes.h"
 class GUIcomponent
 {
     bool active;
@@ -46,29 +46,21 @@ class TextBox:public GUIcomponent
     bool showTxt;
     std::string textField;
     Coord_Rect position;
-    float tc[3];
-    Color c1;
+    Color boxC;
+    Color textC;
 public:
-    TextBox(float x,float y,float h=1,float w=3,float r=0,float g=0,float b=0,bool Selected=false):position(x,y,w,h),c1(r,g,b)
-    {
-       /* position.x =x;
-        position.y = y;
-        position.height =h;
-        position.width =w;*/
-        selected = Selected;
-        showTxt= Selected;
-        setColour(r,g,b);
-    }
-    TextBox(Coord_Rect pos,Color rgb=Color(0,0,0),bool _selected =false):position(pos),c1(rgb)
+    TextBox(Coord_Rect pos,Color box=Color(0,0,0),Color txt=Color(1,1,1),bool _selected =false):position(pos),boxC(box),textC(txt)
     {
         selected =_selected;
-        c1.applyColor();
+        boxC.applyColor();
     }
-    void setColour(float r=0,float g=0,float b=0)
+    std::string getText()
     {
-        tc[0]=r;
-        tc[1]=g;
-        tc[2]=b;
+        return textField;
+    }
+    void setText(std::string _text) //probably won't be used
+    {
+        textField=_text;
     }
     void showText(bool show)
     {
@@ -77,12 +69,13 @@ public:
     void render()
     {
         //glDrawRecOutline(position.x,position.y,position.x+position.width,position.y+position.height);
+       // boxC.applyColor();
          glDrawP(position.x,position.y,position.x+position.width,position.y+position.height);
         //draw rectangular box of textbox based on position
         //if active draw one kind of box if not active draw another kind
         if(selected || showTxt)
         {
-            glColor3f(tc[0],tc[1],tc[2]);
+            textC.applyColor();
             printText(textField,position.x+0.1,position.y+0.2,position.x+position.width,GLUT_BITMAP_HELVETICA_12);
         }
 
@@ -94,17 +87,17 @@ public:
         {
             if(key == TAB_KEY || key == ENTER_KEY)
             {
-                value() = textField;
-                std::cout<<name;
+                userName = textField;
+                std::cout<<userName;
             }
             else if(key>=36 && key<=126)
             {
-              textField.push_back(key);
+                textField.push_back(key);
             }
             else if(key=DEL_KEY && textField.size()>0)
             {
                 textField.pop_back();
-                value()=textField;
+                userName = textField;
             }
         }
 
@@ -120,6 +113,7 @@ public:
         }
         else if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
         {
+            //std::cout<<userName;
             selected = false;
         }
     }

@@ -6,8 +6,8 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClassA.h"
 Color BoxCol(0,1,0);
-Color TextCol(0,0,1);
-Coord_Rect p(0,1,3,0);
+Color TextCol(0,0,0);
+Coord_Rect p(-1,0,6.5,1.5);
 TextBox t1(p,BoxCol,TextCol,false);
 
 void mousePressed(int button, int state,int x, int y);
@@ -77,7 +77,7 @@ void mousePressed(int button, int state,int x, int y)
 void keyPressed(unsigned char key,int x,int y)
 {
     t1.keyboardHandler(key,x,y);
-
-    //std::cout<<userName;
+        userName=t1.getText();
+    std::cout<<userName<<std::endl;
 }
 

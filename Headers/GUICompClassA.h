@@ -1,5 +1,5 @@
 #include "./RenderingFunction.h"
-#include "./classes.h"
+//#include "./classes.h"
 class GUIcomponent
 {
     bool active;
@@ -68,15 +68,16 @@ public:
     }
     void render()
     {
-        //glDrawRecOutline(position.x,position.y,position.x+position.width,position.y+position.height);
-       // boxC.applyColor();
-         glDrawP(position.x,position.y,position.x+position.width,position.y+position.height);
+         glDrawP(position);
+textC.applyColor();
+         glDrawRecOutlineTextBox(position);
         //draw rectangular box of textbox based on position
         //if active draw one kind of box if not active draw another kind
         if(selected || showTxt)
         {
             textC.applyColor();
-            printText(textField,position.x+0.1,position.y+0.2,position.x+position.width,GLUT_BITMAP_HELVETICA_12);
+           // printText(textField,position.x+0.1,position.y+0.2,position.x+position.width,GLUT_BITMAP_HELVETICA_12);
+           printTextInBox(textField,position,GLUT_BITMAP_HELVETICA_12);
         }
 
     }
@@ -87,8 +88,8 @@ public:
         {
             if(key == TAB_KEY || key == ENTER_KEY)
             {
-                userName = textField;
-                std::cout<<userName;
+               // userName = textField;
+               // std::cout<<userName;
             }
             else if(key>=36 && key<=126)
             {
@@ -97,7 +98,7 @@ public:
             else if(key=DEL_KEY && textField.size()>0)
             {
                 textField.pop_back();
-                userName = textField;
+               // userName = textField;
             }
         }
 

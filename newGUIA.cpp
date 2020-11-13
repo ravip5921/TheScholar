@@ -8,8 +8,8 @@
 Color c2(0,0,1);
 
 Coord_Rect p(0,1,3,0);
-//TextBox t1(0,1,0,3,false,0,0,1);
-TextBox t1(p,false,c2);
+//TextBox t1(0,1,0,3,0,0,1,false);
+TextBox t1(p,c2,false);
 
 void mousePressed(int button, int state,int x, int y);
 void keyPressed(unsigned char key,int x,int y);

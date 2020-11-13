@@ -49,7 +49,7 @@ class TextBox:public GUIcomponent
     float tc[3];
     Color c1;
 public:
-    TextBox(float x,float y,float h=1,float w=3,bool Selected=false,float r=0,float g=0,float b=0):position(x,y,w,h),c1(r,g,b)
+    TextBox(float x,float y,float h=1,float w=3,float r=0,float g=0,float b=0,bool Selected=false):position(x,y,w,h),c1(r,g,b)
     {
        /* position.x =x;
         position.y = y;
@@ -59,7 +59,7 @@ public:
         showTxt= Selected;
         setColour(r,g,b);
     }
-    TextBox(Coord_Rect pos,bool _selected =false,Color rgb=Color(0,0,0)):position(pos),c1(rgb)
+    TextBox(Coord_Rect pos,Color rgb=Color(0,0,0),bool _selected =false):position(pos),c1(rgb)
     {
         selected =_selected;
         c1.applyColor();

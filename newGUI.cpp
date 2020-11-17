@@ -5,28 +5,15 @@
 #include <vector>
 #include "Headers/vars.h"
 #include "Headers/GUICompClassA.h"
-#include "map"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
-
-std::map <int,GUIcomponent *> pageMap;
-
-
-enum
-{
-    WELCOME_P = 0,
-    LOGIN_P = 1,
-    SIGNUP_P = 2
-};
-//pageMap.insert(std::pair<int,GUIcomponent *>(LOGIN_P,&loginPage));
-int PAGE=2;
-/**** Login Page *****/
 GUIPage loginPage;
-namespace LogIn{
+namespace LogIn
+{
     Color userNameC(0.878,0.749,0.9055);
     Color passwordC = userNameC;
     Color boxTextC(0.43,0.67,0.1);
@@ -34,7 +21,8 @@ namespace LogIn{
     Color logInButtonTextC(1, 0, 1);
     Color logInButtonC(0.7, 0, 0.43);
     Color pageTextC(1, 0, 0);
-
+    // Color redToSignUpC=logInButtonC;
+    // Color redtoSignUpTextC=logInButtonTextC;
     Coord_Rect logInButtonD(-1, -6, 3, 1.2);
     Coord_Rect userNameD(-3, 1, 8, 2.2);
     Coord_Rect passwordD(-3, -3, 8, 2.2);
@@ -53,39 +41,7 @@ namespace LogIn{
         logInPage->addComponent(&showPassword);
         logInPage->addComponent(&logInButton);
     }
-}
-
-/**** SignUp Page *****/
-GUIPage signupPage;
-namespace SignUp{
-    Color userNameC(0.878,0.749,0.9055);
-    Color passwordC = userNameC;
-    Color boxTextC(0.43,0.67,0.1);
-    Color signUpTextC(1, 1, 0);
-    Color signUpButtonTextC(1, 0, 1);
-    Color signUpButtonC(0.7, 0, 0.43);
-    Color pageTextC(1, 0, 0);
-
-    Coord_Rect signUpButtonD(-1, -6, 3, 1.2);
-    Coord_Rect userNameD(-3, 1, 8, 2.2);
-    Coord_Rect passwordD(-3, -3, 8, 2.2);
-
-    Text signUpScreen(-2, 5, pageTextC, "SIGNUP SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
-    TextBox userNameB(userNameD, userNameC, boxTextC);
-    PasswordBox passwordB(passwordD, passwordC, boxTextC);
-    CheckBox showPassword(&passwordB, 5.5, -3, signUpButtonC);
-    Button signUpButton("Sign Up", signUpButtonC, signUpButtonTextC, signUpButtonD);
-
-    void addsignUpComponents(GUIPage *signUpPage)
-    {
-        signUpPage->addComponent(&signUpScreen);
-        signUpPage->addComponent(&userNameB);
-        signUpPage->addComponent(&passwordB);
-        signUpPage->addComponent(&showPassword);
-        signUpPage->addComponent(&signUpButton);
-    }
-}
-
+} // namespace LogIn
 int main(int argc, char **argv) //default arguments of main
 {
     glutInit(&argc, argv);
@@ -94,10 +50,7 @@ int main(int argc, char **argv) //default arguments of main
     glutInitWindowSize(WID, HEI);
     glutCreateWindow("Scalling Trial");
 
-/*** Login Page ****/
     LogIn::addlogInComponents(&loginPage);
-/**** SignUp Page ***/
-    SignUp::addsignUpComponents(&signupPage);
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
@@ -110,13 +63,7 @@ void callBackFun()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-    glColor3f(0, 1, 0);
-    if(PAGE==WELCOME_P)
-        glDrawP(0,0,1,1);
-    else if(PAGE==LOGIN_P)
-        loginPage.render(); //Login Page render
-    else if(PAGE==SIGNUP_P)
-        signupPage.render();        //Sign Up page render
+    loginPage.render();
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -136,15 +83,8 @@ void initColor()
 
 void mousePressed(int button, int state, int x, int y)
 {
-  //  loginPage.mouseHandler(button,state,x,y);      //login page
-    signupPage.mouseHandler(button,state,x,y);      //sign up page
+    loginPage.mouseHandler(button, state, x, y);
 
-    //pageMap[PAGE].mouseHandler();
-
-    if(signupPage.buttonPressed(SignUp::signUpButton))
-    {
-        PAGE=LOGIN_P;
-    }
     if (state == GLUT_DOWN)
     {
         std::cout << "x= " << x << " y= " << y << '\n';
@@ -152,7 +92,5 @@ void mousePressed(int button, int state, int x, int y)
 }
 void keyPressed(unsigned char key, int x, int y)
 {
-//    loginPage.keyboardHandler(key,x,y);  //login page
-    signupPage.keyboardHandler(key,x,y);    //sign up page
-
+    loginPage.keyboardHandler(key, x, y);
 }

@@ -1,5 +1,5 @@
 #include "./Classes.h"
-//#include <cmath>
+#include <cmath>
 void glDrawP(float x, float y, float w, float h)
 {
     glBegin(GL_POLYGON);
@@ -33,9 +33,9 @@ void DrawCircle(float cx, float cy, float r, int num_segments)
     }
     glEnd();
 }
-void printText(float x, float y, const char *text, void *font, float r, float g, float b)
+void printText(float x, float y,Color rgb=Color(1,1,1), const char *text="", void *font=GLUT_BITMAP_HELVETICA_12)
 {
-    glColor3f(r, g, b);
+    rgb.applyColor();
     char *c;
     glRasterPos2f(x, y);
     char buf[100] = {0};

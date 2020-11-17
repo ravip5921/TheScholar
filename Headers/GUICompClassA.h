@@ -6,7 +6,7 @@ protected:
     bool active;
 
 public:
-    GUIcomponent() { active = true; }
+    GUIcomponent() { active = false; }
     bool isActive() { return active; }
     void setActive(bool _active) { active = _active; }
 
@@ -15,33 +15,6 @@ public:
     virtual void keyboardHandler(unsigned char key, int x, int y) = 0;
 };
 
-class GUIPage
-{
-    std::vector<GUIcomponent *> components;
-
-public:
-    void addComponent(GUIcomponent *_component)
-    {
-        components.push_back(_component);
-    }
-    void render()
-    {
-        for (int i = 0; i < components.size(); i++)
-            components[i]->render();
-    }
-    void keyboardHandler(unsigned char key, int x, int y)
-    {
-        for (int i = 0; i < components.size(); i++)
-            //if (components[i]->isActive())
-            components[i]->keyboardHandler(key, x, y);
-    }
-    void mouseHandler(int button, int state, int x, int y)
-    {
-        for (int i = 0; i < components.size(); i++)
-            //if (components[i]->isActive())
-            components[i]->mouseHandler(button, state, x, y);
-    }
-};
 
 class TextBox : public GUIcomponent
 {
@@ -339,5 +312,38 @@ public:
     void mouseHandler(int button ,int state,int x,int y)
     {
         return;
+    }
+};
+class GUIPage
+{
+    std::vector<GUIcomponent *> components;
+
+public:
+    void addComponent(GUIcomponent *_component)
+    {
+        components.push_back(_component);
+    }
+    bool buttonPressed(Button _button)
+    {
+        if(_button.isActive())
+            return true;
+        return false;
+    }
+    void render()
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->render();
+    }
+    void keyboardHandler(unsigned char key, int x, int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            //if (components[i]->isActive())
+            components[i]->keyboardHandler(key, x, y);
+    }
+    void mouseHandler(int button, int state, int x, int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            //if (components[i]->isActive())
+            components[i]->mouseHandler(button, state, x, y);
     }
 };

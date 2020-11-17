@@ -5,27 +5,87 @@
 #include <vector>
 #include "Headers/vars.h"
 #include "Headers/GUICompClassA.h"
-Color BoxCol(0, 1, 0);
-Color passCol(1, 1, 1);
-Color TextCol(0, 0, 0);
-Coord_Rect norm(-3, 0, 6.5, 2);
-Coord_Rect pass(-3, -4, 6.5, 1.5);
-Coord_Rect butD(5, -5, 3, 1);
-Coord_Rect out(-4, -4.5, 9, 5);
-Color LogIn(1, 0.17, 0.3);
-TextBox normBox(norm, BoxCol, TextCol, false);
-PasswordBox passB(pass, passCol, TextCol, false);
-CheckBox r(&passB, 4, -4, BoxCol, false);
-Text Login(-2, 3, LogIn, "LOGIN SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
-Button loginButton(" Log In", BoxCol, LogIn, butD);
-rectOutline R(out, TextCol);
-GUIPage lp;
+#include "map"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
+
+std::map <int,GUIcomponent *> pageMap;
+
+
+enum
+{
+    WELCOME_P = 0,
+    LOGIN_P = 1,
+    SIGNUP_P = 2
+};
+//pageMap.insert(std::pair<int,GUIcomponent *>(LOGIN_P,&loginPage));
+int PAGE=2;
+/**** Login Page *****/
+GUIPage loginPage;
+namespace LogIn{
+    Color userNameC(0.878,0.749,0.9055);
+    Color passwordC = userNameC;
+    Color boxTextC(0.43,0.67,0.1);
+    Color logInTextC(1, 1, 0);
+    Color logInButtonTextC(1, 0, 1);
+    Color logInButtonC(0.7, 0, 0.43);
+    Color pageTextC(1, 0, 0);
+
+    Coord_Rect logInButtonD(-1, -6, 3, 1.2);
+    Coord_Rect userNameD(-3, 1, 8, 2.2);
+    Coord_Rect passwordD(-3, -3, 8, 2.2);
+
+    Text logInScreen(-2, 5, pageTextC, "LOGIN SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+    TextBox userNameB(userNameD, userNameC, boxTextC);
+    PasswordBox passwordB(passwordD, passwordC, boxTextC);
+    CheckBox showPassword(&passwordB, 5.5, -3, logInButtonC);
+    Button logInButton("Log In", logInButtonC, logInButtonTextC, logInButtonD);
+
+    void addlogInComponents(GUIPage *logInPage)
+    {
+        logInPage->addComponent(&logInScreen);
+        logInPage->addComponent(&userNameB);
+        logInPage->addComponent(&passwordB);
+        logInPage->addComponent(&showPassword);
+        logInPage->addComponent(&logInButton);
+    }
+}
+
+/**** SignUp Page *****/
+GUIPage signupPage;
+namespace SignUp{
+    Color userNameC(0.878,0.749,0.9055);
+    Color passwordC = userNameC;
+    Color boxTextC(0.43,0.67,0.1);
+    Color signUpTextC(1, 1, 0);
+    Color signUpButtonTextC(1, 0, 1);
+    Color signUpButtonC(0.7, 0, 0.43);
+    Color pageTextC(1, 0, 0);
+
+    Coord_Rect signUpButtonD(-1, -6, 3, 1.2);
+    Coord_Rect userNameD(-3, 1, 8, 2.2);
+    Coord_Rect passwordD(-3, -3, 8, 2.2);
+
+    Text signUpScreen(-2, 5, pageTextC, "SIGNUP SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+    TextBox userNameB(userNameD, userNameC, boxTextC);
+    PasswordBox passwordB(passwordD, passwordC, boxTextC);
+    CheckBox showPassword(&passwordB, 5.5, -3, signUpButtonC);
+    Button signUpButton("Sign Up", signUpButtonC, signUpButtonTextC, signUpButtonD);
+
+    void addsignUpComponents(GUIPage *signUpPage)
+    {
+        signUpPage->addComponent(&signUpScreen);
+        signUpPage->addComponent(&userNameB);
+        signUpPage->addComponent(&passwordB);
+        signUpPage->addComponent(&showPassword);
+        signUpPage->addComponent(&signUpButton);
+    }
+}
+
 int main(int argc, char **argv) //default arguments of main
 {
     glutInit(&argc, argv);
@@ -33,12 +93,12 @@ int main(int argc, char **argv) //default arguments of main
     glutInitWindowPosition(INI_X, INI_Y);
     glutInitWindowSize(WID, HEI);
     glutCreateWindow("Scalling Trial");
-    lp.addComponent(&normBox);
-    lp.addComponent(&passB);
-    lp.addComponent(&r);
-    lp.addComponent(&Login);
-    lp.addComponent(&loginButton);
-    lp.addComponent(&R);
+
+/*** Login Page ****/
+    LogIn::addlogInComponents(&loginPage);
+/**** SignUp Page ***/
+    SignUp::addsignUpComponents(&signupPage);
+
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
@@ -50,23 +110,13 @@ void callBackFun()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-
-    //printText(-2.1,3,"C++ Genie",GLUT_BITMAP_TIMES_ROMAN_24,1,1,0);
     glColor3f(0, 1, 0);
-    //printText(0,0,"Ravi Pandey",GLUT_BITMAP_HELVETICA_18,1,1,1);
-    /* glBegin(GL_LINES);
-  glColor3f(1,1,1);
-  glVertex2f(0, 0);
-  glVertex2f(0, .5);
-  glEnd()*/
-    /* normBox.render();
-
-    //if (passB.isActive())
-    //normBox.showText(true);
-    passB.render();
-    r.setActive(passB.isShowing());
-    r.render();*/
-    lp.render();
+    if(PAGE==WELCOME_P)
+        glDrawP(0,0,1,1);
+    else if(PAGE==LOGIN_P)
+        loginPage.render(); //Login Page render
+    else if(PAGE==SIGNUP_P)
+        signupPage.render();        //Sign Up page render
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -86,10 +136,15 @@ void initColor()
 
 void mousePressed(int button, int state, int x, int y)
 {
-    /*  normBox.mouseHandler(button, state, x, y);
-    passB.mouseHandler(button, state, x, y);
-    r.mouseHandler(button, state, x, y);*/
-    lp.mouseHandler(button, state, x, y);
+  //  loginPage.mouseHandler(button,state,x,y);      //login page
+    signupPage.mouseHandler(button,state,x,y);      //sign up page
+
+    //pageMap[PAGE].mouseHandler();
+
+    if(signupPage.buttonPressed(SignUp::signUpButton))
+    {
+        PAGE=LOGIN_P;
+    }
     if (state == GLUT_DOWN)
     {
         std::cout << "x= " << x << " y= " << y << '\n';
@@ -97,23 +152,7 @@ void mousePressed(int button, int state, int x, int y)
 }
 void keyPressed(unsigned char key, int x, int y)
 {
-    /*  normBox.keyboardHandler(key, x, y);
-    passB.keyboardHandler(key, x, y);
-    r.keyboardHandler(key, x, y);*/
-    lp.keyboardHandler(key, x, y);
-    if (key == ENTER_KEY)
-    {
-        userName = normBox.getText();
-        passWord = passB.getText();
-        std::cout << "USER=" << userName << std::endl;
-        std::cout << "PASS=" << passB.getText() << '\n';
-    }
+//    loginPage.keyboardHandler(key,x,y);  //login page
+    signupPage.keyboardHandler(key,x,y);    //sign up page
 
-    /*  else if (key == '/')
-    {
-        passB.showPass(true);
-    }
-    else if (key == '.')
-
-        passB.showPass(false);*/
 }

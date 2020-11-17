@@ -10,13 +10,15 @@ Color passCol(1, 1, 1);
 Color TextCol(0, 0, 0);
 Coord_Rect norm(-3, 0, 6.5, 2);
 Coord_Rect pass(-3, -4, 6.5, 1.5);
-Coord_Rect butD(5,-5,3,1);
-Color LogIn(1,0.17,0.3);
+Coord_Rect butD(5, -5, 3, 1);
+Coord_Rect out(-4, -4.5, 9, 5);
+Color LogIn(1, 0.17, 0.3);
 TextBox normBox(norm, BoxCol, TextCol, false);
 PasswordBox passB(pass, passCol, TextCol, false);
-CheckBox r(&passB,4, -4, BoxCol, false);
-Text Login(-2,3,LogIn,"LOGIN SCREEN",GLUT_BITMAP_TIMES_ROMAN_24);
-Button loginButton(" Log In",BoxCol,LogIn,butD);
+CheckBox r(&passB, 4, -4, BoxCol, false);
+Text Login(-2, 3, LogIn, "LOGIN SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+Button loginButton(" Log In", BoxCol, LogIn, butD);
+rectOutline R(out, TextCol);
 GUIPage lp;
 
 void mousePressed(int button, int state, int x, int y);
@@ -36,6 +38,7 @@ int main(int argc, char **argv) //default arguments of main
     lp.addComponent(&r);
     lp.addComponent(&Login);
     lp.addComponent(&loginButton);
+    lp.addComponent(&R);
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
@@ -56,7 +59,7 @@ void callBackFun()
   glVertex2f(0, 0);
   glVertex2f(0, .5);
   glEnd()*/
-   /* normBox.render();
+    /* normBox.render();
 
     //if (passB.isActive())
     //normBox.showText(true);
@@ -83,10 +86,10 @@ void initColor()
 
 void mousePressed(int button, int state, int x, int y)
 {
-  /*  normBox.mouseHandler(button, state, x, y);
+    /*  normBox.mouseHandler(button, state, x, y);
     passB.mouseHandler(button, state, x, y);
     r.mouseHandler(button, state, x, y);*/
-    lp.mouseHandler(button,state,x,y);
+    lp.mouseHandler(button, state, x, y);
     if (state == GLUT_DOWN)
     {
         std::cout << "x= " << x << " y= " << y << '\n';
@@ -94,10 +97,10 @@ void mousePressed(int button, int state, int x, int y)
 }
 void keyPressed(unsigned char key, int x, int y)
 {
-  /*  normBox.keyboardHandler(key, x, y);
+    /*  normBox.keyboardHandler(key, x, y);
     passB.keyboardHandler(key, x, y);
     r.keyboardHandler(key, x, y);*/
-    lp.keyboardHandler(key,x,y);
+    lp.keyboardHandler(key, x, y);
     if (key == ENTER_KEY)
     {
         userName = normBox.getText();
@@ -106,7 +109,7 @@ void keyPressed(unsigned char key, int x, int y)
         std::cout << "PASS=" << passB.getText() << '\n';
     }
 
-  /*  else if (key == '/')
+    /*  else if (key == '/')
     {
         passB.showPass(true);
     }

@@ -326,13 +326,13 @@ class rectOutline:public GUIcomponent
     Coord_Rect dimension;
     Color color;
 public:
-    rectOutline(Coord_Rect _dim,color _color=Color(0,0,0)):dimension(_dim),color(_color){}
+    rectOutline(Coord_Rect _dim,Color _color=Color(0,0,0)):dimension(_dim),color(_color){}
     void render()
     {
         color.applyColor();
         glDrawRecOutlineCoordBox(dimension);
     }
-    void keyboardHandler(unsigned char key,int x,,int y)
+    void keyboardHandler(unsigned char key,int x,int y)
     {
         return;
     }

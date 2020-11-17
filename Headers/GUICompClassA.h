@@ -2,7 +2,7 @@
 //#include "./classes.h"
 class GUIcomponent
 {
-    protected:
+protected:
     bool active;
 
 public:
@@ -33,13 +33,13 @@ public:
     {
         for (int i = 0; i < components.size(); i++)
             //if (components[i]->isActive())
-                components[i]->keyboardHandler(key, x, y);
+            components[i]->keyboardHandler(key, x, y);
     }
     void mouseHandler(int button, int state, int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
             //if (components[i]->isActive())
-                components[i]->mouseHandler(button, state, x, y);
+            components[i]->mouseHandler(button, state, x, y);
     }
 };
 
@@ -168,37 +168,38 @@ public:
         //}
     }
 };
-class Text:public GUIcomponent
+class Text : public GUIcomponent
 {
     float x;
     float y;
     Color rgb;
-    void * font;
-    const char* text;
-    public:
-    Text(float _x,float _y,Color _rgb,const char* _text,void * _f):rgb(_rgb)
+    void *font;
+    const char *text;
+
+public:
+    Text(float _x, float _y, Color _rgb, const char *_text, void *_f) : rgb(_rgb)
     {
-        x=_x;
-        y=_y;
+        x = _x;
+        y = _y;
         text = _text;
-        font =_f;
+        font = _f;
     }
-    Text(float _x,float _y,Color _rgb,std::string _text,void * _f):rgb(_rgb)
+    Text(float _x, float _y, Color _rgb, std::string _text, void *_f) : rgb(_rgb)
     {
-        x=_x;
-        y=_y;
+        x = _x;
+        y = _y;
         text = _text.data();
-        font =_f;
+        font = _f;
     }
     void render()
     {
-        printText(x,y,rgb,text,font);
+        printText(x, y, rgb, text, font);
     }
-    void keyboardHandler(unsigned char key,int x,int y)
+    void keyboardHandler(unsigned char key, int x, int y)
     {
         return;
     }
-    void mouseHandler(int button,int state,int x,int y)
+    void mouseHandler(int button, int state, int x, int y)
     {
         return;
     }
@@ -208,34 +209,38 @@ class CheckBox : public GUIcomponent
     bool selected;
     Coord_Rect dimensions;
     Color colr;
-    PasswordBox * parent;
+    PasswordBox *parent;
+
 public:
-    CheckBox(PasswordBox * _parent,Coord_Rect _dimensions, Color _colr=Color(1,1,1),bool _selected=false):dimensions(_dimensions),colr(_colr)
+    CheckBox(PasswordBox *_parent, Coord_Rect _dimensions, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(_dimensions), colr(_colr)
     {
         parent = _parent;
         selected = _selected;
     }
-    CheckBox(PasswordBox * _parent,float x,float y,Color _colr=Color(1,1,1),bool _selected=false):dimensions(x,y,CHECK_BOX_DIMENSION,CHECK_BOX_DIMENSION),colr(_colr)
+    CheckBox(PasswordBox *_parent, float x, float y, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(x, y, CHECK_BOX_DIMENSION, CHECK_BOX_DIMENSION), colr(_colr)
     {
-        parent =_parent;
+        parent = _parent;
         selected = _selected;
     }
-     void setActive(bool _active) { active = _active;
-     selected=active; }
+    void setActive(bool _active)
+    {
+        active = _active;
+        selected = active;
+    }
     void render()
     {
         colr.applyColor();
         glDrawRecOutlineCoordBox(dimensions);
-        if(selected)
+        if (selected)
         {
-            glRasterPos2f(dimensions.x+0.09,dimensions.y+0.11);
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,'x');
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,'/');
+            glRasterPos2f(dimensions.x + 0.09, dimensions.y + 0.11);
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, 'x');
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, '/');
         }
 
-       // DrawCircle(0, 0, .1, 20);
+        // DrawCircle(0, 0, .1, 20);
     }
-    void keyboardHandler(unsigned char key,int x,int y)
+    void keyboardHandler(unsigned char key, int x, int y)
     {
         //selected=true;
 
@@ -244,23 +249,22 @@ public:
         else if(key=='.')
             selected=false;*/
     }
-    void mouseHandler(int button,int state,int x,int y)
+    void mouseHandler(int button, int state, int x, int y)
     {
-        std::cout<<dimensions.x<<" "<<toFloatX(x);
-        if(dimensions.liesInside(toFloatX(x),toFloatY(y)) && !selected && state==GLUT_DOWN && button==GLUT_LEFT_BUTTON)
+        std::cout << dimensions.x << " " << toFloatX(x);
+        if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && !selected && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
         {
-           setActive(true);
-           parent->showPass(true);
+            setActive(true);
+            parent->showPass(true);
         }
-        else if(dimensions.liesInside(toFloatX(x),toFloatY(y)) && state==GLUT_DOWN && button==GLUT_LEFT_BUTTON)
+        else if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
         {
             setActive(false);
             parent->showPass(false);
         }
-
     }
 };
-class Button:public GUIcomponent
+class Button : public GUIcomponent
 {
     bool pressed;
     std::string buttonText;
@@ -268,44 +272,52 @@ class Button:public GUIcomponent
     Color buttonColor;
     Color textColor;
     void *f;
+
 public:
-    Button(const char * _text,Color _bColor,Color _tColor,Coord_Rect _dim):buttonColor(_bColor),textColor(_tColor),buttonDimension(_dim)
+    Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
-        pressed=false;
-        buttonText=std::string(_text);
-        f=GLUT_BITMAP_HELVETICA_12;
+        pressed = false;
+        buttonText = std::string(_text);
+        f = GLUT_BITMAP_HELVETICA_12;
     }
-    Button(std::string _text,Color _bColor,Color _tColor,Coord_Rect _dim):buttonColor(_bColor),textColor(_tColor),buttonDimension(_dim)
+    Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
-        pressed=false;
-        buttonText=_text;
-        f=GLUT_BITMAP_HELVETICA_12;
+        pressed = false;
+        buttonText = _text;
+        f = GLUT_BITMAP_HELVETICA_12;
     }
     void setFont(void *_f)
     {
-        f=_f;
+        f = _f;
     }
     void render()
     {
-        buttonColor.applyColor();
-        glDrawP(buttonDimension);
-        textColor.applyColor();
-        printTextInBox(buttonText,buttonDimension,f);
-    }
-    void keyboardHandler(unsigned char key,int x,int y)
-    {
-        return;
-    }
-    void mouseHandler(int button,int state,int x,int y)
-    {
-        if(buttonDimension.liesInside(toFloatX(x),toFloatY(y)) && button==GLUT_LEFT_BUTTON && state== GLUT_DOWN)
+        setActive(pressed);
+        if (isActive())
         {
-            pressed=true;
+            buttonColor.dimColor();
         }
         else
         {
-            pressed=false;
+            buttonColor.applyColor();
+        }
+        glDrawP(buttonDimension);
+        textColor.applyColor();
+        printTextInBox(buttonText, buttonDimension, f);
+    }
+    void keyboardHandler(unsigned char key, int x, int y)
+    {
+        return;
+    }
+    void mouseHandler(int button, int state, int x, int y)
+    {
+        if (buttonDimension.liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            pressed = true;
+        }
+        else
+        {
+            pressed = false;
         }
     }
-
 };

@@ -20,16 +20,17 @@ class TextBox : public GUIcomponent
 {
 protected:
     bool selected;
-    // bool showTxt;
     std::string textField;
     Coord_Rect position;
     Color boxC;
     Color textC;
+    void * f;
 
 public:
     TextBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : position(pos), boxC(box), textC(txt)
     {
         selected = _selected;
+        f= GLUT_BITMAP_HELVETICA_12;
     }
     std::string getText()
     {
@@ -39,9 +40,10 @@ public:
     {
         textField = _text;
     }
-    //void showText(bool show)
-
-    //  showTxt = show;
+    void setFont(void * _f)
+    {
+        f=_f;
+    }
     void render()
     {
         setActive(selected);
@@ -56,7 +58,7 @@ public:
         glDrawP(position);
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
-        printTextInBox(textField, position, GLUT_BITMAP_HELVETICA_12);
+        printTextInBox(textField, position,f);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -99,12 +101,12 @@ public:
 class PasswordBox : public TextBox
 {
     bool showpass;
-
+    void * f;
 public:
     PasswordBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : TextBox(pos, box, txt, _selected)
     {
-
         showpass = false;
+        f=GLUT_BITMAP_HELVETICA_12;
     }
     /*
     void keyboardHandler(unsigned char key,int x,int y) //NEED TO MODIFY ACCORDING TO PASSWORD STANDARDS
@@ -117,6 +119,10 @@ public:
     bool isShowing()
     {
         return showpass;
+    }
+    void setFont(void *_f)
+    {
+        f = _f;
     }
     void render()
     {
@@ -135,7 +141,7 @@ public:
         // if (selected || showPass)
         //{
         if (showpass)
-            printTextInBox(textField, position, GLUT_BITMAP_HELVETICA_12);
+            printTextInBox(textField, position,f);
         else
             printTextPass(TextBox::textField, TextBox::position, GLUT_BITMAP_TIMES_ROMAN_24);
         //}
@@ -276,7 +282,9 @@ public:
         }
         glDrawP(buttonDimension);
         textColor.applyColor();
-        printTextInBox(buttonText, buttonDimension, f);
+        Text bText(buttonDimension.x+CHAR_WIDTH*2,buttonDimension.y+CHAR_WIDTH*2,textColor,buttonText,f);
+        bText.render();
+       //printTextInBox(buttonText, buttonDimension, f);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {

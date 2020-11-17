@@ -32,6 +32,33 @@ public:
         width = xw-x;
         height = yh -y;
     }*/
+    Coord_Rect(Coord_Rect a,char dim,float ext)
+    {
+        switch(dim)
+        {
+            case ('x'):
+            {
+                x=(a.x)+ext;
+                y=a.y;
+                width=a.width;
+                height=a.height;
+                xw=x+width;
+                yh=y+height;
+                break;
+            }
+            case('y'):
+            {
+                x=a.x;
+                y=(a.y)+ext;
+                width=a.width;
+                height=a.height;
+                xw=x+width;
+                yh=y+height;
+                break;
+            }
+        }
+
+    }
     bool liesInside(float x1, float y1) //checks to see if x,y lies inside given rectangular box
     {
         //if(x>x1 && x<x2&& y>y1 && y<y2)

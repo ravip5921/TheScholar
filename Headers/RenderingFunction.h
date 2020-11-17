@@ -76,7 +76,7 @@ void printTextInBox(std::string tex, Coord_Rect pos, void *font)
     pos.x += GAP;
     pos.y += GAP;
     //pos.xw -= GAP;
-    float max_x = pos.xw + CHAR_WIDTH / 4;
+    float max_x = pos.xw ;//+ CHAR_WIDTH / 4;
     glRasterPos2d(pos.x, pos.y);
     int i = 0, a;
     float tsize = (tex.size()) * CHAR_WIDTH;

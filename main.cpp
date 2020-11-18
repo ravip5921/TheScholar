@@ -5,7 +5,7 @@
 #include <vector>
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
-//#include "map"
+#include "Headers/FileReader.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -83,7 +83,7 @@ namespace LogIn
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
-    Coord_Rect toSignupD(-3.1, -8, 5.5, 1.5);
+    Coord_Rect toSignupD(-5, -8, 5.5, 1.5);
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
@@ -93,7 +93,7 @@ namespace LogIn
     TextBox userNameB(userNameD, userNameC, boxTextC);
     PasswordBox passwordB(passwordD, passwordC, boxTextC);
     CheckBox showPassword(&passwordB, 4.5, -2.8, logInButtonC);
-    Button logInButton("   Log In", logInButtonC, logInButtonTextC, logInButtonD);
+    Button logInButton("Log In", logInButtonC, logInButtonTextC, logInButtonD);
     Button toSignup("New to The SCHOLAR?", toSignupC, logInButtonTextC, toSignupD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
@@ -244,9 +244,8 @@ void mousePressed(int button, int state, int x, int y)
             userName = activePage[PAGE]->getText(LogIn::userNameB);
             password=activePage[PAGE]->getText(LogIn::passwordB);
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
-
-            if(userName=="Loki")
-                PAGE=SIGNUP_P;
+            logIn LogInObject(userName,password);
+            std::cout<<"Logged In";
         }
         else if (activePage[PAGE]->buttonPressed(LogIn::toSignup))
         {
@@ -257,10 +256,11 @@ void mousePressed(int button, int state, int x, int y)
     {
         if(activePage[PAGE]->buttonPressed(SignUp::signUpButton))
         {
-            //sign up user
-            userName = activePage[PAGE]->getText(LogIn::userNameB);
-            password=activePage[PAGE]->getText(LogIn::passwordB);
+            userName = activePage[PAGE]->getText(SignUp::userNameB);
+            password=activePage[PAGE]->getText(SignUp::passwordB);
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
+            signUp SignUpObject(userName,password);
+            SignUpObject.signup();
 
         }
         else if(activePage[PAGE]->buttonPressed(SignUp::toLogin))

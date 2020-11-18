@@ -5,7 +5,6 @@
 #include <vector>
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
-#include "map"
 #include "Headers/FileReader.h"
 
 void mousePressed(int button, int state, int x, int y);

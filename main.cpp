@@ -261,6 +261,7 @@ void mousePressed(int button, int state, int x, int y)
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
             signUp SignUpObject(userName,password);
             SignUpObject.signup();
+            std::cout<<"Signed Up";
 
         }
         else if(activePage[PAGE]->buttonPressed(SignUp::toLogin))

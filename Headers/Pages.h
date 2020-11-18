@@ -1,7 +1,3 @@
-#include "./vars.h"
-#include "./GUICompClass.h"
-//#include "Headers/FileReader.h"
-#include "./ErrorWindow.h"
 /**** Welcome Page *****/
 namespace welcome
 {
@@ -130,3 +126,19 @@ namespace SignUp
         signUpPage->addComponent(&rectBoxb);
     }
 } // namespace SignUp
+/********* Home page **********/
+namespace Home{
+
+    Color userNameC(0.978, 0.849, 0.9055);
+    Color logoutButtonC(0.1, 0.3, 0.7);
+    Color logoutButtonTextC(1, 1, 1);
+
+    Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
+
+    Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
+
+    void addHomeComponents(GUIPage *_homePage)
+    {
+        _homePage->addComponent(&logoutButton);
+    }
+}//namespace Home

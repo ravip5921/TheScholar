@@ -1,2 +1,3 @@
 # TheScholarGUI
-Just for exchanging Codes
+	-> UI along with the backend
+

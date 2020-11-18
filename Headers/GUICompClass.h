@@ -337,6 +337,10 @@ public:
             return true;
         return false;
     }
+    std::string getText(TextBox _textbox)
+    {
+        return _textbox.getText();
+    }
     void render()
     {
         for (int i = 0; i < components.size(); i++)

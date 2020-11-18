@@ -21,4 +21,4 @@ const float CHECK_BOX_DIMENSION=0.5;
 int mainWindowIndex;
 char CHAR_MASK = '*';
 std::string userName = "";
-std::string passWord = "";
+std::string password = "";

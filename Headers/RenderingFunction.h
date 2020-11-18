@@ -47,10 +47,8 @@ void printText(float x, float y,Color rgb=Color(1,1,1), const char *text="", voi
     glColor3f(1.0, 1.0, 0.0);
     glutPostRedisplay();
 }
-
 void printText(std::string tex, double x, double y, float max_x, void *font)
 {
-    // glColor3f(0,0,0);
     glRasterPos2d(x, y);
     int i = 0, a;
     float tsize = tex.size() * CHAR_WIDTH;
@@ -67,14 +65,11 @@ void printText(std::string tex, double x, double y, float max_x, void *font)
     glutPostRedisplay();
 }
 
-void printTextInBox(std::string tex, Coord_Rect pos, void *font)
+void printTextInBox(std::string tex, Coord_Rect pos, void *font,float GAP = CHAR_WIDTH*2)
 {
-    // glColor3f(0,0,0);
-    float GAP = CHAR_WIDTH * 2;
     pos.x += GAP;
     pos.y += GAP;
-    //pos.xw -= GAP;
-    float max_x = pos.xw ;//+ CHAR_WIDTH / 4;
+    float max_x = pos.xw ;
     glRasterPos2d(pos.x, pos.y);
     int i = 0, a;
     float tsize = (tex.size()) * CHAR_WIDTH;
@@ -87,27 +82,35 @@ void printTextInBox(std::string tex, Coord_Rect pos, void *font)
     {
         glutBitmapCharacter(font, tex[i]);
     }
-    //glColor3f(0,0,0);
     glutPostRedisplay();
 }
 void printTextPass(std::string tex, Coord_Rect pos, void *font)
 {
-    // glColor3f(0,0,0);
     float GAP = CHAR_WIDTH * 1.5; //PADDING
     pos.x += GAP;
     pos.y += GAP;
-    //pos.xw -= GAP;
-    //float max_x = pos.xw -GAP;
     int max_Len = ((pos.width) / CHAR_WIDTH) - 6.5; //To Stop Overflow caused by error in CHAR_WIDTH
     glRasterPos2d(pos.x, pos.y);
     for (int j = 0; j < max_Len && j < tex.size(); j++)
     {
         glutBitmapCharacter(font, CHAR_MASK);
-        //        std::cout<<i<<'\t';
     }
-    //glColor3f(0,0,0);
     glutPostRedisplay();
 }
+void printTextInButton(std::string text, Coord_Rect dim, void *font=GLUT_BITMAP_HELVETICA_12)
+{
+    char *c;
+    glRasterPos2f(dim.x+CHAR_WIDTH*2, dim.y+CHAR_WIDTH*2);
+    char buf[100] = {0};
+    sprintf(buf, text.c_str());
+    for (c = buf; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(font, *c);
+    }
+    glColor3f(1.0, 1.0, 0.0);
+    glutPostRedisplay();
+}
+
 float toFloatX(int x)
 {
     float tx;

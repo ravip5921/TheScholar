@@ -172,7 +172,7 @@ public:
     {
         x = _x;
         y = _y;
-        text = _text.data();
+        text = _text.c_str();
         font = _f;
     }
     void render()
@@ -227,12 +227,7 @@ public:
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
-        //selected=true;
-
-        /*if(key=='/')
-            selected=true;
-        else if(key=='.')
-            selected=false;*/
+        return;
     }
     void mouseHandler(int button, int state, int x, int y)
     {
@@ -288,9 +283,7 @@ public:
         }
         glDrawP(buttonDimension);
         textColor.applyColor();
-        Text bText(buttonDimension.x+CHAR_WIDTH*2,buttonDimension.y+CHAR_WIDTH*2,textColor,buttonText,f);
-        bText.render();
-
+        printTextInButton(buttonText, buttonDimension, f);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -363,13 +356,11 @@ public:
     void keyboardHandler(unsigned char key, int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
-            //if (components[i]->isActive())
             components[i]->keyboardHandler(key, x, y);
     }
     void mouseHandler(int button, int state, int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
-            //if (components[i]->isActive())
             components[i]->mouseHandler(button, state, x, y);
     }
 };

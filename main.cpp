@@ -6,7 +6,7 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
-#include "Headers/pages.h"
+#include "Headers/GUIPages.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -63,7 +63,6 @@ int main(int argc, char **argv) //default arguments of main
     glutCreateSubWindow(mainWindowIndex, 1, 1, 200, 100);
     glutDisplayFunc(showClock);
     glutReshapeFunc(ReshapeCallBack);
-    initColor();
 
     glutMainLoop();
 }
@@ -134,10 +133,10 @@ void mousePressed(int button, int state, int x, int y)
     {
         if (activePage[PAGE]->buttonPressed(&SignUp::signUpButton))
         {
-            userName = activePage[PAGE]->getText(&SignUp::userNameB);
-            password = activePage[PAGE]->getText(&SignUp::passwordB);
+            userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
+            passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
-            signUp SignUpObject(userName, password);
+            signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
 
             PAGE = HOME_P;
@@ -202,7 +201,7 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-                std::cout << "User = " << userName << "\nPass = " << password << "\n";
+                std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
             }
         }
     }

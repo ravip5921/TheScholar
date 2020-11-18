@@ -19,6 +19,7 @@ GUIPage loginPage;
 GUIPage signupPage;
 GUIPage welcomePage;
 
+/*** Navigate Pages ****/
 int PAGE = 0;
 enum
 {
@@ -26,14 +27,9 @@ enum
     LOGIN_P = 1,
     SIGNUP_P = 2
 };
-/*std::map<int, GUIPage *> pageMap =
-    {
-        {WELCOME_P, &welcomePage},
-        {LOGIN_P, &loginPage},
-        {SIGNUP_P, &signupPage}
-    };
-*/
+
 std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage};
+//end of page navigator
 
 /**** Welcome Page *****/
 namespace welcome
@@ -44,8 +40,6 @@ namespace welcome
     Color devInfo(0.9, 0.9, 0.91);
     Color loginButtonC(0.1, 0.3, 0.7);
     Color loginButtonTextC(1, 1, 1);
-    //Color signupButtonC=loginButtonC;
-    //Color signupButtonTextC=loginButtonTextC;
 
     Coord_Rect loginButtonD(2, -8, 3, 1.5);
     Coord_Rect signupButtonD(loginButtonD, 'x', 3.4);
@@ -88,7 +82,6 @@ namespace LogIn
 
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
-    //Coord_Rect passwordD(-3, -3, 8, 2.2);
     Coord_Rect passwordD(userNameD, 'y', -3);
     Coord_Rect toSignupD(-5, -8, 5.5, 1.5);
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
@@ -120,38 +113,54 @@ namespace LogIn
     }
 } // namespace LogIn
 
-/**** SignUp Page *****/
-
+/***** Sign Up Page *******/
 namespace SignUp
 {
-    Color userNameC(0.878, 0.749, 0.9055);
+    Color userNameC(0.978, 0.849, 0.9055);
     Color passwordC = userNameC;
-    Color boxTextC(0.43, 0.67, 0.1);
+    Color boxTextC(0.23, 0.17, 0.91);
     Color signUpTextC(1, 1, 0);
     Color signUpButtonTextC(1, 0, 1);
-    Color signUpButtonC(0.7, 0, 0.43);
+    Color signUpButtonC(0.1, 0.9, 0.43);
     Color pageTextC(1, 0, 0);
+    Color toLoginC(0.3,0.9,0.6);
+    Color rectBoxC(1,1,1);
+    Color TitleC(0.5,0,0.5);
 
-    Coord_Rect signUpButtonD(-1, -6, 3, 1.2);
-    Coord_Rect userNameD(-3, 1, 9, 1.9);
-    // Coord_Rect passwordD(-3, -3, 8, 2.2);
-    Coord_Rect passwordD(userNameD, 'y', -4);
+    Coord_Rect signUpButtonD(-2, -6, 3, 1.2);
+    Coord_Rect userNameD(-5, 0, 9, 1.9);
+    Coord_Rect passwordD(userNameD, 'y', -3);
+    Coord_Rect toLoginD(-3,-8,4.8,1.3);
+    Coord_Rect rectBoxA(-6.5,-3.5,12.5,7);
+    Coord_Rect rectBoxB(-6.3,-3.3,12.1,6.6);
 
     Text signUpScreen(-2, 5, pageTextC, "SIGNUP SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+    Text userNameT(-4.8,2.2,TitleC,"Enter User-name:",GLUT_BITMAP_HELVETICA_18);
+    Text passwordT(-4.8,-0.8,TitleC,"Enter Password:",GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
     PasswordBox passwordB(passwordD, passwordC, boxTextC);
-    CheckBox showPassword(&passwordB, 6.5, -2.8, signUpButtonC);
+    CheckBox showPassword(&passwordB, 4.5, -2.8, signUpButtonC);
     Button signUpButton("Sign Up", signUpButtonC, signUpButtonTextC, signUpButtonD);
+    Button toLogin("Already a member?", toLoginC, signUpButtonTextC, toLoginD);
+    rectOutline rectBoxa(rectBoxA,rectBoxC);
+    rectOutline rectBoxb(rectBoxB,rectBoxC);
 
     void addsignUpComponents(GUIPage *signUpPage)
     {
         signUpPage->addComponent(&signUpScreen);
         signUpPage->addComponent(&userNameB);
         signUpPage->addComponent(&passwordB);
+        signUpPage->addComponent(&userNameT);
+        signUpPage->addComponent(&passwordT);
         signUpPage->addComponent(&showPassword);
         signUpPage->addComponent(&signUpButton);
+        signUpPage->addComponent(&toLogin);
+        signUpPage->addComponent(&rectBoxa);
+        signUpPage->addComponent(&rectBoxb);
+
     }
 } // namespace SignUp
+
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -159,13 +168,14 @@ int main(int argc, char **argv) //default arguments of main
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowPosition(INI_X, INI_Y);
     glutInitWindowSize(WID, HEI);
-    mainWindowIndex = glutCreateWindow("Scalling Trial");
+    mainWindowIndex = glutCreateWindow("The Scholar");
 
+    /**** Welcome Page ****/
+    welcome::addWelcomComponents(&welcomePage);
     /*** Login Page ****/
     LogIn::addlogInComponents(&loginPage);
     /**** SignUp Page ***/
     SignUp::addsignUpComponents(&signupPage);
-    welcome::addWelcomComponents(&welcomePage);
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
@@ -209,13 +219,12 @@ void initColor()
 void setFonts()
 {
     LogIn::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
+    SignUp::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
+
 }
 
 void mousePressed(int button, int state, int x, int y)
 {
-    //  loginPage.mouseHandler(button,state,x,y);      //login page
-    //signupPage.mouseHandler(button,state,x,y);      //sign up page
-
     activePage[PAGE]->mouseHandler(button, state, x, y);
     if (PAGE == WELCOME_P)
     {
@@ -246,10 +255,17 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == SIGNUP_P)
     {
-        if (activePage[PAGE]->buttonPressed(SignUp::signUpButton))
+        if(activePage[PAGE]->buttonPressed(SignUp::signUpButton))
+        {
+            //sign up user
+            userName = activePage[PAGE]->getText(LogIn::userNameB);
+            password=activePage[PAGE]->getText(LogIn::passwordB);
+            std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
+
+        }
+        else if(activePage[PAGE]->buttonPressed(SignUp::toLogin))
         {
             PAGE = LOGIN_P;
-            //std::cout << "signed In\n";
         }
     }
     if (state == GLUT_DOWN)

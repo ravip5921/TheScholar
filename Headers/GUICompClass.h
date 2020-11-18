@@ -44,6 +44,11 @@ public:
     {
         f=_f;
     }
+    void setActive(bool _active=true)
+    {
+        active = _active;
+        selected = active;
+    }
     void render()
     {
         setActive(selected);
@@ -205,6 +210,7 @@ public:
     {
         active = _active;
         selected = active;
+        parent->setActive();
     }
     void render()
     {
@@ -331,15 +337,23 @@ public:
     {
         components.push_back(_component);
     }
-    bool buttonPressed(Button _button)
+    bool buttonPressed(Button* _button)
     {
-        if(_button.isActive())
+        if(_button->isActive())
             return true;
         return false;
     }
-    std::string getText(TextBox _textbox)
+    std::string getText(TextBox* _textbox)
     {
-        return _textbox.getText();
+        return _textbox->getText();
+    }
+    bool isActiveBox(TextBox * _textbox)
+    {
+        return _textbox->isActive();
+    }
+    void setActiveBox(TextBox * _textbox,bool _value = true)
+    {
+        _textbox->setActive(_value);
     }
     void render()
     {

@@ -80,7 +80,7 @@ namespace LogIn
     Color toSignupC(0.3, 0.9, 0.6);
     Color pageTextC(1, 0, 0);
     Color rectBoxC(1, 1, 1);
-    Color TitleC(0.5,0,0.5);
+    Color TitleC(0.5, 0, 0.5);
 
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
@@ -90,8 +90,8 @@ namespace LogIn
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
     Text logInScreen(-2, 5, pageTextC, "LOGIN SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
-    Text userNameT(-4.8,2.2,TitleC,"Enter User-name:",GLUT_BITMAP_HELVETICA_18);
-    Text passwordT(-4.8,-0.8,TitleC,"Enter Password:",GLUT_BITMAP_HELVETICA_18);
+    Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
+    Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
     PasswordBox passwordB(passwordD, passwordC, boxTextC);
     CheckBox showPassword(&passwordB, 4.5, -2.8, logInButtonC);
@@ -125,27 +125,27 @@ namespace SignUp
     Color signUpButtonTextC(1, 0, 1);
     Color signUpButtonC(0.1, 0.9, 0.43);
     Color pageTextC(1, 0, 0);
-    Color toLoginC(0.3,0.9,0.6);
-    Color rectBoxC(1,1,1);
-    Color TitleC(0.5,0,0.5);
+    Color toLoginC(0.3, 0.9, 0.6);
+    Color rectBoxC(1, 1, 1);
+    Color TitleC(0.5, 0, 0.5);
 
     Coord_Rect signUpButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
-    Coord_Rect toLoginD(-3,-8,4.8,1.3);
-    Coord_Rect rectBoxA(-6.5,-3.5,12.5,7);
-    Coord_Rect rectBoxB(-6.3,-3.3,12.1,6.6);
+    Coord_Rect toLoginD(-3, -8, 4.8, 1.3);
+    Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
+    Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
     Text signUpScreen(-2, 5, pageTextC, "SIGNUP SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
-    Text userNameT(-4.8,2.2,TitleC,"Enter User-name:",GLUT_BITMAP_HELVETICA_18);
-    Text passwordT(-4.8,-0.8,TitleC,"Enter Password:",GLUT_BITMAP_HELVETICA_18);
+    Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
+    Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
     PasswordBox passwordB(passwordD, passwordC, boxTextC);
     CheckBox showPassword(&passwordB, 4.5, -2.8, signUpButtonC);
     Button signUpButton("Sign Up", signUpButtonC, signUpButtonTextC, signUpButtonD);
     Button toLogin("Already a member?", toLoginC, signUpButtonTextC, toLoginD);
-    rectOutline rectBoxa(rectBoxA,rectBoxC);
-    rectOutline rectBoxb(rectBoxB,rectBoxC);
+    rectOutline rectBoxa(rectBoxA, rectBoxC);
+    rectOutline rectBoxb(rectBoxB, rectBoxC);
 
     void addsignUpComponents(GUIPage *signUpPage)
     {
@@ -159,10 +159,8 @@ namespace SignUp
         signUpPage->addComponent(&toLogin);
         signUpPage->addComponent(&rectBoxa);
         signUpPage->addComponent(&rectBoxb);
-
     }
 } // namespace SignUp
-
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -184,7 +182,7 @@ int main(int argc, char **argv) //default arguments of main
     glutKeyboardFunc(keyPressed);
     initColor();
 
-    glutCreateSubWindow(mainWindowIndex,1,1,200,100);
+    glutCreateSubWindow(mainWindowIndex, 1, 1, 200, 100);
     glutDisplayFunc(showClock);
     glutReshapeFunc(ReshapeCallBack);
     initColor();
@@ -196,8 +194,8 @@ void callBackFun()
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     glColor3f(0, 1, 0);
-    WID=windowWidth();
-    HEI=windowHeight();
+    WID = windowWidth();
+    HEI = windowHeight();
     setFonts();
     activePage[PAGE]->render();
 
@@ -222,7 +220,6 @@ void setFonts()
 {
     LogIn::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
     SignUp::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
-
 }
 
 void mousePressed(int button, int state, int x, int y)
@@ -230,43 +227,42 @@ void mousePressed(int button, int state, int x, int y)
     activePage[PAGE]->mouseHandler(button, state, x, y);
     if (PAGE == WELCOME_P)
     {
-        if (activePage[PAGE]->buttonPressed(welcome::signupButton))
+        if (activePage[PAGE]->buttonPressed(&welcome::signupButton))
         {
             PAGE = SIGNUP_P;
         }
-        else if (activePage[PAGE]->buttonPressed(welcome::loginButton))
+        else if (activePage[PAGE]->buttonPressed(&welcome::loginButton))
         {
             PAGE = LOGIN_P;
         }
     }
     else if (PAGE == LOGIN_P)
     {
-        if (activePage[PAGE]->buttonPressed(LogIn::logInButton))
+        if (activePage[PAGE]->buttonPressed(&LogIn::logInButton))
         {
-            userName = activePage[PAGE]->getText(LogIn::userNameB);
-            password=activePage[PAGE]->getText(LogIn::passwordB);
-            std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
-            logIn LogInObject(userName,password);
-            std::cout<<"Logged In";
+            userName = activePage[PAGE]->getText(&LogIn::userNameB);
+            password = activePage[PAGE]->getText(&LogIn::passwordB);
+            std::cout << "User = " << userName << "\nPass = " << password << "\n";
+            logIn LogInObject(userName, password);
+            std::cout << "Logged In";
         }
-        else if (activePage[PAGE]->buttonPressed(LogIn::toSignup))
+        else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
             PAGE = SIGNUP_P;
         }
     }
     else if (PAGE == SIGNUP_P)
     {
-        if(activePage[PAGE]->buttonPressed(SignUp::signUpButton))
+        if (activePage[PAGE]->buttonPressed(&SignUp::signUpButton))
         {
-            userName = activePage[PAGE]->getText(SignUp::userNameB);
-            password=activePage[PAGE]->getText(SignUp::passwordB);
-            std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
-            signUp SignUpObject(userName,password);
+            userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
+            passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
+            std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
+            signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
-            std::cout<<"Signed Up";
-
+            std::cout << "Signed Up";
         }
-        else if(activePage[PAGE]->buttonPressed(SignUp::toLogin))
+        else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
         {
             PAGE = LOGIN_P;
         }
@@ -279,17 +275,48 @@ void mousePressed(int button, int state, int x, int y)
 void keyPressed(unsigned char key, int x, int y)
 {
     activePage[PAGE]->keyboardHandler(key, x, y);
-    if(PAGE == WELCOME_P)
+    if (PAGE == LOGIN_P)
     {
-        std::cout<<glutGet(GLUT_WINDOW_WIDTH)<<WID<<'\n';
-    }
-    if(PAGE==LOGIN_P)
-    {
-        if(key==ENTER_KEY)
+        if (activePage[PAGE]->isActiveBox(&LogIn::userNameB) && (key == ENTER_KEY || key == TAB_KEY))
         {
-            userName = activePage[PAGE]->getText(LogIn::userNameB);
-            password=activePage[PAGE]->getText(LogIn::passwordB);
-            std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
+            activePage[PAGE]->setActiveBox(&LogIn::userNameB, false);
+            activePage[PAGE]->setActiveBox(&LogIn::passwordB);
+        }
+        else if (activePage[PAGE]->isActiveBox(&LogIn::passwordB) && (key == ENTER_KEY || key == TAB_KEY))
+        {
+            if (key == TAB_KEY)
+            {
+                activePage[PAGE]->setActiveBox(&LogIn::passwordB, false);
+                activePage[PAGE]->setActiveBox(&LogIn::userNameB);
+            }
+            else if (key == ENTER_KEY)
+            {
+                userName = activePage[PAGE]->getText(&LogIn::userNameB);
+                password = activePage[PAGE]->getText(&LogIn::passwordB);
+                std::cout << "User = " << userName << "\nPass = " << password << "\n";
+            }
+        }
+    }
+    if (PAGE == SIGNUP_P)
+    {
+        if (activePage[PAGE]->isActiveBox(&SignUp::userNameB) && (key == ENTER_KEY || key == TAB_KEY))
+        {
+            activePage[PAGE]->setActiveBox(&SignUp::userNameB, false);
+            activePage[PAGE]->setActiveBox(&SignUp::passwordB);
+        }
+        else if (activePage[PAGE]->isActiveBox(&SignUp::passwordB) && (key == ENTER_KEY || key == TAB_KEY))
+        {
+            if (key == TAB_KEY)
+            {
+                activePage[PAGE]->setActiveBox(&SignUp::passwordB, false);
+                activePage[PAGE]->setActiveBox(&SignUp::userNameB);
+            }
+            else if (key == ENTER_KEY)
+            {
+                userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
+                passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
+                std::cout << "User = " << userName << "\nPass = " << password << "\n";
+            }
         }
     }
 }
@@ -306,11 +333,10 @@ void showClock()
     glClear(GL_COLOR_BUFFER_BIT); //Clears the frame buffer of window,good habit
 
     glLoadIdentity(); //resets the matrix transformation done is previous options(i.e.,make default coordinate points)
-    glClearColor(WC_R,WC_G,WC_B,WC_A);
-
-    Showtime s1(-9,1.5,1,1,1);
+    glClearColor(WC_R, WC_G, WC_B, WC_A);
+    Showtime s1(-9, 1.5, 1, 1, 1);
     s1.displayClock(GLUT_BITMAP_TIMES_ROMAN_24);
-    s1.displayCalendar(-5,-2.5,GLUT_BITMAP_HELVETICA_18);
+    s1.displayCalendar(-5, -2.5, GLUT_BITMAP_HELVETICA_18);
     glutPostRedisplay();
     glutSwapBuffers();
 }

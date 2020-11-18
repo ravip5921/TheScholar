@@ -6,6 +6,7 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
+#include "Headers/ErrorWindow.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -14,6 +15,7 @@ void initColor();
 void ReshapeCallBack(int wid, int heig);
 void setFonts();
 void showClock();
+void createErrorWindow(const char* err);
 int windowWidth();
 int windowHeight();
 
@@ -316,9 +318,18 @@ void keyPressed(unsigned char key, int x, int y)
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
                 std::cout << "User = " << userName << "\nPass = " << password << "\n";
+                if(userNameN=="")
+                {
+                    createErrorWindow("Please Enter User-Name");
+                }
             }
         }
     }
+}
+void createErrorWindow(const char* err)
+{
+     if(ErrorWindow::canMake)
+            ErrorWindow::create(err,glutGet(GLUT_WINDOW_X)+150,glutGet(GLUT_WINDOW_Y)+200);
 }
 int windowWidth()
 {

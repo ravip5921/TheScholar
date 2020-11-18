@@ -6,7 +6,7 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
-#include "Headers/pages.h"
+#include "Headers/Pages.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);

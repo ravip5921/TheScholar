@@ -13,6 +13,7 @@ void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
 void setFonts();
+void showClock();
 
 GUIPage loginPage;
 GUIPage signupPage;
@@ -158,7 +159,7 @@ int main(int argc, char **argv) //default arguments of main
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowPosition(INI_X, INI_Y);
     glutInitWindowSize(WID, HEI);
-    glutCreateWindow("Scalling Trial");
+    mainWindowIndex = glutCreateWindow("Scalling Trial");
 
     /*** Login Page ****/
     LogIn::addlogInComponents(&loginPage);
@@ -171,6 +172,12 @@ int main(int argc, char **argv) //default arguments of main
     glutMouseFunc(mousePressed);
     glutKeyboardFunc(keyPressed);
     initColor();
+
+    glutCreateSubWindow(mainWindowIndex,1,1,200,100);
+    glutDisplayFunc(showClock);
+    glutReshapeFunc(ReshapeCallBack);
+    initColor();
+
     glutMainLoop();
 }
 void callBackFun()
@@ -262,4 +269,17 @@ void keyPressed(unsigned char key, int x, int y)
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
         }
     }
+}
+void showClock()
+{
+    glClear(GL_COLOR_BUFFER_BIT); //Clears the frame buffer of window,good habit
+
+    glLoadIdentity(); //resets the matrix transformation done is previous options(i.e.,make default coordinate points)
+    glClearColor(WC_R,WC_G,WC_B,WC_A);
+
+    Showtime s1(-9,1.5,1,1,1);
+    s1.displayClock(GLUT_BITMAP_TIMES_ROMAN_24);
+    s1.displayCalendar(-5,-2.5,GLUT_BITMAP_HELVETICA_18);
+    glutPostRedisplay();
+    glutSwapBuffers();
 }

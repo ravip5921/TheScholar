@@ -6,6 +6,7 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "map"
+#include "Headers/FileReader.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -244,9 +245,8 @@ void mousePressed(int button, int state, int x, int y)
             userName = activePage[PAGE]->getText(LogIn::userNameB);
             password=activePage[PAGE]->getText(LogIn::passwordB);
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
-
-            if(userName=="Loki")
-                PAGE=SIGNUP_P;
+            logIn LogInObject(userName,password);
+            std::cout<<"Logged In";
         }
         else if (activePage[PAGE]->buttonPressed(LogIn::toSignup))
         {
@@ -257,10 +257,11 @@ void mousePressed(int button, int state, int x, int y)
     {
         if(activePage[PAGE]->buttonPressed(SignUp::signUpButton))
         {
-            //sign up user
-            userName = activePage[PAGE]->getText(LogIn::userNameB);
-            password=activePage[PAGE]->getText(LogIn::passwordB);
+            userName = activePage[PAGE]->getText(SignUp::userNameB);
+            password=activePage[PAGE]->getText(SignUp::passwordB);
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
+            signUp SignUpObject(userName,password);
+            SignUpObject.signup();
 
         }
         else if(activePage[PAGE]->buttonPressed(SignUp::toLogin))

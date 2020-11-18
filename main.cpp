@@ -14,6 +14,8 @@ void initColor();
 void ReshapeCallBack(int wid, int heig);
 void setFonts();
 void showClock();
+int windowWidth();
+int windowHeight();
 
 GUIPage loginPage;
 GUIPage signupPage;
@@ -167,9 +169,8 @@ int main(int argc, char **argv) //default arguments of main
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowPosition(INI_X, INI_Y);
-    glutInitWindowSize(WID, HEI);
+    glutInitWindowSize(WID_INI, HEI_INI);
     mainWindowIndex = glutCreateWindow("The Scholar");
-
     /**** Welcome Page ****/
     welcome::addWelcomComponents(&welcomePage);
     /*** Login Page ****/
@@ -195,7 +196,8 @@ void callBackFun()
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     glColor3f(0, 1, 0);
-
+    WID=windowWidth();
+    HEI=windowHeight();
     setFonts();
     activePage[PAGE]->render();
 
@@ -277,6 +279,10 @@ void mousePressed(int button, int state, int x, int y)
 void keyPressed(unsigned char key, int x, int y)
 {
     activePage[PAGE]->keyboardHandler(key, x, y);
+    if(PAGE == WELCOME_P)
+    {
+        std::cout<<glutGet(GLUT_WINDOW_WIDTH)<<WID<<'\n';
+    }
     if(PAGE==LOGIN_P)
     {
         if(key==ENTER_KEY)
@@ -286,6 +292,14 @@ void keyPressed(unsigned char key, int x, int y)
             std::cout<<"User = "<<userName<<"\nPass = "<<password<<"\n";
         }
     }
+}
+int windowWidth()
+{
+    return glutGet(GLUT_WINDOW_WIDTH);
+}
+int windowHeight()
+{
+    return glutGet(GLUT_WINDOW_HEIGHT);
 }
 void showClock()
 {

@@ -1,5 +1,5 @@
-const int WID = 700;
-const int HEI = 650;
+const int WID_INI = 700;
+const int HEI_INI = 650;
 const int INI_X = 350;
 const int INI_Y = 70;
 const int WC_R = 0.094;
@@ -19,6 +19,9 @@ const float CHAR_WIDTH = 0.2667;
 const float DIM_FACTOR = 0.2;
 const float CHECK_BOX_DIMENSION=0.5;
 int mainWindowIndex;
+int WID;
+int HEI;
 char CHAR_MASK = '*';
 std::string userName = "";
 std::string password = "";
+

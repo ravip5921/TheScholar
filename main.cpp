@@ -6,7 +6,7 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
-#include "Headers/Pages.h"
+#include "Headers/pages.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -134,10 +134,10 @@ void mousePressed(int button, int state, int x, int y)
     {
         if (activePage[PAGE]->buttonPressed(&SignUp::signUpButton))
         {
-            userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
-            passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
+            userName = activePage[PAGE]->getText(&SignUp::userNameB);
+            password = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
-            signUp SignUpObject(userNameN, passwordN);
+            signUp SignUpObject(userName, password);
             SignUpObject.signup();
 
             PAGE = HOME_P;

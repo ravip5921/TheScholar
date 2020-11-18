@@ -161,18 +161,16 @@ class Text : public GUIcomponent
     const char *text;
 
 public:
-    Text(float _x, float _y, Color _rgb, const char *_text, void *_f) : rgb(_rgb)
+    Text(float _x, float _y, Color _rgb, const char *_text, void *_f) : rgb(_rgb),text(_text)
     {
         x = _x;
         y = _y;
-        text = _text;
         font = _f;
     }
-    Text(float _x, float _y, Color _rgb, std::string _text, void *_f) : rgb(_rgb)
+    Text(float _x, float _y, Color _rgb, std::string _text, void *_f) : rgb(_rgb),text(_text.c_str())
     {
         x = _x;
         y = _y;
-        text = _text.c_str();
         font = _f;
     }
     void render()

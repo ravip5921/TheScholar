@@ -134,8 +134,8 @@ namespace Home{
     Color logoutButtonTextC(1, 1, 1);
 
     Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
-
-    Text User(-2,7,userNameC,"Hi, ",GLUT_BITMAP_HELVETICA_18);
+   // std::string xyz="herr";
+    Text User(-2,7,userNameC,"herr",GLUT_BITMAP_HELVETICA_18);
 
 
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);

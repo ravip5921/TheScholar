@@ -1,5 +1,5 @@
 #include "./RenderingFunction.h"
-//#include "./classes.h"
+
 class GUIcomponent
 {
 protected:
@@ -290,7 +290,7 @@ public:
         textColor.applyColor();
         Text bText(buttonDimension.x+CHAR_WIDTH*2,buttonDimension.y+CHAR_WIDTH*2,textColor,buttonText,f);
         bText.render();
-       //printTextInBox(buttonText, buttonDimension, f);
+
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {

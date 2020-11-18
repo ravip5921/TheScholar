@@ -1,5 +1,6 @@
 #include "./Classes.h"
 #include <cmath>
+
 void glDrawP(float x, float y, float w, float h)
 {
     glBegin(GL_POLYGON);
@@ -11,7 +12,6 @@ void glDrawP(float x, float y, float w, float h)
 }
 void glDrawP(Coord_Rect p)
 {
-    // std::cout<<p.x<<'\t'<<p.xw;
     glBegin(GL_POLYGON);
     glVertex2f(p.x, p.y);
     glVertex2f(p.xw, p.y);
@@ -47,8 +47,6 @@ void printText(float x, float y,Color rgb=Color(1,1,1), const char *text="", voi
     glColor3f(1.0, 1.0, 0.0);
     glutPostRedisplay();
 }
-// std::string& value()
-//  return userName;
 
 void printText(std::string tex, double x, double y, float max_x, void *font)
 {

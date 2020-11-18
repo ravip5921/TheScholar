@@ -3,8 +3,11 @@
 #include <GL/glut.h> //lib glut
 #include <iostream>
 #include <vector>
+#include "Headers/vars.h"
+#include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
-#include "Headers/Pages.h"
+#include "Headers/pages.h"
+
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
@@ -12,13 +15,13 @@ void initColor();
 void ReshapeCallBack(int wid, int heig);
 void setFonts();
 void showClock();
-void createErrorWindow(const char* err);
 int windowWidth();
 int windowHeight();
 
 GUIPage loginPage;
 GUIPage signupPage;
 GUIPage welcomePage;
+GUIPage homePage;
 
 /*** Navigate Pages ****/
 int PAGE = 0;
@@ -26,13 +29,13 @@ enum
 {
     WELCOME_P = 0,
     LOGIN_P = 1,
-    SIGNUP_P = 2
+    SIGNUP_P = 2,
+    HOME_P = 3
 };
 
-std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage};
+std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage , &homePage};
 //end of page navigator
 
-//////////////////////
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -47,6 +50,9 @@ int main(int argc, char **argv) //default arguments of main
     LogIn::addlogInComponents(&loginPage);
     /**** SignUp Page ***/
     SignUp::addsignUpComponents(&signupPage);
+    /***** Home Page *****/
+    Home::addHomeComponents(&homePage);
+
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
@@ -116,7 +122,8 @@ void mousePressed(int button, int state, int x, int y)
             password = activePage[PAGE]->getText(&LogIn::passwordB);
             std::cout << "User = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
-            std::cout << "Logged In";
+            PAGE = HOME_P;
+
         }
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
@@ -132,9 +139,17 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
             signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
-            std::cout << "Signed Up";
+
+            PAGE = HOME_P;
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
+        {
+            PAGE = LOGIN_P;
+        }
+    }
+    else if (PAGE == HOME_P)
+    {
+        if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
         }
@@ -188,18 +203,9 @@ void keyPressed(unsigned char key, int x, int y)
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
                 std::cout << "User = " << userName << "\nPass = " << password << "\n";
-                if(userNameN=="")
-                {
-                    createErrorWindow("Please Enter User-Name");
-                }
             }
         }
     }
-}
-void createErrorWindow(const char* err)
-{
-     if(ErrorWindow::canMake)
-            ErrorWindow::create(err,glutGet(GLUT_WINDOW_X)+150,glutGet(GLUT_WINDOW_Y)+200);
 }
 int windowWidth()
 {

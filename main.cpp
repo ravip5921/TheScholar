@@ -8,6 +8,8 @@
 #include "Headers/FileReader.h"
 #include "Headers/GUIPages.h"
 #include "Headers/ErrorWindow.h"
+#include "Headers/GUIBlocks.h"
+
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
@@ -19,6 +21,7 @@ void showClock();
 int windowWidth();
 int windowHeight();
 
+//For pages
 GUIPage loginPage;
 GUIPage signupPage;
 GUIPage welcomePage;
@@ -37,6 +40,22 @@ enum
 std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage , &homePage};
 //end of page navigator
 
+//for miniPages in Home PageGUIBlock readingBlock;
+    GUIBlock readingBlock;
+    GUIBlock completedBlock;
+    GUIBlock favouriteBlock;
+    GUIBlock sharedBlock;
+
+/**** Navigate miniPages in HOME_PAGE *****/
+    int MINI_P=0;
+    enum{
+        READING_MP = 0,
+        COMPLETED_MP =1,
+        FAVOURITE_MP =2,
+        SHARED_MP = 3
+    };
+    std::vector<GUIBlock *>activeBlock = {&readingBlock, &completedBlock , &favouriteBlock , &sharedBlock};
+//end miniPages
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -53,7 +72,12 @@ int main(int argc, char **argv) //default arguments of main
     SignUp::addsignUpComponents(&signupPage);
     /***** Home Page *****/
     Home::addHomeComponents(&homePage);
-
+    /************** MINI Pages *****************/
+    readingN::addReadingComponents(&readingBlock);
+    completedN::addCompletedComponents(&completedBlock);
+    favouriteN::addFavouriteComponents(&favouriteBlock);
+    sharedN::addSharedComponents(&sharedBlock);
+    //mini pages end
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
@@ -75,9 +99,11 @@ void callBackFun()
     WID = windowWidth();
     HEI = windowHeight();
     setFonts();
-    //if(PAGE==HOME_P)
-    //Home::addHomeComponents(&homePage);
+
     activePage[PAGE]->render();
+    if(PAGE == HOME_P){
+        activeBlock[MINI_P]->render();
+    }
 
     glutPostRedisplay();
     glutSwapBuffers();
@@ -179,6 +205,18 @@ void mousePressed(int button, int state, int x, int y)
             activePage[LOGIN_P]->setText(&LogIn::passwordB,&userName);
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
             activePage[LOGIN_P]->setActiveBox(&LogIn::passwordB,false);
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::readingButton)){
+            MINI_P = READING_MP;
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::completedButton)){
+            MINI_P = COMPLETED_MP;
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton)){
+            MINI_P = FAVOURITE_MP;
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::sharedButton)){
+            MINI_P = SHARED_MP;
         }
     }
     if (state == GLUT_DOWN)

@@ -160,6 +160,5 @@ namespace Home{
         _homePage->addComponent(&completedButton);
         _homePage->addComponent(&favouriteButton);
         _homePage->addComponent(&sharedButton);
-
     }
 }//namespace Home

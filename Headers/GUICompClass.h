@@ -15,7 +15,6 @@ public:
     virtual void keyboardHandler(unsigned char key, int x, int y) = 0;
 };
 
-
 class TextBox : public GUIcomponent
 {
 protected:
@@ -102,7 +101,6 @@ public:
         }
     }
 };
-
 class PasswordBox : public TextBox
 {
     bool showpass;
@@ -339,6 +337,46 @@ public:
         return;
     }
 };
+class GUIBlock
+{
+    std::vector<GUIcomponent *> components;
+
+public:
+    void addComponent(GUIcomponent *_component)
+    {
+        components.push_back(_component);
+    }
+    bool buttonPressed(Button* _button)
+    {
+        if(_button->isActive())
+            return true;
+        return false;
+    }
+
+    void setText(Text * _textB,std::string * _text)
+    {
+        _textB->setText(_text);
+    }
+    void setText(TextBox * _textB,std::string * _text)
+    {
+        _textB->setText(*_text);
+    }
+    void render()
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->render();
+    }
+    void keyboardHandler(unsigned char key, int x, int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->keyboardHandler(key, x, y);
+    }
+    void mouseHandler(int button, int state, int x, int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->mouseHandler(button, state, x, y);
+    }
+};
 class GUIPage
 {
     std::vector<GUIcomponent *> components;
@@ -390,3 +428,4 @@ public:
             components[i]->mouseHandler(button, state, x, y);
     }
 };
+

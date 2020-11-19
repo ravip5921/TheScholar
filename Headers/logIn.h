@@ -30,6 +30,9 @@ bool IsLogedIn(){
             //check if user name and password match
                 return true;
             }
+            else{
+                return false;
+            }
         }
         return false;
     }

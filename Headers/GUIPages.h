@@ -147,10 +147,10 @@ namespace Home{
     Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
 
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
-    Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading);
-    Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed);
-    Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite);
-    Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared);
+    Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared,CHAR_WIDTH*1.5,CHAR_WIDTH);
 
     void addHomeComponents(GUIPage *_homePage)
     {

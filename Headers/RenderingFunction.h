@@ -97,10 +97,10 @@ void printTextPass(std::string tex, Coord_Rect pos, void *font)
     }
     glutPostRedisplay();
 }
-void printTextInButton(std::string text, Coord_Rect dim, void *font=GLUT_BITMAP_HELVETICA_12,float GAP=CHAR_WIDTH*2)
+void printTextInButton(std::string text, Coord_Rect dim, void *font=GLUT_BITMAP_HELVETICA_12,float GAP_X=CHAR_WIDTH*2,float GAP_Y=CHAR_WIDTH*2)
 {
     char *c;
-    glRasterPos2f(dim.x+GAP, dim.y+GAP);
+    glRasterPos2f(dim.x+GAP_X, dim.y+GAP_Y);
     char buf[100] = {0};
     sprintf(buf, text.c_str());
     for (c = buf; *c != '\0'; c++)

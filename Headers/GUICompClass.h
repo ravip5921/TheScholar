@@ -263,20 +263,26 @@ class Button : public GUIcomponent
     Coord_Rect buttonDimension;
     Color buttonColor;
     Color textColor;
+    float gapX;
+    float gapY;
     void *f;
 
 public:
-    Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
+    Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim,float _x=CHAR_WIDTH*2,float _y =CHAR_WIDTH*2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
         pressed = false;
         buttonText = std::string(_text);
         f = GLUT_BITMAP_HELVETICA_12;
+        gapX=_x;
+        gapY=_y;
     }
-    Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
+    Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim,float _x=CHAR_WIDTH*2,float _y =CHAR_WIDTH*2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
         pressed = false;
         buttonText = _text;
         f = GLUT_BITMAP_HELVETICA_12;
+        gapX=_x;
+        gapY=_y;
     }
     void setFont(void *_f)
     {
@@ -295,7 +301,7 @@ public:
         }
         glDrawP(buttonDimension);
         textColor.applyColor();
-        printTextInButton(buttonText, buttonDimension, f);
+        printTextInButton(buttonText, buttonDimension, f,gapX,gapY);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {

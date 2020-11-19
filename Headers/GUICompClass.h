@@ -158,34 +158,24 @@ class Text : public GUIcomponent
     float y;
     Color rgb;
     void *font;
-    std::string text;
-    bool background;
-    Color backgroundC;
-    Coord_Rect backgroundD;
+    const char *text;
 
 public:
-    Text(float _x, float _y, Color _rgb, const char *_text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(std::string(_text)),backgroundC(_bgC),backgroundD(_x,_y,_w,_h)
+    Text(float _x, float _y, Color _rgb, const char *_text, void *_f) : rgb(_rgb),text(_text)
     {
         x = _x;
         y = _y;
         font = _f;
-        background=_bg;
     }
-    Text(float _x, float _y, Color _rgb, std::string _text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(_text),backgroundC(_bgC),backgroundD(_x,_y,_w,_h)
+    Text(float _x, float _y, Color _rgb, std::string _text, void *_f) : rgb(_rgb),text(_text.c_str())
     {
         x = _x;
         y = _y;
         font = _f;
-        background=_bg;
     }
     void render()
     {
-        printText(x, y, rgb, text.c_str(), font);
-        if(background)
-        {
-            backgroundC.applyColor();
-            glDrawP(backgroundD);
-        }
+        printText(x, y, rgb, text, font);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {

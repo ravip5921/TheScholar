@@ -139,10 +139,10 @@ namespace Home{
     Color miniButtonsC(1,0.5,0.6);
 
     Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
-    Coord_Rect reading(-8,4,2,1);
-    Coord_Rect completed(-6,4,2,1);
-    Coord_Rect favourite(-4,4,2,1);
-    Coord_Rect shared(-2,4,2,1);
+    Coord_Rect reading(-9,5.6,2.3,0.9);
+    Coord_Rect completed(-6.5,5.6,2.3,0.9);
+    Coord_Rect favourite(-4,5.6,2.3,0.9);
+    Coord_Rect shared(-1.5,5.6,1.75,0.9);
 
     Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
 

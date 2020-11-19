@@ -110,10 +110,12 @@ void mousePressed(int button, int state, int x, int y)
         if (activePage[PAGE]->buttonPressed(&welcome::signupButton))
         {
             PAGE = SIGNUP_P;
+            activePage[LOGIN_P]->setActiveBox(&SignUp::userNameB);
         }
         else if (activePage[PAGE]->buttonPressed(&welcome::loginButton))
         {
             PAGE = LOGIN_P;
+            activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
         }
     }
     else if (PAGE == LOGIN_P)
@@ -138,6 +140,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
             PAGE = SIGNUP_P;
+            activePage[LOGIN_P]->setActiveBox(&SignUp::userNameB);
         }
     }
     else if (PAGE == SIGNUP_P)
@@ -148,10 +151,11 @@ void mousePressed(int button, int state, int x, int y)
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
             signUp SignUpObject(userNameN, passwordN);
-            SignUpObject.signup();
             if(!SignUpObject.userExists())
             {
-               PAGE = HOME_P;
+                SignUpObject.signup();
+                activePage[HOME_P]->setText(&Home::User,&userNameN);
+                PAGE = HOME_P;
             }
             else
             {
@@ -161,6 +165,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
         {
             PAGE = LOGIN_P;
+            activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
         }
     }
     else if (PAGE == HOME_P)
@@ -168,6 +173,12 @@ void mousePressed(int button, int state, int x, int y)
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
+            userName="";
+            password="";
+            activePage[LOGIN_P]->setText(&LogIn::userNameB,&userName);
+            activePage[LOGIN_P]->setText(&LogIn::passwordB,&userName);
+            activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
+            activePage[LOGIN_P]->setActiveBox(&LogIn::passwordB,false);
         }
     }
     if (state == GLUT_DOWN)
@@ -231,9 +242,9 @@ void keyPressed(unsigned char key, int x, int y)
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
                 std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
                 signUp SignUpObject(userNameN, passwordN);
-                SignUpObject.signup();
                 if(!SignUpObject.userExists())
                 {
+                    SignUpObject.signup();
                     activePage[HOME_P]->setText(&Home::User,&userNameN);
                     PAGE = HOME_P;
                 }

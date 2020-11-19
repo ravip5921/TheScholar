@@ -364,6 +364,10 @@ public:
     {
         _textB->setText(_text);
     }
+    void setText(TextBox * _textB,std::string * _text)
+    {
+        _textB->setText(*_text);
+    }
     void render()
     {
         for (int i = 0; i < components.size(); i++)

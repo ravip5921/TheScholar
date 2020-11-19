@@ -132,18 +132,30 @@ namespace Home{
     Color userNameC(1,1,1);
     Color logoutButtonC(0.1, 0.3, 0.7);
     Color logoutButtonTextC(1, 1, 1);
+    Color miniButtonsC(1,0.5,0.6);
 
     Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
-   // std::string xyz="herr";
-    Text User(-2,7,userNameC,"herr",GLUT_BITMAP_HELVETICA_18);
+    Coord_Rect reading(-8,4,2,1);
+    Coord_Rect completed(-6,4,2,1);
+    Coord_Rect favourite(-4,4,2,1);
+    Coord_Rect shared(-2,4,2,1);
 
+    Text User(3.5,8.5,userNameC,"Username",GLUT_BITMAP_HELVETICA_18);
 
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
+    Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading);
+    Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed);
+    Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite);
+    Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared);
 
     void addHomeComponents(GUIPage *_homePage)
     {
         _homePage->addComponent(&logoutButton);
         _homePage->addComponent(&User);
+        _homePage->addComponent(&readingButton);
+        _homePage->addComponent(&completedButton);
+        _homePage->addComponent(&favouriteButton);
+        _homePage->addComponent(&sharedButton);
 
     }
 }//namespace Home

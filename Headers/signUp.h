@@ -88,11 +88,11 @@ signUp(std::string username,std::string password):username(std::move(username)),
         return dirpath;
     }
 
-    /*bool userExists(){
+  /*  bool userExists(){
         DirectoryHandler checkuserDhl;
-        checkuserDhl.setDirName("./");
-        checkuserDhl.setDirForUse();
-        checkuserDhl.displayfile();
+        //checkuserDhl.setDirName("./");
+        //checkuserDhl.setDirForUse();
+        // checkuserDhl.displayfile();
     for(int i=0;i<checkuserDhl.dirDi.getsize();i++){
         if(checkuserDhl.dirDi.getinfo(i) == username)
             return true;

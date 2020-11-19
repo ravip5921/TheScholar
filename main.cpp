@@ -74,6 +74,8 @@ void callBackFun()
     WID = windowWidth();
     HEI = windowHeight();
     setFonts();
+    //if(PAGE==HOME_P)
+    //Home::addHomeComponents(&homePage);
     activePage[PAGE]->render();
 
     glutPostRedisplay();
@@ -121,12 +123,12 @@ void mousePressed(int button, int state, int x, int y)
             password = activePage[PAGE]->getText(&LogIn::passwordB);
             std::cout << "User = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
-            if(LogInObject.IsLogedIn()){
-                PAGE = HOME_P;
-            }
-            else{
-                std::cout<<std::endl<<"Error window, Not a user"<<std::endl;
-            }
+
+           /* Color userNameC(1,1,1);
+            Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
+            addDynamicComponent(&homePage,&User);*/
+            PAGE = HOME_P;
+
         }
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
@@ -139,14 +141,11 @@ void mousePressed(int button, int state, int x, int y)
         {
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-            std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+            std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
             signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
-            if(!SignUpObject.userExists())
-                PAGE = HOME_P;
-            else{
-                std::cout<<std::endl<<"Error window for user already exists"<<std::endl;
-            }
+
+            PAGE = HOME_P;
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
         {

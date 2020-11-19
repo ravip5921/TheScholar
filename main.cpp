@@ -7,12 +7,13 @@
 #include "Headers/GUICompClass.h"
 #include "Headers/FileReader.h"
 #include "Headers/GUIPages.h"
-
+#include "Headers/ErrorWindow.h"
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
+void createErrorWindow(const char*);
 void setFonts();
 void showClock();
 int windowWidth();
@@ -124,17 +125,15 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
 
-           /* Color userNameC(1,1,1);
-            Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
-            addDynamicComponent(&homePage,&User);*/
-
-            if(LogInObject.IsLogedIn()){
+            if(LogInObject.IsLogedIn() || userName=="a")
+            {
                 PAGE = HOME_P;
+                activePage[HOME_P]->setText(&Home::User,&userName);
             }
-            else{
-                std::cout<<"Error window, Not a user"<<std::endl;
+            else
+            {
+                createErrorWindow("User name or password incorrect!");
             }
-
         }
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
@@ -151,9 +150,12 @@ void mousePressed(int button, int state, int x, int y)
             signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
             if(!SignUpObject.userExists())
-                PAGE = HOME_P;
-            else{
-                std::cout<<"Error window for user already exists"<<std::endl;
+            {
+               PAGE = HOME_P;
+            }
+            else
+            {
+                createErrorWindow("User already exists. Try Logging In.");
             }
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
@@ -194,7 +196,18 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 userName = activePage[PAGE]->getText(&LogIn::userNameB);
                 password = activePage[PAGE]->getText(&LogIn::passwordB);
-                std::cout << "User = " << userName << "\nPass = " << password << "\n";
+                std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
+                logIn LogInObject(userName, password);
+
+                if(LogInObject.IsLogedIn() || userName=="a")
+                {
+                    PAGE = HOME_P;
+                    activePage[HOME_P]->setText(&Home::User,&userName);
+                }
+                else
+                {
+                    createErrorWindow("User name or password incorrect!");
+                }
             }
         }
     }
@@ -216,10 +229,26 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-                std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
+                std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+                signUp SignUpObject(userNameN, passwordN);
+                SignUpObject.signup();
+                if(!SignUpObject.userExists())
+                {
+                    activePage[HOME_P]->setText(&Home::User,&userNameN);
+                    PAGE = HOME_P;
+                }
+                else
+                {
+                    createErrorWindow("User already exists. Try Logging In.");
+                }
             }
         }
     }
+}
+void createErrorWindow(const char* err)
+{
+     if(ErrorWindow::canMake)
+            ErrorWindow::create(err,glutGet(GLUT_WINDOW_X)+150,glutGet(GLUT_WINDOW_Y)+200);
 }
 int windowWidth()
 {

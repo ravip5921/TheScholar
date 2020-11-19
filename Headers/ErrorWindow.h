@@ -4,7 +4,7 @@ namespace ErrorWindow
 {
     int index;
     bool canMake = true;
-    int mainWindowIndex;
+   // int mainWindowIndex;
     string errorText;
     void destroy()
     {

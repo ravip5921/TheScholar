@@ -178,6 +178,10 @@ public:
         font = _f;
         background=_bg;
     }
+    void setText(std::string* _text)
+    {
+        text = *_text;
+    }
     void render()
     {
         printText(x, y, rgb, text.c_str(), font);
@@ -355,6 +359,10 @@ public:
     void setActiveBox(TextBox * _textbox,bool _value = true)
     {
         _textbox->setActive(_value);
+    }
+    void setText(Text * _textB,std::string * _text)
+    {
+        _textB->setText(_text);
     }
     void render()
     {

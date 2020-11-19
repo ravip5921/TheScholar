@@ -74,6 +74,8 @@ void callBackFun()
     WID = windowWidth();
     HEI = windowHeight();
     setFonts();
+    //if(PAGE==HOME_P)
+    //Home::addHomeComponents(&homePage);
     activePage[PAGE]->render();
 
     glutPostRedisplay();
@@ -121,6 +123,10 @@ void mousePressed(int button, int state, int x, int y)
             password = activePage[PAGE]->getText(&LogIn::passwordB);
             std::cout << "User = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
+
+           /* Color userNameC(1,1,1);
+            Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
+            addDynamicComponent(&homePage,&User);*/
             PAGE = HOME_P;
 
         }

@@ -1,3 +1,7 @@
+/*void addDynamicComponent(GUIPage * _page,GUIcomponent* _component)
+    {
+        _page->addComponent(_component);
+    }*/
 /**** Welcome Page *****/
 namespace welcome
 {
@@ -140,7 +144,7 @@ namespace Home{
     Coord_Rect favourite(-4,4,2,1);
     Coord_Rect shared(-2,4,2,1);
 
-    Text User(3.5,8.5,userNameC,"Username",GLUT_BITMAP_HELVETICA_18);
+    Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
 
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
     Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading);

@@ -121,13 +121,19 @@ void mousePressed(int button, int state, int x, int y)
         {
             userName = activePage[PAGE]->getText(&LogIn::userNameB);
             password = activePage[PAGE]->getText(&LogIn::passwordB);
-            std::cout << "User = " << userName << "\nPass = " << password << "\n";
+            std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
 
            /* Color userNameC(1,1,1);
             Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
             addDynamicComponent(&homePage,&User);*/
-            PAGE = HOME_P;
+
+            if(LogInObject.IsLogedIn()){
+                PAGE = HOME_P;
+            }
+            else{
+                std::cout<<"Error window, Not a user"<<std::endl;
+            }
 
         }
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
@@ -141,11 +147,14 @@ void mousePressed(int button, int state, int x, int y)
         {
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-            std::cout << "User = " << userNameN << "\nPass = " << passwordN << "\n";
+            std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
             signUp SignUpObject(userNameN, passwordN);
             SignUpObject.signup();
-
-            PAGE = HOME_P;
+            if(!SignUpObject.userExists())
+                PAGE = HOME_P;
+            else{
+                std::cout<<"Error window for user already exists"<<std::endl;
+            }
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
         {

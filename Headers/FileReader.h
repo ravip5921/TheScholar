@@ -11,6 +11,7 @@ class FileReader{
 private:
     int i=1;
     std::string username, path ,myText;
+    std::vector<std::string> books;
 public:
     FileReader(){
         username = "";
@@ -18,10 +19,10 @@ public:
 
     FileReader(std::string username):username(std::move(username)){}
 
-    void Reader(const int choice);
+    std::vector<std::string> Reader(const int choice);
 };
 
-void FileReader::Reader(const int choice){
+std::vector<std::string> FileReader::Reader(const int choice){
     if(username != ""){
         ifstream fileReader;
         path = std::string(".\\\\") + std::string("Users\\\\") + username;
@@ -32,6 +33,7 @@ void FileReader::Reader(const int choice){
             cout<<endl<<"Reading list:"<<endl;
             while (getline (fileReader, myText)) {      // Output the text from the file
                 cout <<i<<"."<< myText<<endl;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -42,6 +44,7 @@ void FileReader::Reader(const int choice){
             cout<<endl<<"Completed list:"<<endl;
             while (getline(fileReader, myText)) {      // Output the text from the file
                 cout <<i<<"."<< myText<<endl;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -52,6 +55,7 @@ void FileReader::Reader(const int choice){
             cout<<endl<<"Share list:"<<endl;
             while (getline(fileReader, myText)) {      // Output the text from the file
                 cout <<i<<"."<< myText<<endl;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -62,6 +66,7 @@ void FileReader::Reader(const int choice){
             cout<<endl<<"Favourite list:"<<endl;
             while (getline(fileReader, myText)) {      // Output the text from the file
                 cout <<i<<"."<< myText<<endl;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -70,4 +75,5 @@ void FileReader::Reader(const int choice){
             cout<<"Invalid choice,unable to read";
         }
     }
+    return books;
 }

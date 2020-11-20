@@ -21,6 +21,8 @@ const float CHECK_BOX_DIMENSION=0.5;
 int mainWindowIndex;
 int WID;
 int HEI;
+long blinker=0;
+long blinkerP=0;
 char CHAR_MASK = '*';
 std::string userName = "";
 std::string password = "";

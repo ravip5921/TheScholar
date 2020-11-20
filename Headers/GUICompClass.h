@@ -63,6 +63,14 @@ public:
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
         printTextInBox(textField, position,f);
+        if(isActive())
+        {
+            if (blinker%200>=0 && blinker%200<=100)
+            glutBitmapCharacter(f,'|');
+            blinker++;
+        }
+        else
+            blinker=0;
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -148,6 +156,14 @@ public:
         else
             printTextPass(TextBox::textField, TextBox::position, GLUT_BITMAP_TIMES_ROMAN_24);
         //}
+        if(isActive())
+        {
+            if (blinkerP%200>=0 && blinkerP%200<=100)
+            glutBitmapCharacter(f,'|');
+            blinkerP++;
+        }
+        else
+            blinkerP=0;
     }
 };
 class Text : public GUIcomponent

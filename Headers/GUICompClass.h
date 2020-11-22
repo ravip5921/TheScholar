@@ -178,14 +178,14 @@ class Text : public GUIcomponent
     Coord_Rect backgroundD;
 
 public:
-    Text(float _x, float _y, Color _rgb, const char *_text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(std::string(_text)),backgroundC(_bgC),backgroundD(_x,_y,_w,_h)
+    Text(float _x, float _y, Color _rgb, const char *_text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(std::string(_text)),backgroundC(_bgC),backgroundD(_x-0.1,_y-0.3,_w,_h)
     {
         x = _x;
         y = _y;
         font = _f;
         background=_bg;
     }
-    Text(float _x, float _y, Color _rgb, std::string _text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(_text),backgroundC(_bgC),backgroundD(_x,_y,_w,_h)
+    Text(float _x, float _y, Color _rgb, std::string _text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(_text),backgroundC(_bgC),backgroundD(_x-0.1,_y-0.3,_w,_h)
     {
         x = _x;
         y = _y;

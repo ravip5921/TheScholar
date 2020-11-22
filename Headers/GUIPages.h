@@ -144,9 +144,14 @@ namespace Home{
     Coord_Rect favourite(-4,5.6,2.3,0.9);
     Coord_Rect shared(-1.5,5.6,1.75,0.9);
 
+    Coord_Rect BookButtonD(-1, 8, 3, 1.5);   //trial for book detail
+
     Text User(3.5,8.5,userNameC,userName,GLUT_BITMAP_HELVETICA_18);
 
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
+
+    Button bookButton("Book Detail", logoutButtonC, logoutButtonTextC, BookButtonD);        //trial for book detail
+
     Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading,CHAR_WIDTH*1.5,CHAR_WIDTH);
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed,CHAR_WIDTH*1.5,CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite,CHAR_WIDTH*1.5,CHAR_WIDTH);
@@ -160,5 +165,41 @@ namespace Home{
         _homePage->addComponent(&completedButton);
         _homePage->addComponent(&favouriteButton);
         _homePage->addComponent(&sharedButton);
+        _homePage->addComponent(&bookButton);
     }
 }//namespace Home
+
+/********* Book Detail Page *********/
+namespace BookDetail{
+
+    Color backButtonC(0.1, 0.3, 0.7);
+    Color backButtonTextC(1, 1, 1);
+    Color ButtonsC(1,0.5,0.6);
+
+    Coord_Rect backButtonD(7, 8, 1.75, 1.25);
+    Coord_Rect reading(6,3.6,3,0.9);
+    Coord_Rect completed(6,2.3,2.3,0.9);
+    Coord_Rect review(6,1,2.3,0.9);
+    Coord_Rect shared(6,-0.3,1.75,0.9);
+    Coord_Rect favourite(6,-1.6,2.3,0.9);
+    Coord_Rect bookmark(6,-2.9,2.3,0.9);
+
+    Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
+    Button readingButton("Add to reading", ButtonsC, backButtonTextC, reading,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button completedButton("Add to read", ButtonsC, backButtonTextC, completed,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button reviewButton("review", ButtonsC, backButtonTextC, review,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button sharedButton("share", ButtonsC, backButtonTextC, shared,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button favouriteButton("Add to favourite", ButtonsC, backButtonTextC, favourite,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button bookmarkButton("Add bookmark", ButtonsC, backButtonTextC, bookmark,CHAR_WIDTH*1.5,CHAR_WIDTH);
+
+    void addBookDetailComponents(GUIPage *_bookDetailPage)
+    {
+        _bookDetailPage->addComponent(&backButton);
+        _bookDetailPage->addComponent(&readingButton);
+        _bookDetailPage->addComponent(&completedButton);
+        _bookDetailPage->addComponent(&reviewButton);
+        _bookDetailPage->addComponent(&sharedButton);
+        _bookDetailPage->addComponent(&favouriteButton);
+        _bookDetailPage->addComponent(&bookmarkButton);
+    }
+}//namespace bookDetail

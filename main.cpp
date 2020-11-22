@@ -26,6 +26,7 @@ GUIPage loginPage;
 GUIPage signupPage;
 GUIPage welcomePage;
 GUIPage homePage;
+GUIPage bookDetailPage;
 
 /*** Navigate Pages ****/
 int PAGE = 0;
@@ -34,10 +35,11 @@ enum
     WELCOME_P = 0,
     LOGIN_P = 1,
     SIGNUP_P = 2,
-    HOME_P = 3
+    HOME_P = 3,
+    BOOK_DETAIL_P = 4
 };
 
-std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage , &homePage};
+std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage , &homePage,&bookDetailPage};
 //end of page navigator
 
 //for miniPages in Home PageGUIBlock readingBlock;
@@ -78,6 +80,8 @@ int main(int argc, char **argv) //default arguments of main
     favouriteN::addFavouriteComponents(&favouriteBlock);
     sharedN::addSharedComponents(&sharedBlock);
     //mini pages end
+    /******* Book Detail Page *******/
+    BookDetail::addBookDetailComponents(&bookDetailPage);
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
@@ -240,6 +244,16 @@ void mousePressed(int button, int state, int x, int y)
             FileReader fr(userName);
             sharedN::books = fr.Reader(MINI_P+1);
             sharedN::printList(sharedN::books);     //console print list
+        }
+    //trial for book detail page
+        else if(activePage[PAGE]->buttonPressed(&Home::bookButton)){
+            PAGE = BOOK_DETAIL_P;
+        }
+    }
+    else if (PAGE == BOOK_DETAIL_P){
+        if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
+        {
+            PAGE = HOME_P;
         }
     }
     if (state == GLUT_DOWN)

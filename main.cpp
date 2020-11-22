@@ -176,7 +176,7 @@ void mousePressed(int button, int state, int x, int y)
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
-            if(userNameN=="" && passwordN=="")
+            if(userNameN=="" || passwordN=="")
             {
                 createErrorWindow("UserName and Password required!");
             }
@@ -185,7 +185,7 @@ void mousePressed(int button, int state, int x, int y)
                 signUp SignUpObject(userNameN, passwordN);
                 if(!SignUpObject.valid())
                 {
-                    createErrorWindow("Password must contain atleast a digit, an alphabet and a special character.");
+                    createErrorWindow("Password must contain at least a digit, an alphabet and a special character.");
                 }
                 else if(SignUpObject.userExists())
                 {
@@ -302,7 +302,7 @@ void keyPressed(unsigned char key, int x, int y)
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
-            if(userNameN=="" && passwordN=="")
+            if(userNameN=="" || passwordN=="")
             {
                 createErrorWindow("UserName and Password required!");
             }
@@ -311,7 +311,7 @@ void keyPressed(unsigned char key, int x, int y)
                 signUp SignUpObject(userNameN, passwordN);
                 if(!SignUpObject.valid())
                 {
-                    createErrorWindow("Password must contain atleast a digit, an alphabet and a special character.");
+                    createErrorWindow("Password must contain at least a digit, an alphabet and a special character.");
                 }
                 else if(SignUpObject.userExists())
                 {

@@ -255,6 +255,26 @@ void mousePressed(int button, int state, int x, int y)
         {
             PAGE = HOME_P;
         }
+        else if (activePage[PAGE]->buttonPressed(&BookDetail::readingButton))
+        {
+            FileWriter fw(userName);
+            fw.Writer(1,"reading Book");
+        }
+        else if (activePage[PAGE]->buttonPressed(&BookDetail::completedButton))
+        {
+            FileWriter fw(userName);
+            fw.Writer(2,"read Book");
+        }
+        else if (activePage[PAGE]->buttonPressed(&BookDetail::favouriteButton))
+        {
+            FileWriter fw(userName);
+            fw.Writer(3,"favourite Book");
+        }
+        else if (activePage[PAGE]->buttonPressed(&BookDetail::sharedButton))
+        {
+            FileWriter fw(userName);
+            fw.Writer(4,"shared Book");
+        }
     }
     if (state == GLUT_DOWN)
     {

@@ -4,8 +4,9 @@
 Write string in .txt file,choice are:
     1.Reading
     2.Completed
-    3.Share
-    4.Favourite
+    3.Favourite
+    4.Share
+
 ******/
 
 class FileWriter{
@@ -40,13 +41,13 @@ void FileWriter::Writer(const int choice,std::string toWrite){
             fileWrite.close();
         }
         else if(choice == 3){
-            path = path + string("\\\\share.txt");
+            path = path + string("\\\\favourite.txt");
             fileWrite.open(path.c_str(),ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();
         }
         else if(choice == 4){
-            path = path + string("\\\\favourite.txt");
+            path = path + string("\\\\share.txt");
             fileWrite.open(path.c_str(),ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();

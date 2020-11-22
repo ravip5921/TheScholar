@@ -175,14 +175,27 @@ namespace BookDetail{
     Color backButtonC(0.1, 0.3, 0.7);
     Color backButtonTextC(1, 1, 1);
     Color ButtonsC(1,0.5,0.6);
+    Color openButtonC(0.31,0.94,1);
+    Color textC(1,1,1);
 
     Coord_Rect backButtonD(7, 8, 1.75, 1.25);
-    Coord_Rect reading(6,3.6,3,0.9);
-    Coord_Rect completed(6,2.3,2.3,0.9);
-    Coord_Rect review(6,1,2.3,0.9);
-    Coord_Rect shared(6,-0.3,1.75,0.9);
-    Coord_Rect favourite(6,-1.6,2.3,0.9);
-    Coord_Rect bookmark(6,-2.9,2.3,0.9);
+    Coord_Rect reading(5,2.6,3,0.9);
+    Coord_Rect completed(5,1.3,2.5,0.9);
+    Coord_Rect review(5,0,1.75,0.85);
+    Coord_Rect shared(5,-1.3,1.6,0.85);
+    Coord_Rect favourite(5,-2.6,3.1,0.9);
+    Coord_Rect bookmark(5,-3.9,3,0.9);
+    Coord_Rect openBook(5,-7,3,1);
+
+    Text nameBook(-9,4.5,textC,"NAME OF BOOK",GLUT_BITMAP_HELVETICA_18);
+    Text authorBook(-8,2.5,textC,"Author:",GLUT_BITMAP_HELVETICA_18);
+    Text authorNameBook(-6,2.5,textC,"Author Name",GLUT_BITMAP_HELVETICA_18);
+    Text genreBook(-8,1,textC,"Genre:",GLUT_BITMAP_HELVETICA_18);
+    Text genreNameBook(-6,1,textC,"Genre Name",GLUT_BITMAP_HELVETICA_18);
+    Text publishDateBook(-8,-0.5,textC,"Published Date:",GLUT_BITMAP_HELVETICA_18);
+    Text DateBook(-4,-0.5,textC,"Date",GLUT_BITMAP_HELVETICA_18);
+    Text extraDisBook(-8,-2,textC,"Extra Description:",GLUT_BITMAP_HELVETICA_18);
+    Text descriptionBook(-7,-4,textC,".....Description of the books.....",GLUT_BITMAP_HELVETICA_18);
 
     Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
     Button readingButton("Add to reading", ButtonsC, backButtonTextC, reading,CHAR_WIDTH*1.5,CHAR_WIDTH);
@@ -191,6 +204,8 @@ namespace BookDetail{
     Button sharedButton("share", ButtonsC, backButtonTextC, shared,CHAR_WIDTH*1.5,CHAR_WIDTH);
     Button favouriteButton("Add to favourite", ButtonsC, backButtonTextC, favourite,CHAR_WIDTH*1.5,CHAR_WIDTH);
     Button bookmarkButton("Add bookmark", ButtonsC, backButtonTextC, bookmark,CHAR_WIDTH*1.5,CHAR_WIDTH);
+    Button openBookButton("OPEN BOOK", openButtonC, backButtonTextC, openBook,CHAR_WIDTH*1.5,CHAR_WIDTH);
+
 
     void addBookDetailComponents(GUIPage *_bookDetailPage)
     {
@@ -201,5 +216,16 @@ namespace BookDetail{
         _bookDetailPage->addComponent(&sharedButton);
         _bookDetailPage->addComponent(&favouriteButton);
         _bookDetailPage->addComponent(&bookmarkButton);
+        _bookDetailPage->addComponent(&openBookButton);
+        _bookDetailPage->addComponent(&nameBook);
+        _bookDetailPage->addComponent(&authorBook);
+        _bookDetailPage->addComponent(&authorNameBook);
+        _bookDetailPage->addComponent(&genreBook);
+        _bookDetailPage->addComponent(&genreNameBook);
+        _bookDetailPage->addComponent(&publishDateBook);
+        _bookDetailPage->addComponent(&DateBook);
+        _bookDetailPage->addComponent(&extraDisBook);
+        _bookDetailPage->addComponent(&descriptionBook);
+
     }
 }//namespace bookDetail

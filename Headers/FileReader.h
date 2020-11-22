@@ -3,8 +3,8 @@
  Read .txt file,choice are:
     1.Reading
     2.Completed
-    3.Share
-    4.Favourite
+    3.Favourite
+    4.Share
 ******/
 
 class FileReader{
@@ -32,7 +32,7 @@ std::vector<std::string> FileReader::Reader(const int choice){
             fileReader.open(path.c_str());
             cout<<endl<<"Reading list:"<<endl;
             while (getline (fileReader, myText)) {      // Output the text from the file
-                cout <<i<<"."<< myText<<endl;
+                //cout <<i<<"."<< myText<<endl;
                 books.push_back(myText);
                 i++;
             }
@@ -43,29 +43,29 @@ std::vector<std::string> FileReader::Reader(const int choice){
             fileReader.open(path.c_str());
             cout<<endl<<"Completed list:"<<endl;
             while (getline(fileReader, myText)) {      // Output the text from the file
-                cout <<i<<"."<< myText<<endl;
-                books.push_back(myText);
-                i++;
-            }
-            fileReader.close();
-        }
-        else if(choice == 3){
-            path = path + string("\\\\share.txt");
-            fileReader.open(path.c_str());
-            cout<<endl<<"Share list:"<<endl;
-            while (getline(fileReader, myText)) {      // Output the text from the file
-                cout <<i<<"."<< myText<<endl;
+                //cout <<i<<"."<< myText<<endl;
                 books.push_back(myText);
                 i++;
             }
             fileReader.close();
         }
         else if(choice == 4){
+            path = path + string("\\\\share.txt");
+            fileReader.open(path.c_str());
+            cout<<endl<<"Share list:"<<endl;
+            while (getline(fileReader, myText)) {      // Output the text from the file
+                //cout <<i<<"."<< myText<<endl;
+                books.push_back(myText);
+                i++;
+            }
+            fileReader.close();
+        }
+        else if(choice == 3){
             path = path + string("\\\\favourite.txt");
             fileReader.open(path.c_str());
             cout<<endl<<"Favourite list:"<<endl;
             while (getline(fileReader, myText)) {      // Output the text from the file
-                cout <<i<<"."<< myText<<endl;
+                //cout <<i<<"."<< myText<<endl;
                 books.push_back(myText);
                 i++;
             }

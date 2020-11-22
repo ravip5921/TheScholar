@@ -174,8 +174,8 @@ namespace BookDetail{
 
     Color backButtonC(0.1, 0.3, 0.7);
     Color backButtonTextC(1, 1, 1);
-    Color ButtonsC(1,0.5,0.6);
-    Color openButtonC(0.31,0.94,1);
+    Color ButtonsC(0.6,0.5,0.8);
+    Color openButtonC(0.1, 0.3, 0.9);
     Color textC(1,1,1);
 
     Coord_Rect backButtonD(7, 8, 1.75, 1.25);

@@ -6,15 +6,21 @@
 #include "Headers/vars.h"
 #include "Headers/GUICompClass.h"
 #include "Headers/BookAdderPage.h"
+#include "Headers/DatabaseCreator.h"
+
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
+void getValues();
 int windowWidth();
 int windowHeight();
 
 GUIPage BookAdderPage;
+
+BookDescriptor bd;
+
 int main(int argc, char **argv) //default arguments of main
 {
     glutInit(&argc, argv);
@@ -24,7 +30,7 @@ int main(int argc, char **argv) //default arguments of main
     mainWindowIndex = glutCreateWindow("Book Database");
 
     BookAdder::addBookAdderComponents(&BookAdderPage);
-
+    bd.bookPath = "./database/book/book1.pdf";
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
@@ -61,11 +67,63 @@ void initColor()
 
 void mousePressed(int button, int state, int x, int y)
 {
-    BookAdderPage.mouseHandler(button,state,x,y);
+    BookAdderPage.mouseHandler(button, state, x, y);
+    if (BookAdderPage.buttonPressed(&BookAdder::AddBookButton))
+    {
+        getValues();
+    }
 }
 void keyPressed(unsigned char key, int x, int y)
 {
-    BookAdderPage.keyboardHandler(key,x,y);
+    BookAdderPage.keyboardHandler(key, x, y);
+    if (key == ENTER_KEY || key == TAB_KEY)
+    {
+        if (BookAdderPage.isActiveBox(&BookAdder::NameB))
+        {
+            BookAdderPage.setActiveBox(&BookAdder::NameB, false);
+            BookAdderPage.setActiveBox(&BookAdder::AuthorB, true);
+        }
+        else if (BookAdderPage.isActiveBox(&BookAdder::AuthorB))
+        {
+            BookAdderPage.setActiveBox(&BookAdder::AuthorB, false);
+            BookAdderPage.setActiveBox(&BookAdder::GenreB, true);
+        }
+        else if (BookAdderPage.isActiveBox(&BookAdder::GenreB))
+        {
+            BookAdderPage.setActiveBox(&BookAdder::GenreB, false);
+            BookAdderPage.setActiveBox(&BookAdder::DateB, true);
+        }
+        else if (BookAdderPage.isActiveBox(&BookAdder::DateB))
+        {
+            BookAdderPage.setActiveBox(&BookAdder::DateB, false);
+            BookAdderPage.setActiveBox(&BookAdder::ExtraDesB, true);
+        }
+        else if (BookAdderPage.isActiveBox(&BookAdder::ExtraDesB) && key == ENTER_KEY)
+        {
+            getValues();
+        }
+    }
+}
+void getValues()
+{
+    bd.name = BookAdderPage.getText(&BookAdder::NameB);
+    bd.author = BookAdderPage.getText(&BookAdder::AuthorB);
+    bd.genre = BookAdderPage.getText(&BookAdder::GenreB);
+    bd.date = BookAdderPage.getText(&BookAdder::DateB);
+    bd.extrades = BookAdderPage.getText(&BookAdder::ExtraDesB);
+
+    createRequiredDirectories();
+    bd.createDescriptorFile();
+    bd.createAllDirectories();
+
+    BookAdderPage.setActiveBox(&BookAdder::ExtraDesB, false);
+    BookAdderPage.setActiveBox(&BookAdder::NameB, true);
+
+    BookAdderPage.setText(&BookAdder::NameB, "");
+    BookAdderPage.setText(&BookAdder::AuthorB, "");
+    BookAdderPage.setText(&BookAdder::GenreB, "");
+    BookAdderPage.setText(&BookAdder::DateB, "");
+    BookAdderPage.setText(&BookAdder::ExtraDesB, "");
 }
 int windowWidth()
 {

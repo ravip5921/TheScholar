@@ -65,12 +65,12 @@ public:
         printTextInBox(textField, position,f);
         if(isActive())
         {
-            if (blinker%200>=0 && blinker%200<=100)
+            if (blinker%500>=0 && blinker%500<=250)
             glutBitmapCharacter(f,'|');
             blinker++;
+
         }
-        else
-            blinker=0;
+
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -198,12 +198,12 @@ public:
     }
     void render()
     {
-        printText(x, y, rgb, text.c_str(), font);
         if(background)
         {
             backgroundC.applyColor();
             glDrawP(backgroundD);
         }
+        printText(x, y, rgb, text.c_str(), font);
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -427,6 +427,10 @@ public:
     void setText(TextBox * _textB,std::string * _text)
     {
         _textB->setText(*_text);
+    }
+    void setText(TextBox * _textB,const char * _text)
+    {
+        _textB->setText(_text);
     }
     void render()
     {

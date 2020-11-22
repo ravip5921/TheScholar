@@ -16,7 +16,7 @@ namespace BookAdder
     Coord_Rect GenreD(AuthorD, 'y', -gap);
     Coord_Rect DateD(GenreD, 'y', -gap);
     Coord_Rect ExtraDesD(DateD, 'y', -gap);
-    Coord_Rect addBookButtonD(X + 5, Y - (6 * gap), 3, 1.8);
+    Coord_Rect addBookButtonD(X + 5, Y - (6 * gap), 3.4, 1.8);
 
     Text titleT(X + 1, Y + 2, titleC, "Add a new book:", GLUT_BITMAP_TIMES_ROMAN_24, true, addButtonC, 5, 1.5);
     Text NameT(X - 5, Y, textC, "Name:", GLUT_BITMAP_HELVETICA_18);

@@ -209,31 +209,26 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton)){
             MINI_P = READING_MP;
             FileReader fr(userName);
-            std::vector<string> books = fr.Reader(MINI_P+1);
-            for (auto i = books.begin(); i != books.end(); ++i)
-                std::cout <<" "<< *i <<std::endl;
-
+            readingN::books = fr.Reader(MINI_P+1);
+            readingN::printList(readingN::books);   //console print list
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton)){
             MINI_P = COMPLETED_MP;
             FileReader fr(userName);
-            std::vector<string> books = fr.Reader(MINI_P+1);
-            for (auto i = books.begin(); i != books.end(); ++i)
-                std::cout <<" "<< *i <<std::endl;
+            completedN::books = fr.Reader(MINI_P+1);
+            completedN::printList(completedN::books);   //console print list
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton)){
             MINI_P = FAVOURITE_MP;
             FileReader fr(userName);
-            std::vector<string> books = fr.Reader(MINI_P+1);
-            for (auto i = books.begin(); i != books.end(); ++i)
-                std::cout <<" "<< *i <<std::endl;
+            favouriteN::books = fr.Reader(MINI_P+1);
+            favouriteN::printList(favouriteN::books);   //console print list
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton)){
             MINI_P = SHARED_MP;
             FileReader fr(userName);
-            std::vector<string> books = fr.Reader(MINI_P+1);
-            for (auto i = books.begin(); i != books.end(); ++i)
-                std::cout <<" "<< *i <<std::endl;
+            sharedN::books = fr.Reader(MINI_P+1);
+            sharedN::printList(sharedN::books);     //console print list
         }
     }
     if (state == GLUT_DOWN)

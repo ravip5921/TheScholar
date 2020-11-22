@@ -176,16 +176,27 @@ void mousePressed(int button, int state, int x, int y)
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
-            signUp SignUpObject(userNameN, passwordN);
-            if(!SignUpObject.userExists())
+            if(userNameN=="" && passwordN=="")
             {
-                SignUpObject.signup();
-                activePage[HOME_P]->setText(&Home::User,&userNameN);
-                PAGE = HOME_P;
+                createErrorWindow("UserName and Password required!");
             }
             else
             {
-                createErrorWindow("User already exists. Try Logging In.");
+                signUp SignUpObject(userNameN, passwordN);
+                if(!SignUpObject.valid())
+                {
+                    createErrorWindow("Password must contain atleast a digit, an alphabet and a special character.");
+                }
+                else if(SignUpObject.userExists())
+                {
+                    createErrorWindow("User already exists. Try Logging In.");
+                }
+                else
+                {
+                    SignUpObject.signup();
+                    activePage[HOME_P]->setText(&Home::User,&userNameN);
+                    PAGE = HOME_P;
+                }
             }
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
@@ -289,19 +300,30 @@ void keyPressed(unsigned char key, int x, int y)
             else if (key == ENTER_KEY)
             {
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
-                passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-                std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+            passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
+            std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+            if(userNameN=="" && passwordN=="")
+            {
+                createErrorWindow("UserName and Password required!");
+            }
+            else
+            {
                 signUp SignUpObject(userNameN, passwordN);
-                if(!SignUpObject.userExists())
+                if(!SignUpObject.valid())
+                {
+                    createErrorWindow("Password must contain atleast a digit, an alphabet and a special character.");
+                }
+                else if(SignUpObject.userExists())
+                {
+                    createErrorWindow("User already exists. Try Logging In.");
+                }
+                else
                 {
                     SignUpObject.signup();
                     activePage[HOME_P]->setText(&Home::User,&userNameN);
                     PAGE = HOME_P;
                 }
-                else
-                {
-                    createErrorWindow("User already exists. Try Logging In.");
-                }
+            }
             }
         }
     }

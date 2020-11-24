@@ -22,10 +22,12 @@ int mainWindowIndex;
 int WID;
 int HEI;
 long blinker=0;
+long blinkerT=0;
 long blinkerP=0;
 char CHAR_MASK = '*';
 std::string userName = "";
 std::string password = "";
 std::string userNameN = "";
 std::string passwordN = "";
+std::vector<std::string> dataf = {"sjdk","saidikasj","sajdk","sahdjkhas","aSSA"};
 

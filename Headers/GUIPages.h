@@ -23,7 +23,7 @@ namespace welcome
     Text devInfoD(devInfoX, devInfoY - 3, devInfo, "Nikesh D.C.", GLUT_BITMAP_HELVETICA_18);
     Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD);
     Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD);
-
+    ScrollBox test(dataf,loginButtonD.displace(5,5),3);
     void addWelcomComponents(GUIPage *_welcomePage)
     {
         _welcomePage->addComponent(&titleT);
@@ -34,6 +34,7 @@ namespace welcome
         _welcomePage->addComponent(&devInfoD);
         _welcomePage->addComponent(&loginButton);
         _welcomePage->addComponent(&signupButton);
+        _welcomePage->addComponent(&test);
     }
 } // namespace welcome
 /**** Login Page *****/

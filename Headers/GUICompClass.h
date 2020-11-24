@@ -393,7 +393,7 @@ public:
     }
     void mouseHandler(int button,int state,int x,int y)
     {
-        if(button==4 && state ==GLUT_DOWN && (top-maxN<data.size()))
+        if(button==4 && state ==GLUT_DOWN && (data.size()-top>maxN))
         {
             std::cout<<top;
             top++;
@@ -479,6 +479,11 @@ public:
     {
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
+    }
+    void passiveMouseHandler(int x,int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->passiveMouseHandler(x, y);
     }
 };
 class GUIPage

@@ -137,6 +137,7 @@ void setFonts()
 void mousePressed(int button, int state, int x, int y)
 {
     activePage[PAGE]->mouseHandler(button, state, x, y);
+    activeBlock[MINI_P]->mouseHandler(button,state,x,y);
     if (PAGE == WELCOME_P)
     {
         if (activePage[PAGE]->buttonPressed(&welcome::signupButton))
@@ -286,6 +287,7 @@ void mousePressed(int button, int state, int x, int y)
 void keyPressed(unsigned char key, int x, int y)
 {
     activePage[PAGE]->keyboardHandler(key, x, y);
+    //activeBlock[MINI_P]->keyboardHandler(key,x,y);
     if (PAGE == LOGIN_P)
     {
         if (activePage[PAGE]->isActiveBox(&LogIn::userNameB) && (key == ENTER_KEY || key == TAB_KEY))

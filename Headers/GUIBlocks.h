@@ -2,10 +2,13 @@
 namespace readingN{
     std::vector<string> books;
     Color testC(0.7, 0.67, 0.6);
+    Coord_Rect sb(5,0,4,3);
     Text testT(-8.7, 4, testC, "Reading Books", GLUT_BITMAP_HELVETICA_18);
-
-    void printList(std::vector<string> _books){
-        for (auto i = _books.begin(); i != _books.end(); ++i){
+    ScrollBox test(dataf,sb,5);
+    void printList(std::vector<std::string> _books)
+    {
+        for (auto i = _books.begin(); i != _books.end(); ++i)
+            {
                 std::cout <<" "<< *i <<std::endl;
             }
     }
@@ -13,6 +16,7 @@ namespace readingN{
      void addReadingComponents(GUIBlock *_readingPage)
     {
         _readingPage->addComponent(&testT);
+        _readingPage->addComponent(&test);
     }
 
 }
@@ -22,8 +26,10 @@ namespace completedN{
     Color testC(0.7, 0.67, 0.6);
     Text testT(-8.7, 4, testC, "Completed Books", GLUT_BITMAP_HELVETICA_18);
 
-    void printList(std::vector<string> _books){
-        for (auto i = _books.begin(); i != _books.end(); ++i){
+    void printList(std::vector<std::string> _books)
+    {
+        for (auto i = _books.begin(); i != _books.end(); ++i)
+            {
                 std::cout <<" "<< *i <<std::endl;
             }
     }
@@ -35,12 +41,14 @@ namespace completedN{
 }
 /**** favourite block *****/
 namespace favouriteN{
-    std::vector<string> books;
+    std::vector<std::string> books;
     Color testC(0.7, 0.67, 0.6);
     Text testT(-8.7, 4, testC, "favourite Books", GLUT_BITMAP_HELVETICA_18);
 
-    void printList(std::vector<string> _books){
-        for (auto i = _books.begin(); i != _books.end(); ++i){
+    void printList(std::vector<string> _books)
+    {
+        for (auto i = _books.begin(); i != _books.end(); ++i)
+            {
                 std::cout <<" "<< *i <<std::endl;
             }
     }
@@ -56,8 +64,10 @@ namespace sharedN{
     Color testC(0.7, 0.67, 0.6);
     Text testT(-8.7, 4, testC, "Shared Books", GLUT_BITMAP_HELVETICA_18);
 
-     void printList(std::vector<string> _books){
-        for (auto i = _books.begin(); i != _books.end(); ++i){
+     void printList(std::vector<string> _books)
+     {
+        for (auto i = _books.begin(); i != _books.end(); ++i)
+            {
                 std::cout <<" "<< *i <<std::endl;
             }
     }

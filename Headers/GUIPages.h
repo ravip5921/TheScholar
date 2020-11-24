@@ -14,7 +14,6 @@ namespace welcome
 
     Coord_Rect loginButtonD(2, -8, 3, 1.5);
     Coord_Rect signupButtonD(loginButtonD, 'x', 3.4);
-    Coord_Rect sb(5,0,4,3);
 
     Text titleT(-2.5, 2.5, titleC, "THE SCHOLAR", GLUT_BITMAP_TIMES_ROMAN_24);
     Text subTitleT(-2.2, 1.8, titleC, "E-lib of some sort", GLUT_BITMAP_HELVETICA_18);
@@ -24,7 +23,6 @@ namespace welcome
     Text devInfoD(devInfoX, devInfoY - 3, devInfo, "Nikesh D.C.", GLUT_BITMAP_HELVETICA_18);
     Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD);
     Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD);
-    ScrollBox test(dataf,sb,5);
     void addWelcomComponents(GUIPage *_welcomePage)
     {
         _welcomePage->addComponent(&titleT);
@@ -35,7 +33,6 @@ namespace welcome
         _welcomePage->addComponent(&devInfoD);
         _welcomePage->addComponent(&loginButton);
         _welcomePage->addComponent(&signupButton);
-        _welcomePage->addComponent(&test);
     }
 } // namespace welcome
 /**** Login Page *****/

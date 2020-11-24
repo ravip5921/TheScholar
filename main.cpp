@@ -12,6 +12,7 @@
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
+void passiveMouse(int x,int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
@@ -87,6 +88,7 @@ int main(int argc, char **argv) //default arguments of main
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
     glutKeyboardFunc(keyPressed);
+    glutPassiveMotionFunc(passiveMouse);
     initColor();
 
     glutCreateSubWindow(mainWindowIndex, 1, 1, 200, 100);
@@ -361,6 +363,10 @@ void keyPressed(unsigned char key, int x, int y)
             }
         }
     }
+}
+void passiveMouse(int x,int y)
+{
+    activePage[PAGE]->passiveMouseHandler(x,y);
 }
 void createErrorWindow(const char* err)
 {

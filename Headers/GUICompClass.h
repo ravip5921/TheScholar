@@ -370,7 +370,14 @@ public:
     }
     void passiveMouseHandler(int x, int y)
     {
-        return;
+        for(auto i:bDim)
+        {
+            if(i.liesInside(toFloatX(x),toFloatY(y)))
+            {
+                std::cout<<"a";
+            }
+        }
+
     }
 };
 class rectOutline:public GUIcomponent
@@ -490,6 +497,11 @@ public:
     {
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
+    }
+    void passiveMouseHandler(int x,int y)
+    {
+        for (int i = 0; i < components.size(); i++)
+            components[i]->passiveMouseHandler(x, y);
     }
 };
 

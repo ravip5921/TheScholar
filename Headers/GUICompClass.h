@@ -244,7 +244,7 @@ public:
         glDrawRecOutlineCoordBox(dimensions);
         if (selected)
         {
-            glRasterPos2f(dimensions.x + 0.09, dimensions.y + 0.11);
+            glRasterPos2f(dimensions.getx() + 0.09, dimensions.gety() + 0.11);
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, 'x');
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, '/');
         }
@@ -257,7 +257,7 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        std::cout << dimensions.x << " " << toFloatX(x);
+        std::cout << dimensions.getx() << " " << toFloatX(x);
         if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && !selected && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
         {
             setActive(true);
@@ -333,6 +333,22 @@ public:
         }
     }
 };
+/*class ScrollBox:public GUIcomponent
+{
+    vector<std::string*> data;
+    Color bgColor;
+    Coord_Rect dim;
+    int max_n;
+public:
+    void render()
+    {
+        //Coord_Rect buttonD(dim.x)
+        for(int i=0;i<data.size();i++)
+        {
+           // printTextInButton(&data[i],)
+        }
+    }
+};*/
 class rectOutline:public GUIcomponent
 {
     Coord_Rect dimension;

@@ -2,7 +2,7 @@
 #include <ctime>
 class Coord_Rect
 {
-public:
+//public:
     float x; //bottom left x co-ordinate
     float y; //bottom left y co-ordinate
     float height;
@@ -46,7 +46,10 @@ public:
                 break;
             }
         }
-
+    }
+    Coord_Rect  displace(float _x=0,float _y=0)
+    {
+        return Coord_Rect(x+_x,y+_y,width,height);
     }
     bool liesInside(float x1, float y1) //checks to see if x,y lies inside given rectangular box
     {
@@ -54,6 +57,30 @@ public:
             return true;
         else
             return false;
+    }
+    float getx()
+    {
+        return x;
+    }
+    float gety()
+    {
+        return y;
+    }
+    float getwidth()
+    {
+        return width;
+    }
+    float getheight()
+    {
+        return height;
+    }
+    float getxw()
+    {
+        return xw;
+    }
+    float getyh()
+    {
+        return yh;
     }
 };
 

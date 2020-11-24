@@ -13,10 +13,10 @@ void glDrawP(float x, float y, float w, float h)
 void glDrawP(Coord_Rect p)
 {
     glBegin(GL_POLYGON);
-    glVertex2f(p.x, p.y);
-    glVertex2f(p.xw, p.y);
-    glVertex2f(p.xw, p.yh);
-    glVertex2f(p.x, p.yh);
+    glVertex2f(p.getx(), p.gety());
+    glVertex2f(p.getxw(), p.gety());
+    glVertex2f(p.getxw(), p.getyh());
+    glVertex2f(p.getx(), p.getyh());
     glEnd();
 }
 void DrawCircle(float cx, float cy, float r, int num_segments)
@@ -33,7 +33,7 @@ void DrawCircle(float cx, float cy, float r, int num_segments)
     }
     glEnd();
 }
-void printText(float x, float y,Color rgb=Color(1,1,1), const char *text="", void *font=GLUT_BITMAP_HELVETICA_12)
+void printText(float x, float y, Color rgb = Color(1, 1, 1), const char *text = "", void *font = GLUT_BITMAP_HELVETICA_12)
 {
     rgb.applyColor();
     char *c;
@@ -65,18 +65,18 @@ void printText(std::string tex, double x, double y, float max_x, void *font)
     glutPostRedisplay();
 }
 
-void printTextInBox(std::string tex, Coord_Rect pos, void *font,float GAP = CHAR_WIDTH*2)
+void printTextInBox(std::string tex, Coord_Rect pos, void *font, float GAP = CHAR_WIDTH * 2)
 {
-    pos.x += GAP;
-    pos.y += GAP;
-    float max_x = pos.xw ;
-    glRasterPos2d(pos.x, pos.y);
+    float x = pos.getx() + GAP;
+    float y = pos.gety() + GAP;
+    float max_x = pos.getxw();
+    glRasterPos2d(x, y);
     int i = 0, a;
     float tsize = (tex.size()) * CHAR_WIDTH;
-    if (tsize < (max_x - pos.x))
+    if (tsize < (max_x - x))
         a = 0;
     else
-        a = (tex.size() - (int)((max_x - pos.x) / CHAR_WIDTH));
+        a = (tex.size() - (int)((max_x - x) / CHAR_WIDTH));
 
     for (i = a; tex[i] != '\0'; i++)
     {
@@ -87,20 +87,20 @@ void printTextInBox(std::string tex, Coord_Rect pos, void *font,float GAP = CHAR
 void printTextPass(std::string tex, Coord_Rect pos, void *font)
 {
     float GAP = CHAR_WIDTH * 1.5; //PADDING
-    pos.x += GAP;
-    pos.y += GAP;
-    int max_Len = ((pos.width) / CHAR_WIDTH) - 6.5; //To Stop Overflow caused by error in CHAR_WIDTH
-    glRasterPos2d(pos.x, pos.y);
+    float x = pos.getx() + GAP;
+    float y = pos.gety() + GAP;
+    int max_Len = ((pos.getwidth()) / CHAR_WIDTH) - 6.5; //To Stop Overflow caused by error in CHAR_WIDTH
+    glRasterPos2d(x, y);
     for (int j = 0; j < max_Len && j < tex.size(); j++)
     {
         glutBitmapCharacter(font, CHAR_MASK);
     }
     glutPostRedisplay();
 }
-void printTextInButton(std::string text, Coord_Rect dim, void *font=GLUT_BITMAP_HELVETICA_12,float GAP_X=CHAR_WIDTH*2,float GAP_Y=CHAR_WIDTH*2)
+void printTextInButton(std::string text, Coord_Rect dim, void *font = GLUT_BITMAP_HELVETICA_12, float GAP_X = CHAR_WIDTH * 2, float GAP_Y = CHAR_WIDTH * 2)
 {
     char *c;
-    glRasterPos2f(dim.x+GAP_X, dim.y+GAP_Y);
+    glRasterPos2f(dim.getx() + GAP_X, dim.gety() + GAP_Y);
     char buf[100] = {0};
     sprintf(buf, text.c_str());
     for (c = buf; *c != '\0'; c++)
@@ -159,37 +159,37 @@ void glDrawRecOutline(float a, float b, float c, float d)
 void glDrawRecOutlineTextBox(Coord_Rect pos)
 {
     float PADDING = CHAR_WIDTH / 1.5;
-    pos.x += PADDING;
-    pos.y += PADDING;
-    pos.xw -= PADDING;
-    pos.yh -= PADDING;
+    float x = pos.getx() + PADDING;
+    float y = pos.gety() + PADDING;
+    float xw = pos.getxw() - PADDING;
+    float yh = pos.getyh() - PADDING;
     glBegin(GL_LINES);
-    glVertex2f(pos.x, pos.y); //BottomLine
-    glVertex2f(pos.xw, pos.y);
+    glVertex2f(x, y); //BottomLine
+    glVertex2f(xw, y);
 
-    glVertex2f(pos.xw, pos.y); //RightLine
-    glVertex2f(pos.xw, pos.yh);
+    glVertex2f(xw, y); //RightLine
+    glVertex2f(xw, yh);
 
-    glVertex2f(pos.xw, pos.yh); //TopLine
-    glVertex2f(pos.x, pos.yh);
+    glVertex2f(xw, yh); //TopLine
+    glVertex2f(x, yh);
 
-    glVertex2f(pos.x, pos.yh); //LeftLine
-    glVertex2f(pos.x, pos.y);
+    glVertex2f(x, yh); //LeftLine
+    glVertex2f(x, y);
     glEnd();
 }
 void glDrawRecOutlineCoordBox(Coord_Rect pos)
 {
     glBegin(GL_LINES);
-    glVertex2f(pos.x, pos.y); //BottomLine
-    glVertex2f(pos.xw, pos.y);
+    glVertex2f(pos.getx(), pos.gety()); //BottomLine
+    glVertex2f(pos.getxw(), pos.gety());
 
-    glVertex2f(pos.xw, pos.y); //RightLine
-    glVertex2f(pos.xw, pos.yh);
+    glVertex2f(pos.getxw(), pos.gety()); //RightLine
+    glVertex2f(pos.getxw(), pos.getyh());
 
-    glVertex2f(pos.xw, pos.yh); //TopLine
-    glVertex2f(pos.x, pos.yh);
+    glVertex2f(pos.getxw(), pos.getyh()); //TopLine
+    glVertex2f(pos.getx(), pos.getyh());
 
-    glVertex2f(pos.x, pos.yh); //LeftLine
-    glVertex2f(pos.x, pos.y);
+    glVertex2f(pos.getx(), pos.getyh()); //LeftLine
+    glVertex2f(pos.getx(), pos.gety());
     glEnd();
 }

@@ -341,23 +341,42 @@ class ScrollBox:public GUIcomponent
     Color bgColor;
     Coord_Rect dim;
     std::vector<Coord_Rect> bDim;
+    std::vector <Button> dataB;
     int maxN;
+    int top;
 public:
     ScrollBox (std::vector<std::string> _data,Coord_Rect _dim,int _maxN,Color _bgC=Color(WC_R,WC_G,WC_B)):dim(_dim),bgColor(_bgC)
     {
         data = _data;
         maxN=_maxN;
+        top=0;
+        createBox();
+    }
+    void createBox()
+    {
         for(int i=0; i<maxN;i++)
         {
             Coord_Rect d(dim.getx(),dim.gety()+(i*(dim.getheight()/maxN)),dim.getwidth(),(dim.getheight()/maxN));
             bDim.push_back(d);
         }
+        for(int i=0;i<maxN;i++)
+        {
+            Button button(data[i+top],Color(1,0,0),Color(1,1,1),bDim[i],0.1,0.1);
+            dataB.push_back(button);
+        }
     }
     void render()
     {
+        createBox();
         for(int i=0;i<maxN;i++)
         {
-            printTextInButton(data[i],bDim[i]);
+            dataB[i].render();
+
+            glColor3f(1,1,1);
+            glBegin(GL_LINES);
+            glVertex2f(bDim[i].getx(),bDim[i].gety());
+            glVertex2f(bDim[i].getxw(),bDim[i].gety());
+            glEnd();
         }
     }
     void keyboardHandler(unsigned char key,int x,int y)
@@ -366,18 +385,20 @@ public:
     }
     void mouseHandler(int button,int state,int x,int y)
     {
-        return;
+        for(int i=0;i<maxN;i++)
+            dataB[i].mouseHandler(button,state,x,y);
+        if(button==4 && state ==GLUT_DOWN && (top-maxN<data.size()))
+        {
+            top++;
+        }
+        else if(button==3 && state ==GLUT_DOWN && (top>0))
+        {
+            top--;
+        }
     }
     void passiveMouseHandler(int x, int y)
     {
-        for(auto i:bDim)
-        {
-            if(i.liesInside(toFloatX(x),toFloatY(y)))
-            {
-                std::cout<<"a";
-            }
-        }
-
+        return;
     }
 };
 class rectOutline:public GUIcomponent

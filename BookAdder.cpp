@@ -13,7 +13,7 @@ void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
-void getValues();
+void getValues(BookDescriptor );
 int windowWidth();
 int windowHeight();
 
@@ -70,7 +70,7 @@ void mousePressed(int button, int state, int x, int y)
     BookAdderPage.mouseHandler(button, state, x, y);
     if (BookAdderPage.buttonPressed(&BookAdder::AddBookButton))
     {
-        getValues();
+        getValues(bd);
     }
 }
 void keyPressed(unsigned char key, int x, int y)
@@ -100,11 +100,11 @@ void keyPressed(unsigned char key, int x, int y)
         }
         else if (BookAdderPage.isActiveBox(&BookAdder::ExtraDesB) && key == ENTER_KEY)
         {
-            getValues();
+            getValues(bd);
         }
     }
 }
-void getValues()
+void getValues(BookDescriptor bd)
 {
     bd.name = BookAdderPage.getText(&BookAdder::NameB);
     bd.author = BookAdderPage.getText(&BookAdder::AuthorB);

@@ -1,3 +1,3 @@
-# TheScholarGUI
-	-> UI along with the backend
+# TheScholar
+ An offline Book database for users to join and access.
 

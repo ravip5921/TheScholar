@@ -296,6 +296,14 @@ public:
         gapX=_x;
         gapY=_y;
     }
+    void setText(std::string _text)
+    {
+        buttonText = _text;
+    }
+    std::string getText()
+    {
+        return buttonText;
+    }
     void setFont(void *_f)
     {
         f = _f;
@@ -352,10 +360,6 @@ public:
         maxN=_maxN;
         top=0;
         scrolled=false;
-        createBox();
-    }
-    void createBox()
-    {
         for(int i=0; i<maxN;i++)
         {
             Coord_Rect d(dim.getx(),dim.gety()+(i*(dim.getheight()/maxN)),dim.getwidth(),(dim.getheight()/maxN));
@@ -363,17 +367,22 @@ public:
         }
         for(int i=0;i<maxN;i++)
         {
-            Button button(data[i+top],Color(1,0,0),Color(1,1,1),bDim[i],0.1,0.1);
+            Button button(data[i],Color(1,0,0),Color(1,1,1),bDim[i],0.1,0.1);
             dataB.push_back(button);
+        }
+    }
+    void refreshBox()
+    {
+        for(int i=0;i<maxN;i++)
+        {
+            dataB[i].setText(data[i+top]);
         }
     }
     void render()
     {
         if(scrolled)
         {
-            dataB.clear();
-            bDim.clear();
-            createBox();
+            refreshBox();
             scrolled=false;
         }
         for(int i=0;i<maxN;i++)
@@ -395,7 +404,6 @@ public:
     {
         if(button==4 && state ==GLUT_DOWN && (data.size()-top>maxN))
         {
-            std::cout<<top;
             top++;
             scrolled=true;
         }
@@ -409,8 +417,6 @@ public:
             for(int i=0;i<maxN;i++)
             dataB[i].mouseHandler(button,state,x,y);
         }
-
-
     }
     void passiveMouseHandler(int x, int y)
     {

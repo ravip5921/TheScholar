@@ -344,12 +344,14 @@ class ScrollBox:public GUIcomponent
     std::vector <Button> dataB;
     int maxN;
     int top;
+    bool scrolled;
 public:
     ScrollBox (std::vector<std::string> _data,Coord_Rect _dim,int _maxN,Color _bgC=Color(WC_R,WC_G,WC_B)):dim(_dim),bgColor(_bgC)
     {
         data = _data;
         maxN=_maxN;
         top=0;
+        scrolled=false;
         createBox();
     }
     void createBox()
@@ -367,7 +369,13 @@ public:
     }
     void render()
     {
-        createBox();
+        if(scrolled)
+        {
+            dataB.clear();
+            bDim.clear();
+            createBox();
+            scrolled=false;
+        }
         for(int i=0;i<maxN;i++)
         {
             dataB[i].render();
@@ -385,16 +393,24 @@ public:
     }
     void mouseHandler(int button,int state,int x,int y)
     {
-        for(int i=0;i<maxN;i++)
-            dataB[i].mouseHandler(button,state,x,y);
         if(button==4 && state ==GLUT_DOWN && (top-maxN<data.size()))
         {
+            std::cout<<top;
             top++;
+            scrolled=true;
         }
         else if(button==3 && state ==GLUT_DOWN && (top>0))
         {
             top--;
+            scrolled=true;
         }
+        else
+        {
+            for(int i=0;i<maxN;i++)
+            dataB[i].mouseHandler(button,state,x,y);
+        }
+
+
     }
     void passiveMouseHandler(int x, int y)
     {

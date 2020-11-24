@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Headers/vars.h"
-#include "Headers/GUICompClassA.h"
+#include "Headers/GUICompClass.h"
 Color BoxCol(0, 1, 0);
 Color passCol(1, 1, 1);
 Color TextCol(0, 0, 0);

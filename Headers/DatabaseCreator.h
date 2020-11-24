@@ -1,7 +1,7 @@
-#include<iostream>
-#include<fstream>
-#include<vector>
-#include<string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
 #include <unistd.h>
 #include "./Utility.h"
 #include "./Sort.h"
@@ -27,7 +27,6 @@ const std::string FILE_AUTHOR_HEADER = "#header.txt";
 const std::string FILE_AUTHOR_STATUS = "#status.txt";
 const std::string FILE_AUTHOR_PAIR = "#pair.txt";
 
-
 void createRequiredDirectories()
 {
     mkdir(DIR_DATA.c_str());
@@ -39,11 +38,11 @@ void createRequiredDirectories()
     mkdir(DIR_SEARCH_BOOK_GENRE.c_str());
     mkdir(DIR_SEARCH_BOOK_DATE.c_str());
 
-    if(!Utility::FileHandler::exists(FILE_BOOKCOUNT))
+    if (!Utility::FileHandler::exists(FILE_BOOKCOUNT))
     {
         std::ofstream outStream;
         outStream.open(FILE_BOOKCOUNT.c_str());
-        outStream<<0;
+        outStream << 0;
     }
 }
 
@@ -64,32 +63,33 @@ public:
     {
         std::ifstream inStream(FILE_BOOKCOUNT.c_str());
         int bc;
-        inStream>>bc;
+        inStream >> bc;
         inStream.close();
         bc++;
         path = DIR_DATA_BOOK + std::to_string(bc) + BOOKDES_EXT;
         std::ofstream outStream(FILE_BOOKCOUNT.c_str());
-        outStream<<bc;
+        outStream << bc;
         outStream.close();
 
         outStream.open(path.c_str());
-        outStream<<bookPath<<NEXT_FIELD_DELIM;
-        outStream<<name<<NEXT_FIELD_DELIM;
-        outStream<<author<<NEXT_FIELD_DELIM;
-        outStream<<genre<<NEXT_FIELD_DELIM;
-        outStream<<date<<NEXT_FIELD_DELIM;
-        outStream<<extrades;
+        outStream << bookPath << NEXT_FIELD_DELIM;
+        outStream << name << NEXT_FIELD_DELIM;
+        outStream << author << NEXT_FIELD_DELIM;
+        outStream << genre << NEXT_FIELD_DELIM;
+        outStream << date << NEXT_FIELD_DELIM;
+        outStream << extrades;
 
         outStream.close();
     }
+
 private:
     void _name()
     {
         std::vector<std::string> bookWords;
-        Utility::String::breakString(name,bookWords,std::string(" :"));
+        Utility::String::breakString(name, bookWords, std::string(" :"));
         std::string curBookPath = DIR_SEARCH_BOOK_NAME + name[0];
         mkdir(curBookPath.data());
-        for(int i=0;i<bookWords.size();i++)
+        for (int i = 0; i < bookWords.size(); i++)
         {
             curBookPath += DIRECTORY_SEPERATOR + bookWords[i];
             mkdir(curBookPath.data());
@@ -97,14 +97,14 @@ private:
         curBookPath += DIRECTORY_SEPERATOR + PATH_FILE;
         //create #.txt <- path of bookdescriptor
         std::ofstream outstream;
-        outstream.open(curBookPath.data(),std::ios_base::app);
-        outstream<<path<<"\n";
+        outstream.open(curBookPath.data(), std::ios_base::app);
+        outstream << path << "\n";
         outstream.close();
     }
     void _author()
     {
         std::vector<std::string> authors;
-        Utility::String::breakString(author,authors,std::string(" +"));
+        Utility::String::breakString(author, authors, std::string(" +"));
         std::string baseBookPath = DIR_SEARCH_BOOK_AUTHOR;
         std::string curBookPath;
         std::string bdBookPath;
@@ -114,7 +114,7 @@ private:
         std::fstream astream;
         int nameCount;
         int status = FILE_NOT_SORTED;
-        for(int i=0;i<authors.size();i++)
+        for (int i = 0; i < authors.size(); i++)
         {
             baseBookPath.push_back(authors[i][0]);
             mkdir(baseBookPath.data());
@@ -124,28 +124,28 @@ private:
             headerPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_HEADER;
             statusPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_STATUS;
             //std::cout<<"\nCP: "<<curBookPath<<"  SP: "<<statusPath<<"  HP: "<<headerPath;
-            if(!Utility::FileHandler::exists(statusPath))
+            if (!Utility::FileHandler::exists(statusPath))
             {
-                astream.open(statusPath.c_str(),std::ios_base::out);
-                astream<<FILE_NOT_SORTED;//<<"\n"<<0<<"\n"; //status \n namecount
+                astream.open(statusPath.c_str(), std::ios_base::out);
+                astream << FILE_NOT_SORTED; //<<"\n"<<0<<"\n"; //status \n namecount
                 astream.close();
             }
             else
             {
-                astream.open(statusPath.c_str(),std::ios_base::in);
-                astream>>status;
+                astream.open(statusPath.c_str(), std::ios_base::in);
+                astream >> status;
                 astream.close();
             }
 
-            if(status == FILE_NOT_SORTED)
+            if (status == FILE_NOT_SORTED)
             {
-                outstream.open(headerPath.c_str(),std::ios_base::app);
-                for(int j=0;j<MAX_AUTHOR_NAME;j++)
+                outstream.open(headerPath.c_str(), std::ios_base::app);
+                for (int j = 0; j < MAX_AUTHOR_NAME; j++)
                 {
-                    if(j<authors[i].size())
-                        outstream<<authors[i][j];
+                    if (j < authors[i].size())
+                        outstream << authors[i][j];
                     else
-                        outstream<<AUTHOR_HEADER_BLANK_CHAR;
+                        outstream << AUTHOR_HEADER_BLANK_CHAR;
                 }
             }
             else
@@ -159,8 +159,8 @@ private:
             outstream.close();
 
             bdBookPath = curBookPath + DIRECTORY_SEPERATOR + PATH_FILE;
-            outstream.open(bdBookPath.data(),std::ios_base::app);
-            outstream<<path<<"\n";
+            outstream.open(bdBookPath.data(), std::ios_base::app);
+            outstream << path << "\n";
             outstream.close();
             /*bdBookPath = curBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_PAIR;
             outstream.open(bdBookPath.data(),std::ios_base::app);
@@ -178,19 +178,19 @@ private:
         mkdir(bookPath.data());
         std::ofstream outstream;
         std::string bdBookPath = bookPath + DIRECTORY_SEPERATOR + PATH_FILE; // replace path file with book name
-        outstream.open(bdBookPath.data(),std::ios_base::app);
-        outstream<<path;
+        outstream.open(bdBookPath.data(), std::ios_base::app);
+        outstream << path;
         outstream.close();
     }
     void _genre()
     {
         std::vector<std::string> genres;
-        Utility::String::breakString(genre,genres,std::string(" +"));
+        Utility::String::breakString(genre, genres, std::string(" +"));
         std::string baseBookPath = DIR_SEARCH_BOOK_GENRE;
         std::string curBookPath;
         std::string bdBookPath;
         std::ofstream outstream;
-        for(int i=0;i<genres.size();i++)
+        for (int i = 0; i < genres.size(); i++)
         {
             baseBookPath.push_back(genres[i][0]);
             mkdir(baseBookPath.data());
@@ -199,13 +199,14 @@ private:
             mkdir(curBookPath.data());
             //create #.txt <- path of bookdescriptor
             bdBookPath = curBookPath + DIRECTORY_SEPERATOR + PATH_FILE;
-            outstream.open(bdBookPath.data(),std::ios_base::app);
-            outstream<<path;
+            outstream.open(bdBookPath.data(), std::ios_base::app);
+            outstream << path;
             outstream.close();
 
             baseBookPath.pop_back();
         }
     }
+
 public:
     void createAllDirectories()
     {
@@ -215,5 +216,3 @@ public:
         _date();
     }
 };
-
-

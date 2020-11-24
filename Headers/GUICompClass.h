@@ -13,7 +13,7 @@ public:
     virtual void render() = 0;
     virtual void mouseHandler(int button, int state, int x, int y) = 0;
     virtual void keyboardHandler(unsigned char key, int x, int y) = 0;
-    virtual void passiveMouseHandler(int x,int y)=0;
+    virtual void passiveMouseHandler(int x, int y) = 0;
 };
 
 class TextBox : public GUIcomponent
@@ -24,13 +24,13 @@ protected:
     Coord_Rect position;
     Color boxC;
     Color textC;
-    void * f;
+    void *f;
 
 public:
     TextBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : position(pos), boxC(box), textC(txt)
     {
         selected = _selected;
-        f= GLUT_BITMAP_HELVETICA_12;
+        f = GLUT_BITMAP_HELVETICA_12;
     }
     std::string getText()
     {
@@ -40,11 +40,11 @@ public:
     {
         textField = _text;
     }
-    void setFont(void * _f)
+    void setFont(void *_f)
     {
-        f=_f;
+        f = _f;
     }
-    void setActive(bool _active=true)
+    void setActive(bool _active = true)
     {
         active = _active;
         selected = active;
@@ -63,21 +63,21 @@ public:
         glDrawP(position);
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
-        printTextInBox(textField, position,f);
-        if(isActive())
+        printTextInBox(textField, position, f);
+        if (isActive())
         {
-            if (blinkerT%200>=0 && blinkerT%200<=100)
-            glutBitmapCharacter(f,'|');
+            if (blinkerT % 200 >= 0 && blinkerT % 200 <= 100)
+                glutBitmapCharacter(f, '|');
             blinkerT++;
         }
         else
-            blinkerT=0;
+            blinkerT = 0;
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
         if (selected)
         {
-            if(key ==ENTER_KEY || key== TAB_KEY)
+            if (key == ENTER_KEY || key == TAB_KEY)
             {
             }
             else if (key >= 36 && key <= 126 || key == SPACE_KEY)
@@ -103,7 +103,7 @@ public:
             selected = false;
         }
     }
-    void passiveMouseHandler(int x,int y)
+    void passiveMouseHandler(int x, int y)
     {
         return;
     }
@@ -111,12 +111,13 @@ public:
 class PasswordBox : public TextBox
 {
     bool showpass;
-    void * f;
+    void *f;
+
 public:
     PasswordBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : TextBox(pos, box, txt, _selected)
     {
         showpass = false;
-        f=GLUT_BITMAP_HELVETICA_12;
+        f = GLUT_BITMAP_HELVETICA_12;
     }
     void showPass(bool _showPass)
     {
@@ -145,17 +146,17 @@ public:
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
         if (showpass)
-            printTextInBox(textField, position,f);
+            printTextInBox(textField, position, f);
         else
             printTextPass(TextBox::textField, TextBox::position, GLUT_BITMAP_TIMES_ROMAN_24);
-        if(isActive())
+        if (isActive())
         {
-            if (blinkerP%200>=0 && blinkerP%200<=100)
-            glutBitmapCharacter(f,'|');
+            if (blinkerP % 200 >= 0 && blinkerP % 200 <= 100)
+                glutBitmapCharacter(f, '|');
             blinkerP++;
         }
         else
-            blinkerP=0;
+            blinkerP = 0;
     }
 };
 class Text : public GUIcomponent
@@ -170,27 +171,27 @@ class Text : public GUIcomponent
     Coord_Rect backgroundD;
 
 public:
-    Text(float _x, float _y, Color _rgb, const char *_text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(std::string(_text)),backgroundC(_bgC),backgroundD(_x-0.1,_y-0.3,_w,_h)
+    Text(float _x, float _y, Color _rgb, const char *_text, void *_f, bool _bg = false, Color _bgC = Color(WC_R, WC_G, WC_B), float _w = 0, float _h = 0) : rgb(_rgb), text(std::string(_text)), backgroundC(_bgC), backgroundD(_x - 0.1, _y - 0.3, _w, _h)
     {
         x = _x;
         y = _y;
         font = _f;
-        background=_bg;
+        background = _bg;
     }
-    Text(float _x, float _y, Color _rgb, std::string _text, void *_f,bool _bg=false, Color _bgC=Color(WC_R,WC_G,WC_B),float _w=0, float _h=0) : rgb(_rgb),text(_text),backgroundC(_bgC),backgroundD(_x-0.1,_y-0.3,_w,_h)
+    Text(float _x, float _y, Color _rgb, std::string _text, void *_f, bool _bg = false, Color _bgC = Color(WC_R, WC_G, WC_B), float _w = 0, float _h = 0) : rgb(_rgb), text(_text), backgroundC(_bgC), backgroundD(_x - 0.1, _y - 0.3, _w, _h)
     {
         x = _x;
         y = _y;
         font = _f;
-        background=_bg;
+        background = _bg;
     }
-    void setText(std::string* _text)
+    void setText(std::string *_text)
     {
         text = *_text;
     }
     void render()
     {
-        if(background)
+        if (background)
         {
             backgroundC.applyColor();
             glDrawP(backgroundD);
@@ -205,7 +206,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x,int y)
+    void passiveMouseHandler(int x, int y)
     {
         return;
     }
@@ -263,7 +264,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x,int y)
+    void passiveMouseHandler(int x, int y)
     {
         return;
     }
@@ -280,21 +281,21 @@ class Button : public GUIcomponent
     void *f;
 
 public:
-    Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim,float _x=CHAR_WIDTH*2,float _y =CHAR_WIDTH*2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
+    Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim, float _x = CHAR_WIDTH * 2, float _y = CHAR_WIDTH * 2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
         pressed = false;
         buttonText = std::string(_text);
         f = GLUT_BITMAP_HELVETICA_12;
-        gapX=_x;
-        gapY=_y;
+        gapX = _x;
+        gapY = _y;
     }
-    Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim,float _x=CHAR_WIDTH*2,float _y =CHAR_WIDTH*2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
+    Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim, float _x = CHAR_WIDTH * 2, float _y = CHAR_WIDTH * 2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
         pressed = false;
         buttonText = _text;
         f = GLUT_BITMAP_HELVETICA_12;
-        gapX=_x;
-        gapY=_y;
+        gapX = _x;
+        gapY = _y;
     }
     void setText(std::string _text)
     {
@@ -321,7 +322,7 @@ public:
         }
         glDrawP(buttonDimension);
         textColor.applyColor();
-        printTextInButton(buttonText, buttonDimension, f,gapX,gapY);
+        printTextInButton(buttonText, buttonDimension, f, gapX, gapY);
     }
     void mouseHandler(int button, int state, int x, int y)
     {
@@ -343,79 +344,79 @@ public:
         return;
     }
 };
-class ScrollBox:public GUIcomponent
+class ScrollBox : public GUIcomponent
 {
-    std::vector<std::string>  data;
+    std::vector<std::string> data;
     Color bgColor;
     Coord_Rect dim;
     std::vector<Coord_Rect> bDim;
-    std::vector <Button> dataB;
+    std::vector<Button> dataB;
     int maxN;
     int top;
     bool scrolled;
+
 public:
-    ScrollBox (std::vector<std::string> _data,Coord_Rect _dim,int _maxN,Color _bgC=Color(WC_R,WC_G,WC_B)):dim(_dim),bgColor(_bgC)
+    ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B)) : dim(_dim), bgColor(_bgC)
     {
         data = _data;
-        maxN=_maxN;
-        top=0;
-        scrolled=false;
-        for(int i=0; i<maxN;i++)
+        maxN = _maxN;
+        top = 0;
+        scrolled = false;
+        for (int i = 0; i < maxN; i++)
         {
-            Coord_Rect d(dim.getx(),dim.gety()+(i*(dim.getheight()/maxN)),dim.getwidth(),(dim.getheight()/maxN));
+            Coord_Rect d(dim.getx(), dim.gety() + (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
             bDim.push_back(d);
         }
-        for(int i=0;i<maxN;i++)
+        for (int i = 0; i < maxN; i++)
         {
-            Button button(data[i],Color(1,0,0),Color(1,1,1),bDim[i],0.1,0.1);
+            Button button(data[i], Color(1, 0, 0), Color(1, 1, 1), bDim[i], 0.1, 0.1);
             dataB.push_back(button);
         }
     }
     void refreshBox()
     {
-        for(int i=0;i<maxN;i++)
+        for (int i = 0; i < maxN; i++)
         {
-            dataB[i].setText(data[i+top]);
+            dataB[i].setText(data[i + top]);
         }
     }
     void render()
     {
-        if(scrolled)
+        if (scrolled)
         {
             refreshBox();
-            scrolled=false;
+            scrolled = false;
         }
-        for(int i=0;i<maxN;i++)
+        for (int i = 0; i < maxN; i++)
         {
             dataB[i].render();
-
-            glColor3f(1,1,1);
+            glColor3f(1, 1, 1);
             glBegin(GL_LINES);
-            glVertex2f(bDim[i].getx(),bDim[i].gety());
-            glVertex2f(bDim[i].getxw(),bDim[i].gety());
+            glVertex2f(bDim[i].getx(), bDim[i].gety());
+            glVertex2f(bDim[i].getxw(), bDim[i].gety());
             glEnd();
         }
     }
-    void keyboardHandler(unsigned char key,int x,int y)
+    void keyboardHandler(unsigned char key, int x, int y)
     {
         return;
     }
-    void mouseHandler(int button,int state,int x,int y)
+    void mouseHandler(int button, int state, int x, int y)
     {
-        if(button==4 && state ==GLUT_DOWN && (data.size()-top>maxN))
+        if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
         {
             top++;
-            scrolled=true;
+            scrolled = true;
         }
-        else if(button==3 && state ==GLUT_DOWN && (top>0))
+        else if (button == 3 && state == GLUT_DOWN && (top > 0))
         {
             top--;
-            scrolled=true;
+            scrolled = true;
         }
         else
         {
-            for(int i=0;i<maxN;i++)
-            dataB[i].mouseHandler(button,state,x,y);
+            for (int i = 0; i < maxN; i++)
+                dataB[i].mouseHandler(button, state, x, y);
         }
     }
     void passiveMouseHandler(int x, int y)
@@ -423,22 +424,23 @@ public:
         return;
     }
 };
-class rectOutline:public GUIcomponent
+class rectOutline : public GUIcomponent
 {
     Coord_Rect dimension;
     Color color;
+
 public:
-    rectOutline(Coord_Rect _dim,Color _color=Color(0,0,0)):dimension(_dim),color(_color){}
+    rectOutline(Coord_Rect _dim, Color _color = Color(0, 0, 0)) : dimension(_dim), color(_color) {}
     void render()
     {
         color.applyColor();
         glDrawRecOutlineCoordBox(dimension);
     }
-    void keyboardHandler(unsigned char key,int x,int y)
+    void keyboardHandler(unsigned char key, int x, int y)
     {
         return;
     }
-    void mouseHandler(int button ,int state,int x,int y)
+    void mouseHandler(int button, int state, int x, int y)
     {
         return;
     }
@@ -456,18 +458,18 @@ public:
     {
         components.push_back(_component);
     }
-    bool buttonPressed(Button* _button)
+    bool buttonPressed(Button *_button)
     {
-        if(_button->isActive())
+        if (_button->isActive())
             return true;
         return false;
     }
 
-    void setText(Text * _textB,std::string * _text)
+    void setText(Text *_textB, std::string *_text)
     {
         _textB->setText(_text);
     }
-    void setText(TextBox * _textB,std::string * _text)
+    void setText(TextBox *_textB, std::string *_text)
     {
         _textB->setText(*_text);
     }
@@ -486,7 +488,7 @@ public:
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
     }
-    void passiveMouseHandler(int x,int y)
+    void passiveMouseHandler(int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
             components[i]->passiveMouseHandler(x, y);
@@ -501,33 +503,33 @@ public:
     {
         components.push_back(_component);
     }
-    bool buttonPressed(Button* _button)
+    bool buttonPressed(Button *_button)
     {
-        if(_button->isActive())
+        if (_button->isActive())
             return true;
         return false;
     }
-    std::string getText(TextBox* _textbox)
+    std::string getText(TextBox *_textbox)
     {
         return _textbox->getText();
     }
-    bool isActiveBox(TextBox * _textbox)
+    bool isActiveBox(TextBox *_textbox)
     {
         return _textbox->isActive();
     }
-    void setActiveBox(TextBox * _textbox,bool _value = true)
+    void setActiveBox(TextBox *_textbox, bool _value = true)
     {
         _textbox->setActive(_value);
     }
-    void setText(Text * _textB,std::string * _text)
+    void setText(Text *_textB, std::string *_text)
     {
         _textB->setText(_text);
     }
-    void setText(TextBox * _textB,std::string * _text)
+    void setText(TextBox *_textB, std::string *_text)
     {
         _textB->setText(*_text);
     }
-    void setText(TextBox * _textB,const char * _text)
+    void setText(TextBox *_textB, const char *_text)
     {
         _textB->setText(_text);
     }
@@ -546,10 +548,9 @@ public:
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
     }
-    void passiveMouseHandler(int x,int y)
+    void passiveMouseHandler(int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
             components[i]->passiveMouseHandler(x, y);
     }
 };
-

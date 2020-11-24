@@ -12,11 +12,11 @@
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
-void passiveMouse(int x,int y);
+void passiveMouse(int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
-void createErrorWindow(const char*);
+void createErrorWindow(const char *);
 void setFonts();
 void showClock();
 int windowWidth();
@@ -40,24 +40,25 @@ enum
     BOOK_DETAIL_P = 4
 };
 
-std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage , &homePage,&bookDetailPage};
+std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage, &homePage, &bookDetailPage};
 //end of page navigator
 
 //for miniPages in Home PageGUIBlock readingBlock;
-    GUIBlock readingBlock;
-    GUIBlock completedBlock;
-    GUIBlock favouriteBlock;
-    GUIBlock sharedBlock;
+GUIBlock readingBlock;
+GUIBlock completedBlock;
+GUIBlock favouriteBlock;
+GUIBlock sharedBlock;
 
 /**** Navigate miniPages in HOME_PAGE *****/
-    int MINI_P=0;
-    enum{
-        READING_MP = 0,
-        COMPLETED_MP =1,
-        FAVOURITE_MP =2,
-        SHARED_MP = 3
-    };
-    std::vector<GUIBlock *>activeBlock = {&readingBlock, &completedBlock , &favouriteBlock , &sharedBlock};
+int MINI_P = 0;
+enum
+{
+    READING_MP = 0,
+    COMPLETED_MP = 1,
+    FAVOURITE_MP = 2,
+    SHARED_MP = 3
+};
+std::vector<GUIBlock *> activeBlock = {&readingBlock, &completedBlock, &favouriteBlock, &sharedBlock};
 //end miniPages
 
 int main(int argc, char **argv) //default arguments of main
@@ -107,7 +108,8 @@ void callBackFun()
     setFonts();
 
     activePage[PAGE]->render();
-    if(PAGE == HOME_P){
+    if (PAGE == HOME_P)
+    {
         activeBlock[MINI_P]->render();
     }
 
@@ -137,7 +139,7 @@ void setFonts()
 void mousePressed(int button, int state, int x, int y)
 {
     activePage[PAGE]->mouseHandler(button, state, x, y);
-    activeBlock[MINI_P]->mouseHandler(button,state,x,y);
+    activeBlock[MINI_P]->mouseHandler(button, state, x, y);
     if (PAGE == WELCOME_P)
     {
         if (activePage[PAGE]->buttonPressed(&welcome::signupButton))
@@ -160,10 +162,10 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
 
-            if(LogInObject.IsLogedIn() || userName=="a")
+            if (LogInObject.IsLogedIn() || userName == "a")
             {
                 PAGE = HOME_P;
-                activePage[HOME_P]->setText(&Home::User,&userName);
+                activePage[HOME_P]->setText(&Home::User, &userName);
             }
             else
             {
@@ -183,25 +185,25 @@ void mousePressed(int button, int state, int x, int y)
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
             std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
-            if(userNameN=="" || passwordN=="")
+            if (userNameN == "" || passwordN == "")
             {
                 createErrorWindow("UserName and Password required!");
             }
             else
             {
                 signUp SignUpObject(userNameN, passwordN);
-                if(!SignUpObject.valid())
+                if (!SignUpObject.valid())
                 {
                     createErrorWindow("Password must contain at least a digit, an alphabet and a special character.");
                 }
-                else if(SignUpObject.userExists())
+                else if (SignUpObject.userExists())
                 {
                     createErrorWindow("User already exists. Try Logging In.");
                 }
                 else
                 {
                     SignUpObject.signup();
-                    activePage[HOME_P]->setText(&Home::User,&userNameN);
+                    activePage[HOME_P]->setText(&Home::User, &userNameN);
                     PAGE = HOME_P;
                 }
             }
@@ -217,43 +219,49 @@ void mousePressed(int button, int state, int x, int y)
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
-            userName="";
-            password="";
-            activePage[LOGIN_P]->setText(&LogIn::userNameB,&userName);
-            activePage[LOGIN_P]->setText(&LogIn::passwordB,&userName);
+            userName = "";
+            password = "";
+            activePage[LOGIN_P]->setText(&LogIn::userNameB, &userName);
+            activePage[LOGIN_P]->setText(&LogIn::passwordB, &userName);
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
-            activePage[LOGIN_P]->setActiveBox(&LogIn::passwordB,false);
+            activePage[LOGIN_P]->setActiveBox(&LogIn::passwordB, false);
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::readingButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
+        {
             MINI_P = READING_MP;
             FileReader fr(userName);
-            readingN::books = fr.Reader(MINI_P+1);
-            readingN::printList(readingN::books);   //console print list
+            readingN::books = fr.Reader(MINI_P + 1);
+            readingN::printList(readingN::books); //console print list
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::completedButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
+        {
             MINI_P = COMPLETED_MP;
             FileReader fr(userName);
-            completedN::books = fr.Reader(MINI_P+1);
-            completedN::printList(completedN::books);   //console print list
+            completedN::books = fr.Reader(MINI_P + 1);
+            completedN::printList(completedN::books); //console print list
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
+        {
             MINI_P = FAVOURITE_MP;
             FileReader fr(userName);
-            favouriteN::books = fr.Reader(MINI_P+1);
-            favouriteN::printList(favouriteN::books);   //console print list
+            favouriteN::books = fr.Reader(MINI_P + 1);
+            favouriteN::printList(favouriteN::books); //console print list
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::sharedButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
+        {
             MINI_P = SHARED_MP;
             FileReader fr(userName);
-            sharedN::books = fr.Reader(MINI_P+1);
-            sharedN::printList(sharedN::books);     //console print list
+            sharedN::books = fr.Reader(MINI_P + 1);
+            sharedN::printList(sharedN::books); //console print list
         }
-    //trial for book detail page
-        else if(activePage[PAGE]->buttonPressed(&Home::bookButton)){
+        //trial for book detail page
+        else if (activePage[PAGE]->buttonPressed(&Home::bookButton))
+        {
             PAGE = BOOK_DETAIL_P;
         }
     }
-    else if (PAGE == BOOK_DETAIL_P){
+    else if (PAGE == BOOK_DETAIL_P)
+    {
         if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
         {
             PAGE = HOME_P;
@@ -261,22 +269,22 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&BookDetail::readingButton))
         {
             FileWriter fw(userName);
-            fw.Writer(1,"reading Book");
+            fw.Writer(1, "reading Book");
         }
         else if (activePage[PAGE]->buttonPressed(&BookDetail::completedButton))
         {
             FileWriter fw(userName);
-            fw.Writer(2,"read Book");
+            fw.Writer(2, "read Book");
         }
         else if (activePage[PAGE]->buttonPressed(&BookDetail::favouriteButton))
         {
             FileWriter fw(userName);
-            fw.Writer(3,"favourite Book");
+            fw.Writer(3, "favourite Book");
         }
         else if (activePage[PAGE]->buttonPressed(&BookDetail::sharedButton))
         {
             FileWriter fw(userName);
-            fw.Writer(4,"shared Book");
+            fw.Writer(4, "shared Book");
         }
     }
     if (state == GLUT_DOWN)
@@ -309,10 +317,10 @@ void keyPressed(unsigned char key, int x, int y)
                 std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
                 logIn LogInObject(userName, password);
 
-                if(LogInObject.IsLogedIn() || userName=="a")
+                if (LogInObject.IsLogedIn() || userName == "a")
                 {
                     PAGE = HOME_P;
-                    activePage[HOME_P]->setText(&Home::User,&userName);
+                    activePage[HOME_P]->setText(&Home::User, &userName);
                 }
                 else
                 {
@@ -338,42 +346,42 @@ void keyPressed(unsigned char key, int x, int y)
             else if (key == ENTER_KEY)
             {
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
-            passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-            std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
-            if(userNameN=="" || passwordN=="")
-            {
-                createErrorWindow("UserName and Password required!");
-            }
-            else
-            {
-                signUp SignUpObject(userNameN, passwordN);
-                if(!SignUpObject.valid())
+                passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
+                std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+                if (userNameN == "" || passwordN == "")
                 {
-                    createErrorWindow("Password must contain at least a digit, an alphabet and a special character.");
-                }
-                else if(SignUpObject.userExists())
-                {
-                    createErrorWindow("User already exists. Try Logging In.");
+                    createErrorWindow("UserName and Password required!");
                 }
                 else
                 {
-                    SignUpObject.signup();
-                    activePage[HOME_P]->setText(&Home::User,&userNameN);
-                    PAGE = HOME_P;
+                    signUp SignUpObject(userNameN, passwordN);
+                    if (!SignUpObject.valid())
+                    {
+                        createErrorWindow("Password must contain at least a digit, an alphabet and a special character.");
+                    }
+                    else if (SignUpObject.userExists())
+                    {
+                        createErrorWindow("User already exists. Try Logging In.");
+                    }
+                    else
+                    {
+                        SignUpObject.signup();
+                        activePage[HOME_P]->setText(&Home::User, &userNameN);
+                        PAGE = HOME_P;
+                    }
                 }
-            }
             }
         }
     }
 }
-void passiveMouse(int x,int y)
+void passiveMouse(int x, int y)
 {
-    activePage[PAGE]->passiveMouseHandler(x,y);
+    activePage[PAGE]->passiveMouseHandler(x, y);
 }
-void createErrorWindow(const char* err)
+void createErrorWindow(const char *err)
 {
-     if(ErrorWindow::canMake)
-            ErrorWindow::create(err,glutGet(GLUT_WINDOW_X)+150,glutGet(GLUT_WINDOW_Y)+200);
+    if (ErrorWindow::canMake)
+        ErrorWindow::create(err, glutGet(GLUT_WINDOW_X) + 150, glutGet(GLUT_WINDOW_Y) + 200);
 }
 int windowWidth()
 {

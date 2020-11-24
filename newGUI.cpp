@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Headers/vars.h"
-#include "Headers/GUICompClassA.h"
+#include "Headers/GUICompClass.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -14,9 +14,9 @@ void ReshapeCallBack(int wid, int heig);
 GUIPage loginPage;
 namespace LogIn
 {
-    Color userNameC(0.878,0.749,0.9055);
+    Color userNameC(0.878, 0.749, 0.9055);
     Color passwordC = userNameC;
-    Color boxTextC(0.43,0.67,0.1);
+    Color boxTextC(0.43, 0.67, 0.1);
     Color logInTextC(1, 1, 0);
     Color logInButtonTextC(1, 0, 1);
     Color logInButtonC(0.7, 0, 0.43);

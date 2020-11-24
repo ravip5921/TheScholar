@@ -1,36 +1,44 @@
 #include "signUp.h"
 
-class logIn{
+class logIn
+{
 private:
-    std::string username,un;
-    std::string password,pw;
+    std::string username, un;
+    std::string password, pw;
 
 public:
+    logIn()
+    { //default constructor
+        username = "";
+        password = "";
+    }
 
-logIn(){  //default constructor
-    username="";
-    password="";
-}
+    logIn(std::string usernamed, std::string passwordd) : username(usernamed), password(passwordd) {} //parametric constructor
 
-logIn(std::string usernamed,std::string passwordd):username(usernamed),password(passwordd){} //parametric constructor
-
-bool IsLogedIn(){
+    bool IsLogedIn()
+    {
         std::string path = std::string(".\\\\") + std::string("Users\\\\") + std::string(username) + std::string("\\\\password.txt");
-        try{
+        try
+        {
             ifstream read((path).c_str());
-        //read from file
-            getline(read,un);
-            getline(read,pw);
+            //read from file
+            getline(read, un);
+            getline(read, pw);
         }
-        catch(...){
-            cout<<endl<<"File could not be found"<<endl;
+        catch (...)
+        {
+            cout << endl
+                 << "File could not be found" << endl;
         }
-        if(username!="" && password!=""){
-            if((un == username) && (pw == password)){
-            //check if user name and password match
+        if (username != "" && password != "")
+        {
+            if ((un == username) && (pw == password))
+            {
+                //check if user name and password match
                 return true;
             }
-            else{
+            else
+            {
                 return false;
             }
         }

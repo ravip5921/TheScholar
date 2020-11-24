@@ -1,4 +1,3 @@
-
 #include "logIn.h"
 /******
 Write string in .txt file,choice are:
@@ -9,51 +8,61 @@ Write string in .txt file,choice are:
 
 ******/
 
-class FileWriter{
+class FileWriter
+{
 private:
     std::string username;
+
 public:
-    FileWriter(){
+    FileWriter()
+    {
         username = "";
     }
 
-    FileWriter(std::string username):username(std::move(username)){}
+    FileWriter(std::string username) : username(std::move(username)) {}
 
-    void Writer(const int choice , std::string toWrite);
+    void Writer(const int choice, std::string toWrite);
 };
 
-void FileWriter::Writer(const int choice,std::string toWrite){
+void FileWriter::Writer(const int choice, std::string toWrite)
+{
 
-    if(username != ""){
+    if (username != "")
+    {
         ofstream fileWrite;
         string path = std::string(".\\\\") + std::string("Users\\\\") + username;
 
-        if(choice == 1){
+        if (choice == 1)
+        {
             path = path + string("\\\\reading.txt");
-            fileWrite.open(path.c_str(),ios::app);
+            fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();
         }
-        else if(choice == 2){
+        else if (choice == 2)
+        {
             path = path + string("\\\\completed.txt");
-            fileWrite.open(path.c_str(),ios::app);
+            fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();
         }
-        else if(choice == 3){
+        else if (choice == 3)
+        {
             path = path + string("\\\\favourite.txt");
-            fileWrite.open(path.c_str(),ios::app);
+            fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();
         }
-        else if(choice == 4){
+        else if (choice == 4)
+        {
             path = path + string("\\\\share.txt");
-            fileWrite.open(path.c_str(),ios::app);
+            fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
             fileWrite.close();
         }
-        else{
-            cout<<"Invalid choice,unable to write";
+        else
+        {
+            cout << "Invalid choice,unable to write";
         }
     }
 }

@@ -13,7 +13,7 @@ void keyPressed(unsigned char key, int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
-void getValues(BookDescriptor );
+void getValues(BookDescriptor);
 int windowWidth();
 int windowHeight();
 

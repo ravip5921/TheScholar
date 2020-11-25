@@ -20,6 +20,7 @@ int windowHeight();
 GUIPage BookAdderPage;
 
 BookDescriptor bd;
+std::string dbookname;
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -30,7 +31,9 @@ int main(int argc, char **argv) //default arguments of main
     mainWindowIndex = glutCreateWindow("Book Database");
 
     BookAdder::addBookAdderComponents(&BookAdderPage);
-    bd.bookPath = "./database/book/book1.pdf";
+    REQ_DIRS::setDirsForBook();
+    REQ_DIRS::create();
+
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
@@ -98,7 +101,12 @@ void keyPressed(unsigned char key, int x, int y)
             BookAdderPage.setActiveBox(&BookAdder::DateB, false);
             BookAdderPage.setActiveBox(&BookAdder::ExtraDesB, true);
         }
-        else if (BookAdderPage.isActiveBox(&BookAdder::ExtraDesB) && key == ENTER_KEY)
+        else if (BookAdderPage.isActiveBox(&BookAdder::ExtraDesB))
+        {
+            BookAdderPage.setActiveBox(&BookAdder::ExtraDesB, false);
+            BookAdderPage.setActiveBox(&BookAdder::NameDataB, true);
+        }
+        else if (BookAdderPage.isActiveBox(&BookAdder::NameDataB) && key == ENTER_KEY)
         {
             getValues(bd);
         }
@@ -111,12 +119,12 @@ void getValues(BookDescriptor bd)
     bd.genre = BookAdderPage.getText(&BookAdder::GenreB);
     bd.date = BookAdderPage.getText(&BookAdder::DateB);
     bd.extrades = BookAdderPage.getText(&BookAdder::ExtraDesB);
-
-    createRequiredDirectories();
+    bd.bookPath = REQ_DIRS::DATA_BOOK + BookAdderPage.getText(&BookAdder::NameDataB);
+    //createRequiredDirectories();
     bd.createDescriptorFile();
     bd.createAllDirectories();
 
-    BookAdderPage.setActiveBox(&BookAdder::ExtraDesB, false);
+    BookAdderPage.setActiveBox(&BookAdder::NameDataB, false);
     BookAdderPage.setActiveBox(&BookAdder::NameB, true);
 
     BookAdderPage.setText(&BookAdder::NameB, "");
@@ -124,6 +132,7 @@ void getValues(BookDescriptor bd)
     BookAdderPage.setText(&BookAdder::GenreB, "");
     BookAdderPage.setText(&BookAdder::DateB, "");
     BookAdderPage.setText(&BookAdder::ExtraDesB, "");
+    BookAdderPage.setText(&BookAdder::NameDataB, "");
 }
 int windowWidth()
 {

@@ -232,7 +232,14 @@ void mousePressed(int button, int state, int x, int y)
             MINI_P = READING_MP;
             FileReader fr(userName);
             readingN::books = fr.Reader(MINI_P + 1);
-            readingN::printList(readingN::books); //console print list
+            readingN::printList(readingN::books); //console print lists
+            dataf.clear();
+            dataf = readingN::books;
+            std::cout<<"\nTEST:\n";
+            for (auto i = dataf.begin(); i != dataf.end(); ++i)
+            {
+            std::cout << " " << *i << std::endl;
+            }
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
@@ -240,6 +247,9 @@ void mousePressed(int button, int state, int x, int y)
             FileReader fr(userName);
             completedN::books = fr.Reader(MINI_P + 1);
             completedN::printList(completedN::books); //console print list
+            dataf.clear();
+            dataf = completedN::books;
+
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
         {
@@ -247,6 +257,8 @@ void mousePressed(int button, int state, int x, int y)
             FileReader fr(userName);
             favouriteN::books = fr.Reader(MINI_P + 1);
             favouriteN::printList(favouriteN::books); //console print list
+            dataf.clear();
+            dataf = favouriteN::books;
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
@@ -254,6 +266,8 @@ void mousePressed(int button, int state, int x, int y)
             FileReader fr(userName);
             sharedN::books = fr.Reader(MINI_P + 1);
             sharedN::printList(sharedN::books); //console print list
+            dataf.clear();
+            dataf = sharedN::books;
         }
         //trial for book detail page
         else if (activePage[PAGE]->buttonPressed(&Home::bookButton))

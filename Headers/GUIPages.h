@@ -139,7 +139,7 @@ namespace Home
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
-    Coord_Rect BookListD(-8.5, -9, 8, 10);
+    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
     Coord_Rect BookButtonD(-1, 8, 3, 1.5); //trial for book detail
 
     Text User(3.5, 8.5, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
@@ -152,7 +152,7 @@ namespace Home
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.5, CHAR_WIDTH);
-    ScrollBox BookListB(dataf, BookListD, 11);
+    ScrollBox BookListB(dataf, BookListD, 8);
 
     void addHomeComponents(GUIPage *_homePage)
     {

@@ -3,7 +3,7 @@ namespace readingN
 {
     std::vector<string> books;
     Color testC(0.7, 0.67, 0.6);
-   // Coord_Rect sb(5, 0, 4, 3);
+    //Coord_Rect sb(5, 0, 4, 3);
     Text testT(-8.7, 4, testC, "Reading Books", GLUT_BITMAP_HELVETICA_18);
    // ScrollBox test(dataf, sb, 5);
     void printList(std::vector<std::string> _books)
@@ -17,7 +17,7 @@ namespace readingN
     void addReadingComponents(GUIBlock *_readingPage)
     {
         _readingPage->addComponent(&testT);
-       // _readingPage->addComponent(&test);
+      //  _readingPage->addComponent(&test);
     }
 
 } // namespace readingN

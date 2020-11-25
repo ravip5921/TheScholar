@@ -383,7 +383,7 @@ public:
     std::string getButtonText(int button,int state,int x,int y)
     {
         for(int i=0;i<maxN;i++)
-        if (bDim[i].liesInside(toFloatX(x), toFloatY(y) && button==GLUT_LEFT_BUTTON && state==GLUT_DOWN))
+        if (bDim[i].liesInside(toFloatX(x), toFloatY(y))&& button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
         {
             return dataB[i].getText();
         }
@@ -416,7 +416,7 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        std::cout<<getButtonText(button,state, x, y);
+       // std::cout<<getButtonText(button,state, x, y);
         if (dim.liesInside(toFloatX(x), toFloatY(y)))
         {
             if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
@@ -481,7 +481,10 @@ public:
             return true;
         return false;
     }
-
+    std::string getButtonText(int button,int state,int x,int y,ScrollBox * sb)
+    {
+            return sb->getButtonText(button,state,x,y);
+    }
     void setText(Text *_textB, std::string *_text)
     {
         _textB->setText(_text);

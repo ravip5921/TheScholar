@@ -362,9 +362,9 @@ public:
         maxN = _maxN;
         top = 0;
         scrolled = false;
-        for (int i = 0; i < maxN; i++)
+        for (int i = 1; i <= maxN; i++)
         {
-            Coord_Rect d(dim.getx(), dim.gety() + (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
+            Coord_Rect d(dim.getx(), dim.getyh() - (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
             bDim.push_back(d);
         }
         for (int i = 0; i < maxN; i++)
@@ -380,6 +380,15 @@ public:
             dataB[i].setText(data[i + top]);
         }
     }
+    std::string getButtonText(int button,int state,int x,int y)
+    {
+        for(int i=0;i<maxN;i++)
+        if (bDim[i].liesInside(toFloatX(x), toFloatY(y) && button==GLUT_LEFT_BUTTON && state==GLUT_DOWN))
+        {
+            return dataB[i].getText();
+        }
+        return "";
+    }
     void render()
     {
         if (scrolled)
@@ -387,14 +396,18 @@ public:
             refreshBox();
             scrolled = false;
         }
+        glDrawRecOutlineCoordBox(dim);
         for (int i = 0; i < maxN; i++)
         {
             dataB[i].render();
-            glColor3f(1, 1, 1);
-            glBegin(GL_LINES);
-            glVertex2f(bDim[i].getx(), bDim[i].gety());
-            glVertex2f(bDim[i].getxw(), bDim[i].gety());
-            glEnd();
+            if (i != 0)
+            {
+                glColor3f(1, 1, 1);
+                glBegin(GL_LINES);
+                glVertex2f(bDim[i].getx(), bDim[i].getyh());
+                glVertex2f(bDim[i].getxw(), bDim[i].getyh());
+                glEnd();
+            }
         }
     }
     void keyboardHandler(unsigned char key, int x, int y)
@@ -403,20 +416,24 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+        std::cout<<getButtonText(button,state, x, y);
+        if (dim.liesInside(toFloatX(x), toFloatY(y)))
         {
-            top++;
-            scrolled = true;
-        }
-        else if (button == 3 && state == GLUT_DOWN && (top > 0))
-        {
-            top--;
-            scrolled = true;
-        }
-        else
-        {
-            for (int i = 0; i < maxN; i++)
-                dataB[i].mouseHandler(button, state, x, y);
+            if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+            {
+                top++;
+                scrolled = true;
+            }
+            else if (button == 3 && state == GLUT_DOWN && (top > 0))
+            {
+                top--;
+                scrolled = true;
+            }
+            else
+            {
+                for (int i = 0; i < maxN; i++)
+                    dataB[i].mouseHandler(button, state, x, y);
+            }
         }
     }
     void passiveMouseHandler(int x, int y)
@@ -532,6 +549,10 @@ public:
     void setText(TextBox *_textB, const char *_text)
     {
         _textB->setText(_text);
+    }
+    std::string getButtonText(int button,int state,int x,int y,ScrollBox * sb)
+    {
+            return sb->getButtonText(button,state,x,y);
     }
     void render()
     {

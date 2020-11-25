@@ -120,7 +120,7 @@ void getValues(BookDescriptor bd)
     bd.date = BookAdderPage.getText(&BookAdder::DateB);
     bd.extrades = BookAdderPage.getText(&BookAdder::ExtraDesB);
     bd.bookPath = REQ_DIRS::DATA_BOOK + BookAdderPage.getText(&BookAdder::NameDataB);
-    //createRequiredDirectories();
+
     bd.createDescriptorFile();
     bd.createAllDirectories();
 

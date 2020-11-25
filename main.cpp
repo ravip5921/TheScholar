@@ -216,6 +216,7 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == HOME_P)
     {
+        std::cout<<activePage[PAGE]->getButtonText(button,state,x,y,&Home::BookListB);
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;

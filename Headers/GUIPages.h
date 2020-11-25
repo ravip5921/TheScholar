@@ -30,7 +30,7 @@ namespace welcome
         _welcomePage->addComponent(&loginButton);
         _welcomePage->addComponent(&signupButton);
     }
-} // namespace welcome
+}; // namespace welcome
 /**** Login Page *****/
 
 namespace LogIn
@@ -49,7 +49,7 @@ namespace LogIn
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
-    Coord_Rect toSignupD(-5, -8, 5.5, 1.5);
+    Coord_Rect toSignupD(-3.2, -8, 5.5, 1.5);
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
@@ -77,7 +77,7 @@ namespace LogIn
         logInPage->addComponent(&rectBoxa);
         logInPage->addComponent(&rectBoxb);
     }
-} // namespace LogIn
+}; // namespace LogIn
 
 /***** Sign Up Page *******/
 namespace SignUp
@@ -124,7 +124,7 @@ namespace SignUp
         signUpPage->addComponent(&rectBoxa);
         signUpPage->addComponent(&rectBoxb);
     }
-} // namespace SignUp
+}; // namespace SignUp
 /********* Home page **********/
 namespace Home
 {
@@ -139,7 +139,7 @@ namespace Home
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
-
+    Coord_Rect BookListD(-8.5, -9, 8, 10);
     Coord_Rect BookButtonD(-1, 8, 3, 1.5); //trial for book detail
 
     Text User(3.5, 8.5, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
@@ -152,6 +152,7 @@ namespace Home
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.5, CHAR_WIDTH);
+    ScrollBox BookListB(dataf, BookListD, 11);
 
     void addHomeComponents(GUIPage *_homePage)
     {
@@ -162,8 +163,9 @@ namespace Home
         _homePage->addComponent(&favouriteButton);
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&bookButton);
+        _homePage->addComponent(&BookListB);
     }
-} //namespace Home
+}; //namespace Home
 
 /********* Book Detail Page *********/
 namespace BookDetail
@@ -223,4 +225,4 @@ namespace BookDetail
         _bookDetailPage->addComponent(&extraDisBook);
         _bookDetailPage->addComponent(&descriptionBook);
     }
-} // namespace BookDetail
+}; // namespace BookDetail

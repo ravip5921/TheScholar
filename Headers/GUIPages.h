@@ -135,6 +135,7 @@ namespace Home
     Color miniButtonsC(1, 0.5, 0.6);
 
     Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
+    Coord_Rect backgroundD(-9,-8,18,13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
@@ -143,7 +144,7 @@ namespace Home
     Coord_Rect BookButtonD(-1, 8, 3, 1.5); //trial for book detail
 
     Text User(3.5, 8.5, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
-
+    rectBox background(backgroundD,miniButtonsC);
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
 
     Button bookButton("Book Detail", logoutButtonC, logoutButtonTextC, BookButtonD); //trial for book detail
@@ -163,6 +164,7 @@ namespace Home
         _homePage->addComponent(&favouriteButton);
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&bookButton);
+        _homePage->addComponent(&background);
         _homePage->addComponent(&BookListB);
     }
 }; //namespace Home

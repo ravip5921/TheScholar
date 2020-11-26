@@ -8,7 +8,6 @@
 #include "Headers/FileReader.h"
 #include "Headers/GUIPages.h"
 #include "Headers/ErrorWindow.h"
-#include "Headers/GUIBlocks.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -49,7 +48,7 @@ GUIBlock completedBlock;
 GUIBlock favouriteBlock;
 GUIBlock sharedBlock;
 
-/**** Navigate miniPages in HOME_PAGE *****/
+/**** Navigate Blocks in HOME_PAGE *****/
 int MINI_P = 0;
 enum
 {
@@ -59,7 +58,7 @@ enum
     SHARED_MP = 3
 };
 std::vector<GUIBlock *> activeBlock = {&readingBlock, &completedBlock, &favouriteBlock, &sharedBlock};
-//end miniPages
+//end blocks
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -76,12 +75,6 @@ int main(int argc, char **argv) //default arguments of main
     SignUp::addsignUpComponents(&signupPage);
     /***** Home Page *****/
     Home::addHomeComponents(&homePage);
-    /************** MINI Pages *****************/
-    readingN::addReadingComponents(&readingBlock);
-    completedN::addCompletedComponents(&completedBlock);
-    favouriteN::addFavouriteComponents(&favouriteBlock);
-    sharedN::addSharedComponents(&sharedBlock);
-    //mini pages end
     /******* Book Detail Page *******/
     BookDetail::addBookDetailComponents(&bookDetailPage);
 
@@ -108,10 +101,6 @@ void callBackFun()
     setFonts();
 
     activePage[PAGE]->render();
-    if (PAGE == HOME_P)
-    {
-        activeBlock[MINI_P]->render();
-    }
 
     glutPostRedisplay();
     glutSwapBuffers();
@@ -232,18 +221,18 @@ void mousePressed(int button, int state, int x, int y)
 
             MINI_P = READING_MP;
             FileReader fr(userName);
-            readingN::books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(MINI_P + 1);
             dataf.clear();
-            dataf = readingN::books;
+            dataf = books;
             activePage[PAGE]->setData(&Home::BookListB,dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
             MINI_P = COMPLETED_MP;
             FileReader fr(userName);
-            completedN::books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(MINI_P + 1);
             dataf.clear();
-            dataf = completedN::books;
+            dataf = books;
             activePage[PAGE]->setData(&Home::BookListB,dataf);
 
         }
@@ -251,18 +240,18 @@ void mousePressed(int button, int state, int x, int y)
         {
             MINI_P = FAVOURITE_MP;
             FileReader fr(userName);
-            favouriteN::books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(MINI_P + 1);
             dataf.clear();
-            dataf = favouriteN::books;
+            dataf = books;
             activePage[PAGE]->setData(&Home::BookListB,dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
             MINI_P = SHARED_MP;
             FileReader fr(userName);
-            sharedN::books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(MINI_P + 1);
             dataf.clear();
-            dataf = sharedN::books;
+            dataf = books;
             activePage[PAGE]->setData(&Home::BookListB,dataf);
         }
         //trial for book detail page

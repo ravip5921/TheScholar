@@ -471,6 +471,31 @@ public:
         return;
     }
 };
+class rectBox : public GUIcomponent
+{
+    Coord_Rect dimension;
+    Color color;
+
+public:
+    rectBox(Coord_Rect _dim, Color _color = Color(0, 0, 0)) : dimension(_dim), color(_color) {}
+    void render()
+    {
+        color.applyColor();
+        glDrawP(dimension);
+    }
+    void keyboardHandler(unsigned char key, int x, int y)
+    {
+        return;
+    }
+    void mouseHandler(int button, int state, int x, int y)
+    {
+        return;
+    }
+    void passiveMouseHandler(int x, int y)
+    {
+        return;
+    }
+};
 class GUIBlock
 {
     std::vector<GUIcomponent *> components;

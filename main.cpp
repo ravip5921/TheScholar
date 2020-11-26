@@ -141,6 +141,8 @@ void mousePressed(int button, int state, int x, int y)
             PAGE = LOGIN_P;
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
         }
+        else if(activePage[PAGE]->buttonPressed(&welcome::exitButton))
+            exit(EXIT_SUCCESS);
     }
     else if (PAGE == LOGIN_P)
     {
@@ -166,6 +168,8 @@ void mousePressed(int button, int state, int x, int y)
             PAGE = SIGNUP_P;
             activePage[LOGIN_P]->setActiveBox(&SignUp::userNameB);
         }
+        else if(activePage[PAGE]->buttonPressed(&LogIn::exitButton))
+            exit(EXIT_SUCCESS);
     }
     else if (PAGE == SIGNUP_P)
     {
@@ -202,6 +206,8 @@ void mousePressed(int button, int state, int x, int y)
             PAGE = LOGIN_P;
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
         }
+        else if(activePage[PAGE]->buttonPressed(&SignUp::exitButton))
+            exit(EXIT_SUCCESS);
     }
     else if (PAGE == HOME_P)
     {

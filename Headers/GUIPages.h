@@ -7,7 +7,10 @@ namespace welcome
     Color devInfo(0.9, 0.9, 0.91);
     Color loginButtonC(0.1, 0.3, 0.7);
     Color loginButtonTextC(1, 1, 1);
+    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonTextC(1, 1, 1);
 
+    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
     Coord_Rect loginButtonD(2, -8, 3, 1.5);
     Coord_Rect signupButtonD(loginButtonD, 'x', 3.4);
 
@@ -19,6 +22,8 @@ namespace welcome
     Text devInfoD(devInfoX, devInfoY - 3, devInfo, "Nikesh D.C.", GLUT_BITMAP_HELVETICA_18);
     Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD);
     Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
+
     void addWelcomComponents(GUIPage *_welcomePage)
     {
         _welcomePage->addComponent(&titleT);
@@ -29,6 +34,7 @@ namespace welcome
         _welcomePage->addComponent(&devInfoD);
         _welcomePage->addComponent(&loginButton);
         _welcomePage->addComponent(&signupButton);
+        _welcomePage->addComponent(&exitButton);
     }
 }; // namespace welcome
 /**** Login Page *****/
@@ -45,7 +51,10 @@ namespace LogIn
     Color pageTextC(1, 0, 0);
     Color rectBoxC(1, 1, 1);
     Color TitleC(0.5, 0, 0.5);
+    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonTextC(1, 1, 1);
 
+    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
@@ -63,6 +72,7 @@ namespace LogIn
     Button toSignup("New to The SCHOLAR?", toSignupC, logInButtonTextC, toSignupD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
 
     void addlogInComponents(GUIPage *logInPage)
     {
@@ -76,6 +86,7 @@ namespace LogIn
         logInPage->addComponent(&toSignup);
         logInPage->addComponent(&rectBoxa);
         logInPage->addComponent(&rectBoxb);
+        logInPage->addComponent(&exitButton);
     }
 }; // namespace LogIn
 
@@ -92,7 +103,10 @@ namespace SignUp
     Color toLoginC(0.3, 0.9, 0.6);
     Color rectBoxC(1, 1, 1);
     Color TitleC(0.5, 0, 0.5);
+    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonTextC(1, 1, 1);
 
+    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
     Coord_Rect signUpButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
@@ -110,6 +124,7 @@ namespace SignUp
     Button toLogin("Already a member?", toLoginC, signUpButtonTextC, toLoginD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
 
     void addsignUpComponents(GUIPage *signUpPage)
     {
@@ -123,6 +138,7 @@ namespace SignUp
         signUpPage->addComponent(&toLogin);
         signUpPage->addComponent(&rectBoxa);
         signUpPage->addComponent(&rectBoxb);
+        signUpPage->addComponent(&exitButton);
     }
 }; // namespace SignUp
 /********* Home page **********/
@@ -134,16 +150,16 @@ namespace Home
     Color logoutButtonTextC(1, 1, 1);
     Color miniButtonsC(1, 0.5, 0.6);
 
-    Coord_Rect logoutButtonD(6.5, 8, 3, 1.5);
+    Coord_Rect logoutButtonD(6.5, 7.5, 3, 1.5);
     Coord_Rect backgroundD(-9,-8,18,13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
     Coord_Rect BookListD(-8.5, -6.5, 8, 10);
-    Coord_Rect BookButtonD(-1, 8, 3, 1.5); //trial for book detail
+    Coord_Rect BookButtonD(-1, 7.5, 3, 1.5); //trial for book detail
 
-    Text User(3.5, 8.5, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
+    Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
     rectBox background(backgroundD,miniButtonsC);
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
 
@@ -179,7 +195,7 @@ namespace BookDetail
     Color openButtonC(0.1, 0.3, 0.9);
     Color textC(1, 1, 1);
 
-    Coord_Rect backButtonD(7, 8, 1.75, 1.25);
+    Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
     Coord_Rect reading(5, 2.6, 3, 0.9);
     Coord_Rect completed(5, 1.3, 2.5, 0.9);
     Coord_Rect review(5, 0, 1.75, 0.85);

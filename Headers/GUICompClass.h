@@ -380,6 +380,11 @@ public:
             dataB[i].setText(data[i + top]);
         }
     }
+    void setData(std::vector<std::string> _data)
+    {
+        data=_data;
+        refreshBox();
+    }
     std::string getButtonText(int button,int state,int x,int y)
     {
         for(int i=0;i<maxN;i++)
@@ -552,6 +557,10 @@ public:
     void setText(TextBox *_textB, const char *_text)
     {
         _textB->setText(_text);
+    }
+    void setData(ScrollBox * sb,std::vector<std::string> data)
+    {
+        sb->setData(data);
     }
     std::string getButtonText(int button,int state,int x,int y,ScrollBox * sb)
     {

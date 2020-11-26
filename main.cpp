@@ -229,12 +229,14 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
+
             MINI_P = READING_MP;
             FileReader fr(userName);
             readingN::books = fr.Reader(MINI_P + 1);
             readingN::printList(readingN::books); //console print lists
             dataf.clear();
             dataf = readingN::books;
+            activePage[PAGE]->setData(&Home::BookListB,dataf);
             std::cout<<"\nTEST:\n";
             for (auto i = dataf.begin(); i != dataf.end(); ++i)
             {

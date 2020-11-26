@@ -233,24 +233,18 @@ void mousePressed(int button, int state, int x, int y)
             MINI_P = READING_MP;
             FileReader fr(userName);
             readingN::books = fr.Reader(MINI_P + 1);
-            readingN::printList(readingN::books); //console print lists
             dataf.clear();
             dataf = readingN::books;
             activePage[PAGE]->setData(&Home::BookListB,dataf);
-            std::cout<<"\nTEST:\n";
-            for (auto i = dataf.begin(); i != dataf.end(); ++i)
-            {
-            std::cout << " " << *i << std::endl;
-            }
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
             MINI_P = COMPLETED_MP;
             FileReader fr(userName);
             completedN::books = fr.Reader(MINI_P + 1);
-            completedN::printList(completedN::books); //console print list
             dataf.clear();
             dataf = completedN::books;
+            activePage[PAGE]->setData(&Home::BookListB,dataf);
 
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
@@ -258,18 +252,18 @@ void mousePressed(int button, int state, int x, int y)
             MINI_P = FAVOURITE_MP;
             FileReader fr(userName);
             favouriteN::books = fr.Reader(MINI_P + 1);
-            favouriteN::printList(favouriteN::books); //console print list
             dataf.clear();
             dataf = favouriteN::books;
+            activePage[PAGE]->setData(&Home::BookListB,dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
             MINI_P = SHARED_MP;
             FileReader fr(userName);
             sharedN::books = fr.Reader(MINI_P + 1);
-            sharedN::printList(sharedN::books); //console print list
             dataf.clear();
             dataf = sharedN::books;
+            activePage[PAGE]->setData(&Home::BookListB,dataf);
         }
         //trial for book detail page
         else if (activePage[PAGE]->buttonPressed(&Home::bookButton))

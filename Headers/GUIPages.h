@@ -7,10 +7,10 @@ namespace welcome
     Color devInfo(0.9, 0.9, 0.91);
     Color loginButtonC(0.1, 0.3, 0.7);
     Color loginButtonTextC(1, 1, 1);
-    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
 
-    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
+    Coord_Rect exitButtonD(8.1, 8.7, 1.4, 0.9);
     Coord_Rect loginButtonD(2, -8, 3, 1.5);
     Coord_Rect signupButtonD(loginButtonD, 'x', 3.4);
 
@@ -22,7 +22,7 @@ namespace welcome
     Text devInfoD(devInfoX, devInfoY - 3, devInfo, "Nikesh D.C.", GLUT_BITMAP_HELVETICA_18);
     Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD);
     Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD);
-    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD, CHAR_WIDTH * 1.1, CHAR_WIDTH * 1.1);
 
     void addWelcomComponents(GUIPage *_welcomePage)
     {
@@ -51,10 +51,10 @@ namespace LogIn
     Color pageTextC(1, 0, 0);
     Color rectBoxC(1, 1, 1);
     Color TitleC(0.5, 0, 0.5);
-    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
 
-    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
+    Coord_Rect exitButtonD(8.1, 8.7, 1.4, 0.9);
     Coord_Rect logInButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
@@ -72,7 +72,7 @@ namespace LogIn
     Button toSignup("New to The SCHOLAR?", toSignupC, logInButtonTextC, toSignupD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
-    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD, CHAR_WIDTH * 1.1, CHAR_WIDTH * 1.1);
 
     void addlogInComponents(GUIPage *logInPage)
     {
@@ -103,10 +103,10 @@ namespace SignUp
     Color toLoginC(0.3, 0.9, 0.6);
     Color rectBoxC(1, 1, 1);
     Color TitleC(0.5, 0, 0.5);
-    Color exitButtonC(0.1, 0.3, 0.7);
+    Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
 
-    Coord_Rect exitButtonD(6.5, 7.5, 3, 1.5);
+    Coord_Rect exitButtonD(8.1, 8.7, 1.4, 0.9);
     Coord_Rect signUpButtonD(-2, -6, 3, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
@@ -124,7 +124,7 @@ namespace SignUp
     Button toLogin("Already a member?", toLoginC, signUpButtonTextC, toLoginD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
-    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD);
+    Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD, CHAR_WIDTH * 1.1, CHAR_WIDTH * 1.1);
 
     void addsignUpComponents(GUIPage *signUpPage)
     {
@@ -150,21 +150,19 @@ namespace Home
     Color logoutButtonTextC(1, 1, 1);
     Color miniButtonsC(1, 0.5, 0.6);
 
-    Coord_Rect logoutButtonD(6.5, 7.5, 3, 1.5);
-    Coord_Rect backgroundD(-9,-8,18,13.65);
+    Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
+    Coord_Rect backgroundD(-9, -8, 18, 13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
     Coord_Rect BookListD(-8.5, -6.5, 8, 10);
-    Coord_Rect BookButtonD(-1, 7.5, 3, 1.5); //trial for book detail
+    Coord_Rect BookButtonD(-1, 7.5, 2.5, 1.1); //trial for book detail
 
     Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
-    rectBox background(backgroundD,miniButtonsC);
-    Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD);
-
-    Button bookButton("Book Detail", logoutButtonC, logoutButtonTextC, BookButtonD); //trial for book detail
-
+    rectBox background(backgroundD, miniButtonsC);
+    Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
+    Button bookButton("Book Detail", logoutButtonC, logoutButtonTextC, BookButtonD, CHAR_WIDTH * 1.3, CHAR_WIDTH * 1.3); //trial for book detail
     Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);

@@ -149,6 +149,7 @@ namespace Home
     Color logoutButtonC(0.1, 0.3, 0.7);
     Color logoutButtonTextC(1, 1, 1);
     Color miniButtonsC(1, 0.5, 0.6);
+    Color scrollBoxC(0,1,0);
 
     Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
     Coord_Rect backgroundD(-9, -8, 18, 13.65);
@@ -167,7 +168,7 @@ namespace Home
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.5, CHAR_WIDTH);
-    ScrollBox BookListB(dataf, BookListD, 8);
+    ScrollBox BookListB(dataf, BookListD, 8,scrollBoxC);
 
     void addHomeComponents(GUIPage *_homePage)
     {

@@ -348,12 +348,14 @@ class ScrollBox : public GUIcomponent
 {
     std::vector<std::string> data;
     Color bgColor;
+    Color textC;
     Coord_Rect dim;
     std::vector<Coord_Rect> bDim;
     std::vector<Button> dataB;
     int maxN;
     int top;
     bool scrolled;
+    bool scrollable;
     float scrollerX;
     float scrollerY;
     float scrollerW;
@@ -361,12 +363,13 @@ class ScrollBox : public GUIcomponent
     float dec;
 
 public:
-    ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B)) : dim(_dim), bgColor(_bgC)
+    ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B),Color _textC=Color(0,0,0),bool _scrollable=true) : dim(_dim), bgColor(_bgC),textC(_textC)
     {
         data = _data;
         maxN = _maxN;
         top = 0;
         scrolled = false;
+        scrollable = _scrollable;
         scrollerX = dim.getxw();
         scrollerY = dim.getyh() - dim.getheight() / 5;
         scrollerW = dim.getwidth() / 15;
@@ -379,7 +382,7 @@ public:
         }
         for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
-            Button button(data[i], Color(1, 0, 0), Color(1, 1, 1), bDim[i], 0.1, 0.1);
+            Button button(data[i], bgColor,textC, bDim[i], 0.1, 0.1);
             dataB.push_back(button);
         }
     }
@@ -412,25 +415,26 @@ public:
     }
     void render()
     {
+        glDrawRecOutlineCoordBox(dim);
+        if(scrollable)
+        {
         if (scrolled)
         {
             refreshBox();
             scrolled = false;
         }
-        glDrawRecOutlineCoordBox(dim);
-
         bgColor.briColor();
         glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
 
         bgColor.dimColor();
         glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
-
+        }
         for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
             dataB[i].render();
             if (i != 0)
             {
-                glColor3f(1, 1, 1);
+                textC.applyColor();
                 glBegin(GL_LINES);
                 glVertex2f(bDim[i].getx(), bDim[i].getyh());
                 glVertex2f(bDim[i].getxw(), bDim[i].getyh());
@@ -444,7 +448,8 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        // std::cout<<getButtonText(button,state, x, y);
+        if(scrollable)
+        {
         if (dim.liesInside(toFloatX(x), toFloatY(y)))
         {
             if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
@@ -463,9 +468,20 @@ public:
                     dataB[i].mouseHandler(button, state, x, y);
             }
         }
+        }
+        else
+        {
+            for (int i = 0; i < maxN; i++)
+                    dataB[i].mouseHandler(button, state, x, y);
+        }
+
     }
     void mouseMotionHandler(int x, int y)
     {
+        if(scrollable)
+        {
+
+
         Coord_Rect scroller(scrollerX,scrollerY-top*dec,scrollerW,scrollerH);
         if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN))
         {
@@ -475,6 +491,7 @@ public:
         {
             top--;
         }*/
+        }
         return;
     }
 };

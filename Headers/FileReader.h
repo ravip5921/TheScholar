@@ -31,7 +31,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
     {
         ifstream fileReader;
         path = std::string(".\\\\") + std::string("Users\\\\") + username;
-
+        books.clear();
         if (choice == 1)
         {
             path = path + string("\\\\reading.txt");

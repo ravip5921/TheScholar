@@ -558,9 +558,17 @@ public:
             return true;
         return false;
     }
-    std::string getButtonText(int button, int state, int x, int y, ScrollBox *sb)
+    std::string getText(TextBox *_textbox)
     {
-        return sb->getButtonText(button, state, x, y);
+        return _textbox->getText();
+    }
+    bool isActiveBox(TextBox *_textbox)
+    {
+        return _textbox->isActive();
+    }
+    void setActiveBox(TextBox *_textbox, bool _value = true)
+    {
+        _textbox->setActive(_value);
     }
     void setText(Text *_textB, std::string *_text)
     {
@@ -569,6 +577,18 @@ public:
     void setText(TextBox *_textB, std::string *_text)
     {
         _textB->setText(*_text);
+    }
+    void setText(TextBox *_textB, const char *_text)
+    {
+        _textB->setText(_text);
+    }
+    void setData(ScrollBox *sb, std::vector<std::string> data)
+    {
+        sb->setData(data);
+    }
+    std::string getButtonText(int button, int state, int x, int y, ScrollBox *sb)
+    {
+        return sb->getButtonText(button, state, x, y);
     }
     void render()
     {

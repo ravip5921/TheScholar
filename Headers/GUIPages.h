@@ -38,7 +38,6 @@ namespace welcome
     }
 }; // namespace welcome
 /**** Login Page *****/
-
 namespace LogIn
 {
     Color userNameC(0.978, 0.849, 0.9055);
@@ -89,7 +88,6 @@ namespace LogIn
         logInPage->addComponent(&exitButton);
     }
 }; // namespace LogIn
-
 /***** Sign Up Page *******/
 namespace SignUp
 {
@@ -154,7 +152,6 @@ namespace Home
     Color logoutButtonC(0.1, 0.3, 0.7);
     Color logoutButtonTextC(1, 1, 1);
     Color miniButtonsC(1, 0.5, 0.6);
-    Color scrollBoxC(0,1,0);
     Color searchBoxC(0.9,0.9,0.8);
     Color searchBoxTextC(0,0,0);
 
@@ -164,8 +161,7 @@ namespace Home
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
-    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
-    Coord_Rect BookButtonD(-1, 7.5, 2.5, 1.1);
+    Coord_Rect BookButtonD(-1, 7.5, 2.5, 1.1); //trial for book detail
     Coord_Rect SNameD(searchX,searchY-gap-1.5,searchW,searchH);
     Coord_Rect SAuthorD(SNameD,'y',-gap-1);
     Coord_Rect SGenreD(SAuthorD,'y',-gap-1);
@@ -190,8 +186,6 @@ namespace Home
     Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button searchButton("Search",miniButtonsC,logoutButtonC,SBoxD,CHAR_WIDTH*1.5,CHAR_WIDTH*1.5);
 
-    ScrollBox BookListB(dataf, BookListD, 8,scrollBoxC);
-
     void addHomeComponents(GUIPage *_homePage)
     {
         _homePage->addComponent(&logoutButton);
@@ -202,7 +196,7 @@ namespace Home
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&bookButton);
         _homePage->addComponent(&background);
-        _homePage->addComponent(&BookListB);
+
         _homePage->addComponent(&SNameT);
         _homePage->addComponent(&SAuthorT);
         _homePage->addComponent(&SGenreT);
@@ -213,8 +207,6 @@ namespace Home
         _homePage->addComponent(&SDateB);
         searchButton.setFont(GLUT_BITMAP_HELVETICA_18);
         _homePage->addComponent(&searchButton);
-
-
     }
 }; //namespace Home
 

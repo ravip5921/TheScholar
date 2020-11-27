@@ -37,14 +37,8 @@ enum
 std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage, &homePage, &bookDetailPage};
 //end of page navigator
 
-//for miniPages in Home PageGUIBlock readingBlock;
-GUIBlock readingBlock;
-GUIBlock completedBlock;
-GUIBlock favouriteBlock;
-GUIBlock sharedBlock;
-
 /**** Navigate Blocks in HOME_PAGE *****/
-int MINI_P = 0;
+int BLOCK = 0;
 enum
 {
     READING_MP = 0,
@@ -187,36 +181,36 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
 
-            MINI_P = READING_MP;
+            BLOCK = READING_MP;
             FileReader fr(userName);
-            books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
             activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
-            MINI_P = COMPLETED_MP;
+            BLOCK = COMPLETED_MP;
             FileReader fr(userName);
-            books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
             activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
         {
-            MINI_P = FAVOURITE_MP;
+            BLOCK = FAVOURITE_MP;
             FileReader fr(userName);
-            books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
             activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
-            MINI_P = SHARED_MP;
+            BLOCK = SHARED_MP;
             FileReader fr(userName);
-            books = fr.Reader(MINI_P + 1);
+            books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
             activePage[PAGE]->setData(&Home::BookListB, dataf);
@@ -254,10 +248,10 @@ void mousePressed(int button, int state, int x, int y)
             fw.Writer(4, "shared Book");
         }
     }
-    if (state == GLUT_DOWN)
+    /*if (state == GLUT_DOWN)
     {
         std::cout << "x= " << x << " y= " << y << '\n';
-    }
+    }*/
 }
 void keyPressed(unsigned char key, int x, int y)
 {

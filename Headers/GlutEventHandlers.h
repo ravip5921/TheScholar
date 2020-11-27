@@ -167,6 +167,7 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == HOME_P)
     {
+        FileReader fr(userName);
         std::cout << activePage[PAGE]->getButtonText(button, state, x, y, &Home::BookListB);
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
@@ -182,7 +183,6 @@ void mousePressed(int button, int state, int x, int y)
         {
 
             BLOCK = READING_MP;
-            FileReader fr(userName);
             books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
@@ -191,7 +191,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
             BLOCK = COMPLETED_MP;
-            FileReader fr(userName);
+            //FileReader fr(userName);
             books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
@@ -200,7 +200,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
         {
             BLOCK = FAVOURITE_MP;
-            FileReader fr(userName);
+            //FileReader fr(userName);
             books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;
@@ -209,7 +209,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
             BLOCK = SHARED_MP;
-            FileReader fr(userName);
+            //FileReader fr(userName);
             books = fr.Reader(BLOCK + 1);
             dataf.clear();
             dataf = books;

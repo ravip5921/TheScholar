@@ -367,7 +367,7 @@ public:
             Coord_Rect d(dim.getx(), dim.getyh() - (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
             bDim.push_back(d);
         }
-        for (int i = 0; i < maxN; i++)
+        for (int i = 0; i <( maxN<data.size()?maxN:data.size()); i++)
         {
             Button button(data[i], Color(1, 0, 0), Color(1, 1, 1), bDim[i], 0.1, 0.1);
             dataB.push_back(button);
@@ -375,9 +375,14 @@ public:
     }
     void refreshBox()
     {
-        for (int i = 0; i < maxN; i++)
+        int i;
+        for (i = 0; i < (maxN<data.size()?maxN:data.size()); i++)
         {
             dataB[i].setText(data[i + top]);
+        }
+        for(int j=i;j<maxN;j++)
+        {
+            dataB[j].setText("");
         }
     }
     void setData(std::vector<std::string> _data)
@@ -402,7 +407,7 @@ public:
             scrolled = false;
         }
         glDrawRecOutlineCoordBox(dim);
-        for (int i = 0; i < maxN; i++)
+        for (int i = 0; i < (maxN<data.size()?maxN:data.size()); i++)
         {
             dataB[i].render();
             if (i != 0)

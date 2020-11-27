@@ -242,10 +242,6 @@ void mousePressed(int button, int state, int x, int y)
             fw.Writer(4, "shared Book");
         }
     }
-    /*if (state == GLUT_DOWN)
-    {
-        std::cout << "x= " << x << " y= " << y << '\n';
-    }*/
 }
 void keyPressed(unsigned char key, int x, int y)
 {

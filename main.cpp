@@ -27,7 +27,7 @@ int main(int argc, char **argv) //default arguments of main
     glutReshapeFunc(ReshapeCallBack);
     glutMouseFunc(mousePressed);
     glutKeyboardFunc(keyPressed);
-    glutPassiveMotionFunc(passiveMouse);
+    glutMotionFunc(mouseMotion);
     initColor();
 
     glutCreateSubWindow(mainWindowIndex, 1, 1, 200, 100);

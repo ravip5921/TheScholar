@@ -6,7 +6,7 @@
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
-void passiveMouse(int x, int y);
+void mouseMotion(int x, int y);
 void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
@@ -113,6 +113,9 @@ void mousePressed(int button, int state, int x, int y)
             {
                 PAGE = HOME_P;
                 activePage[HOME_P]->setText(&Home::User, &userName);
+                FileReader fr(userName);
+                dataf = fr.Reader(BLOCK + 1);
+                activePage[PAGE]->setData(&Home::BookListB, dataf);
             }
             else
             {
@@ -152,8 +155,13 @@ void mousePressed(int button, int state, int x, int y)
                 else
                 {
                     SignUpObject.signup();
+                    userName = userNameN;
+                    password = passwordN;
                     activePage[HOME_P]->setText(&Home::User, &userNameN);
                     PAGE = HOME_P;
+                    FileReader fr(userNameN);
+                    dataf = fr.Reader(BLOCK + 1);
+                    activePage[PAGE]->setData(&Home::BookListB, dataf);
                 }
             }
         }
@@ -181,45 +189,27 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
-
             BLOCK = READING_MP;
-            books = fr.Reader(BLOCK + 1);
-            dataf.clear();
-            dataf = books;
-            activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
             BLOCK = COMPLETED_MP;
-            //FileReader fr(userName);
-            books = fr.Reader(BLOCK + 1);
-            dataf.clear();
-            dataf = books;
-            activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
         {
             BLOCK = FAVOURITE_MP;
-            //FileReader fr(userName);
-            books = fr.Reader(BLOCK + 1);
-            dataf.clear();
-            dataf = books;
-            activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
             BLOCK = SHARED_MP;
-            //FileReader fr(userName);
-            books = fr.Reader(BLOCK + 1);
-            dataf.clear();
-            dataf = books;
-            activePage[PAGE]->setData(&Home::BookListB, dataf);
         }
         //trial for book detail page
         else if (activePage[PAGE]->buttonPressed(&Home::bookButton))
         {
             PAGE = BOOK_DETAIL_P;
         }
+        dataf = fr.Reader(BLOCK + 1);
+        activePage[PAGE]->setData(&Home::BookListB, dataf);
     }
     else if (PAGE == BOOK_DETAIL_P)
     {
@@ -281,6 +271,9 @@ void keyPressed(unsigned char key, int x, int y)
                 {
                     PAGE = HOME_P;
                     activePage[HOME_P]->setText(&Home::User, &userName);
+                    FileReader fr(userName);
+                    dataf = fr.Reader(BLOCK + 1);
+                    activePage[PAGE]->setData(&Home::BookListB, dataf);
                 }
                 else
                 {
@@ -326,17 +319,23 @@ void keyPressed(unsigned char key, int x, int y)
                     else
                     {
                         SignUpObject.signup();
+                        userName = userNameN;
+                        password = passwordN;
                         activePage[HOME_P]->setText(&Home::User, &userNameN);
                         PAGE = HOME_P;
+                        FileReader fr(userNameN);
+                        dataf = fr.Reader(BLOCK + 1);
+                        activePage[PAGE]->setData(&Home::BookListB, dataf);
                     }
                 }
             }
         }
     }
 }
-void passiveMouse(int x, int y)
+void mouseMotion(int x, int y)
 {
-    activePage[PAGE]->passiveMouseHandler(x, y);
+    activePage[PAGE]->mouseMotionHandler(x, y);
+        std::cout << "x= " << x << " y= " << y << '\n';
 }
 void createErrorWindow(const char *err)
 {

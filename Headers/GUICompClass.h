@@ -13,7 +13,7 @@ public:
     virtual void render() = 0;
     virtual void mouseHandler(int button, int state, int x, int y) = 0;
     virtual void keyboardHandler(unsigned char key, int x, int y) = 0;
-    virtual void passiveMouseHandler(int x, int y) = 0;
+    virtual void mouseMotionHandler(int x, int y) = 0;
 };
 
 class TextBox : public GUIcomponent
@@ -103,7 +103,7 @@ public:
             selected = false;
         }
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -206,7 +206,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -264,7 +264,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -339,7 +339,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -354,6 +354,11 @@ class ScrollBox : public GUIcomponent
     int maxN;
     int top;
     bool scrolled;
+    float scrollerX;
+    float scrollerY;
+    float scrollerW;
+    float scrollerH;
+    float dec;
 
 public:
     ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B)) : dim(_dim), bgColor(_bgC)
@@ -362,12 +367,17 @@ public:
         maxN = _maxN;
         top = 0;
         scrolled = false;
+        scrollerX = dim.getxw();
+        scrollerY = dim.getyh() - dim.getheight() / 5;
+        scrollerW = dim.getwidth() / 15;
+        scrollerH = dim.getheight() / 5;
+        dec = 0;
         for (int i = 1; i <= maxN; i++)
         {
             Coord_Rect d(dim.getx(), dim.getyh() - (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
             bDim.push_back(d);
         }
-        for (int i = 0; i <( maxN<data.size()?maxN:data.size()); i++)
+        for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
             Button button(data[i], Color(1, 0, 0), Color(1, 1, 1), bDim[i], 0.1, 0.1);
             dataB.push_back(button);
@@ -375,28 +385,29 @@ public:
     }
     void refreshBox()
     {
+        dec = ((scrollerY - dim.gety()) / (data.size() - maxN));
         int i;
-        for (i = 0; i < (maxN<data.size()?maxN:data.size()); i++)
+        for (i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
             dataB[i].setText(data[i + top]);
         }
-        for(int j=i;j<maxN;j++)
+        for (int j = i; j < maxN; j++)
         {
             dataB[j].setText("");
         }
     }
     void setData(std::vector<std::string> _data)
     {
-        data=_data;
+        data = _data;
         refreshBox();
     }
-    std::string getButtonText(int button,int state,int x,int y)
+    std::string getButtonText(int button, int state, int x, int y)
     {
-        for(int i=0;i<maxN;i++)
-        if (bDim[i].liesInside(toFloatX(x), toFloatY(y))&& button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
-        {
-            return dataB[i].getText();
-        }
+        for (int i = 0; i < maxN; i++)
+            if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+            {
+                return dataB[i].getText();
+            }
         return "";
     }
     void render()
@@ -407,7 +418,14 @@ public:
             scrolled = false;
         }
         glDrawRecOutlineCoordBox(dim);
-        for (int i = 0; i < (maxN<data.size()?maxN:data.size()); i++)
+
+        bgColor.briColor();
+        glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
+
+        bgColor.dimColor();
+        glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+
+        for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
             dataB[i].render();
             if (i != 0)
@@ -426,7 +444,7 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-       // std::cout<<getButtonText(button,state, x, y);
+        // std::cout<<getButtonText(button,state, x, y);
         if (dim.liesInside(toFloatX(x), toFloatY(y)))
         {
             if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
@@ -446,8 +464,17 @@ public:
             }
         }
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
+        Coord_Rect scroller(scrollerX,scrollerY-top*dec,scrollerW,scrollerH);
+        if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN))
+        {
+            top++;
+        }
+        /*else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top>0 && top< data.size()-maxN)
+        {
+            top--;
+        }*/
         return;
     }
 };
@@ -471,7 +498,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -496,7 +523,7 @@ public:
     {
         return;
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         return;
     }
@@ -516,9 +543,9 @@ public:
             return true;
         return false;
     }
-    std::string getButtonText(int button,int state,int x,int y,ScrollBox * sb)
+    std::string getButtonText(int button, int state, int x, int y, ScrollBox *sb)
     {
-            return sb->getButtonText(button,state,x,y);
+        return sb->getButtonText(button, state, x, y);
     }
     void setText(Text *_textB, std::string *_text)
     {
@@ -543,10 +570,10 @@ public:
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
-            components[i]->passiveMouseHandler(x, y);
+            components[i]->mouseMotionHandler(x, y);
     }
 };
 class GUIPage
@@ -588,13 +615,13 @@ public:
     {
         _textB->setText(_text);
     }
-    void setData(ScrollBox * sb,std::vector<std::string> data)
+    void setData(ScrollBox *sb, std::vector<std::string> data)
     {
         sb->setData(data);
     }
-    std::string getButtonText(int button,int state,int x,int y,ScrollBox * sb)
+    std::string getButtonText(int button, int state, int x, int y, ScrollBox *sb)
     {
-            return sb->getButtonText(button,state,x,y);
+        return sb->getButtonText(button, state, x, y);
     }
     void render()
     {
@@ -611,9 +638,9 @@ public:
         for (int i = 0; i < components.size(); i++)
             components[i]->mouseHandler(button, state, x, y);
     }
-    void passiveMouseHandler(int x, int y)
+    void mouseMotionHandler(int x, int y)
     {
         for (int i = 0; i < components.size(); i++)
-            components[i]->passiveMouseHandler(x, y);
+            components[i]->mouseMotionHandler(x, y);
     }
 };

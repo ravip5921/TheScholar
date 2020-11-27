@@ -1,11 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include<iostream>
+#include<fstream>
+#include<vector>
+#include<string>
 #include <unistd.h>
-#include <dirent.h>
-#include "./Utility.h"
-#include "./Sort.h"
+#include<dirent.h>
+#include "Utility.h"
+#include "sort.h"
 
 const char DIRECTORY_SEPERATOR = '/';
 const int MAX_AUTHOR_NAME = 15;
@@ -16,7 +16,6 @@ const std::string BOOKDES_EXT = ".des";
 const std::string PATH_FILE = "#.txt";
 const std::string FILE_AUTHOR_HEADER = "#header.txt";
 const std::string FILE_AUTHOR_STATUS = "#status.txt";
-const std::string FILE_AUTHOR_PAIR = "#pair.txt";
 
 namespace REQ_DIRS
 {
@@ -35,11 +34,11 @@ namespace REQ_DIRS
         DATA = "./data/";
         DATA_BOOK = DATA + "book/"; //"./data/book/";
         SEARCH = "./search/";
-        SEARCH_BOOK = SEARCH + "book/";               //"./search/book/";
-        SEARCH_BOOK_NAME = SEARCH_BOOK + "name/";     //"./search/book/name/";
+        SEARCH_BOOK = SEARCH + "book/";//"./search/book/";
+        SEARCH_BOOK_NAME = SEARCH_BOOK + "name/";  //"./search/book/name/";
         SEARCH_BOOK_AUTHOR = SEARCH_BOOK + "author/"; //"./search/book/author/";
-        SEARCH_BOOK_GENRE = SEARCH_BOOK + "genre/";   //"./search/book/genre/";
-        SEARCH_BOOK_DATE = SEARCH_BOOK + "date/";     //"./search/book/date/";
+        SEARCH_BOOK_GENRE = SEARCH_BOOK + "genre/"; //"./search/book/genre/";
+        SEARCH_BOOK_DATE = SEARCH_BOOK + "date/"; //"./search/book/date/";
         FILE_BOOKCOUNT = DATA_BOOK + "#bookcount.txt";
     }
     void setDirsForArticle()
@@ -47,11 +46,11 @@ namespace REQ_DIRS
         DATA = "./data/";
         DATA_BOOK = DATA + "article/"; //"./data/article/";
         SEARCH = "./search/";
-        SEARCH_BOOK = SEARCH + "article/";            //"./search/article/";
-        SEARCH_BOOK_NAME = SEARCH_BOOK + "name/";     //"./search/article/name/";
+        SEARCH_BOOK = SEARCH + "article/";//"./search/article/";
+        SEARCH_BOOK_NAME = SEARCH_BOOK + "name/"; //"./search/article/name/";
         SEARCH_BOOK_AUTHOR = SEARCH_BOOK + "author/"; //"./search/article/author/";
-        SEARCH_BOOK_GENRE = SEARCH_BOOK + "genre/";   //"./search/article/genre/";
-        SEARCH_BOOK_DATE = SEARCH_BOOK + "date/";     //"./search/article/date/";
+        SEARCH_BOOK_GENRE = SEARCH_BOOK + "genre/"; //"./search/article/genre/";
+        SEARCH_BOOK_DATE = SEARCH_BOOK + "date/"; //"./search/article/date/";
         FILE_BOOKCOUNT = DATA_BOOK + "#bookcount.txt";
     }
     void create()
@@ -64,14 +63,14 @@ namespace REQ_DIRS
         mkdir(SEARCH_BOOK_AUTHOR.c_str());
         mkdir(SEARCH_BOOK_GENRE.c_str());
         mkdir(SEARCH_BOOK_DATE.c_str());
-        if (!Utility::FileHandler::exists(FILE_BOOKCOUNT))
+        if(!Utility::FileHandler::exists(FILE_BOOKCOUNT))
         {
             std::ofstream outStream;
             outStream.open(FILE_BOOKCOUNT.c_str());
-            outStream << 0;
+            outStream<<0;
         }
     }
-}; // namespace REQ_DIRS
+};
 
 class BookDescriptor
 {
@@ -87,160 +86,151 @@ public:
 
     void createDescriptorFile();
     void createAllDirectories();
-
 private:
     void createDir_Name();
     void createDir_author();
     void createDir_date();
     void createDir_genre();
 };
-void BookDescriptor::createDescriptorFile()
-{
-    //if(descriptorFileAlreadyExists()) return;
-    std::ifstream inStream(REQ_DIRS::FILE_BOOKCOUNT.c_str());
-    int bc;
-    inStream >> bc;
-    inStream.close();
-    bc++;
-    path = REQ_DIRS::DATA_BOOK + std::to_string(bc) + BOOKDES_EXT;
-    std::ofstream outStream(REQ_DIRS::FILE_BOOKCOUNT.c_str());
-    outStream << bc;
-    outStream.close();
-
-    outStream.open(path.c_str());
-    outStream << bookPath << "\n";
-    outStream << name << "\n";
-    outStream << author << "\n";
-    outStream << genre << "\n";
-    outStream << date << "\n";
-    outStream << extrades;
-
-    outStream.close();
-}
-/*void readFromFile()
+    void BookDescriptor::createDescriptorFile()
     {
-        std::ifstream inStream(path.c_str());
-        std::getline(inStream, bookPath);
-        std::getline(inStream, name);
-        std::getline(inStream, author);
-        std::getline(inStream, genre);
-        std::getline(inStream, date);
-        std::getline(inStream, extrades);
+        //if(descriptorFileAlreadyExists()) return;
+        std::ifstream inStream(REQ_DIRS::FILE_BOOKCOUNT.c_str());
+        int bc;
+        inStream>>bc;
         inStream.close();
+        bc++;
+        path = REQ_DIRS::DATA_BOOK + std::to_string(bc) + BOOKDES_EXT;
+        std::ofstream outStream(REQ_DIRS::FILE_BOOKCOUNT.c_str());
+        outStream<<bc;
+        outStream.close();
+
+        outStream.open(path.c_str());
+        outStream<<bookPath<<"\n";
+        outStream<<name<<"\n";
+        outStream<<author<<"\n";
+        outStream<<genre<<"\n";
+        outStream<<date<<"\n";
+        outStream<<extrades<<"\n";
+        outStream<<0<<'\n';
+        outStream<<0;
+
+        outStream.close();
     }
-    bool descriptorFileAlreadyExists()
+
+    void BookDescriptor::createDir_Name()
     {
-    }*/
-void BookDescriptor::createDir_Name()
-{
-    std::vector<std::string> bookWords;
-    Utility::String::breakString(name, bookWords, std::string(" :"));
-    std::string curBookPath = REQ_DIRS::SEARCH_BOOK_NAME + name[0];
-    mkdir(curBookPath.c_str());
-    for (int i = 0; i < bookWords.size(); i++)
-    {
-        curBookPath += DIRECTORY_SEPERATOR + bookWords[i];
+        std::vector<std::string> bookWords;
+        Utility::String::breakString(name,bookWords,std::string(" :"));
+        std::string curBookPath = REQ_DIRS::SEARCH_BOOK_NAME + name[0];
         mkdir(curBookPath.c_str());
+        for(int i=0;i<bookWords.size();i++)
+        {
+            curBookPath += DIRECTORY_SEPERATOR + bookWords[i];
+            mkdir(curBookPath.c_str());
+        }
+        curBookPath += DIRECTORY_SEPERATOR + PATH_FILE;
+        std::ofstream outstream;
+        outstream.open(curBookPath.c_str(),std::ios_base::app);
+        outstream<<path<<"\n";
+        outstream.close();
     }
-    curBookPath += DIRECTORY_SEPERATOR + PATH_FILE;
-    std::ofstream outstream;
-    outstream.open(curBookPath.c_str(), std::ios_base::app);
-    outstream << path << "\n";
-    outstream.close();
-}
-void BookDescriptor::createDir_author()
-{
-    std::vector<std::string> authors;
-    Utility::String::breakString(author, authors, std::string(" $"));
-    std::string baseBookPath = REQ_DIRS::SEARCH_BOOK_AUTHOR;
-    std::string curBookPath;
-    std::string headerPath;
-    std::string statusPath;
-    std::fstream outstream;
-    int status = FILE_NOT_SORTED;
-    for (int i = 0; i < authors.size(); i++)
+    void BookDescriptor::createDir_author()
     {
-        baseBookPath.push_back(authors[i][0]);
-        mkdir(baseBookPath.c_str());
-        curBookPath = baseBookPath + DIRECTORY_SEPERATOR + authors[i];
+        std::vector<std::string> authors;
+        Utility::String::breakString(author,authors,std::string(" $"));
+        std::string baseBookPath = REQ_DIRS::SEARCH_BOOK_AUTHOR;
+        std::string curBookPath;
+        std::string headerPath;
+        std::string statusPath;
+        std::fstream outstream;
+        int status = FILE_NOT_SORTED;
+        for(int i=0;i<authors.size();i++)
+        {
+            baseBookPath.push_back(authors[i][0]);
+            mkdir(baseBookPath.c_str());
+            curBookPath = baseBookPath + DIRECTORY_SEPERATOR + authors[i];
 
-        headerPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_HEADER;
-        statusPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_STATUS;
-        //GETTING STATUS FROM STATUS FILE/CREATING IF NOT EXIST
-        if (!Utility::FileHandler::exists(statusPath))
-        {
-            outstream.open(statusPath.c_str(), std::ios_base::out);
-            outstream << FILE_NOT_SORTED;
-            outstream.close();
-        }
-        else
-        {
-            outstream.open(statusPath.c_str(), std::ios_base::in);
-            outstream >> status;
-            outstream.close();
-        }
-        //WRITING AUTHOR NAME TO HEADER FILE
-        if (status == FILE_NOT_SORTED)
-        {
-            outstream.open(headerPath.c_str(), std::ios_base::app);
-            for (int j = 0; j < MAX_AUTHOR_NAME; j++)
+            headerPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_HEADER;
+            statusPath = baseBookPath + DIRECTORY_SEPERATOR + FILE_AUTHOR_STATUS;
+            //GETTING STATUS FROM STATUS FILE/CREATING IF NOT EXIST
+            if(!Utility::FileHandler::exists(statusPath))
             {
-                if (j < authors[i].size())
-                    outstream << authors[i][j];
-                else
-                    outstream << AUTHOR_HEADER_BLANK_CHAR;
+                outstream.open(statusPath.c_str(),std::ios_base::out);
+                outstream<<FILE_NOT_SORTED;
+                outstream.close();
             }
-        }
-        else
-        {
-            outstream.open(headerPath.c_str());
-            outstream.seekg(0, std::ios::end);
-            int noOfEls = outstream.tellg() / MAX_AUTHOR_NAME;
-            outstream.seekg(0, std::ios::beg);
-            insertInSortedFile(outstream, authors[i], noOfEls, MAX_AUTHOR_NAME);
-        }
-        outstream.close();
+            else
+            {
+                outstream.open(statusPath.c_str(),std::ios_base::in);
+                outstream>>status;
+                outstream.close();
+            }
+            //WRITING AUTHOR NAME TO HEADER FILE
+            if(!Utility::FileHandler::exists(curBookPath))
+            {
+                if(status == FILE_NOT_SORTED)
+                {
+                    outstream.open(headerPath.c_str(),std::ios_base::app);
+                    for(int j=0;j<MAX_AUTHOR_NAME;j++)
+                    {
+                        if(j<authors[i].size())
+                            outstream<<authors[i][j];
+                        else
+                            outstream<<AUTHOR_HEADER_BLANK_CHAR;
+                    }
+                }
+                else
+                {
+                    outstream.open(headerPath.c_str());
+                    outstream.seekg(0, std::ios::end);
+                    int noOfEls = outstream.tellg() / MAX_AUTHOR_NAME;
+                    outstream.seekg(0, std::ios::beg);
+                    insertInSortedFile(outstream, authors[i], noOfEls, MAX_AUTHOR_NAME);
+                }
+                outstream.close();
+            }
 
-        outstream.open(curBookPath.c_str(), std::ios_base::app);
-        outstream << path << "\n";
-        outstream.close();
+            outstream.open(curBookPath.c_str(),std::ios_base::app);
+            outstream<<path<<"\n";
+            outstream.close();
 
-        baseBookPath.pop_back();
+            baseBookPath.pop_back();
+        }
     }
-}
-void BookDescriptor::createDir_date()
-{
-    std::string bookPath;
-    bookPath = REQ_DIRS::SEARCH_BOOK_DATE + date;
-    std::ofstream outstream;
-    outstream.open(bookPath.c_str(), std::ios_base::app);
-    outstream << path;
-    outstream.close();
-}
-void BookDescriptor::createDir_genre()
-{
-    std::vector<std::string> genres;
-    Utility::String::breakString(genre, genres, std::string(" $"));
-    std::string baseBookPath = REQ_DIRS::SEARCH_BOOK_GENRE;
-    std::string curBookPath;
-    std::ofstream outstream;
-    for (int i = 0; i < genres.size(); i++)
+    void BookDescriptor::createDir_date()
     {
-        baseBookPath.push_back(genres[i][0]);
-
-        mkdir(baseBookPath.c_str());
-        curBookPath = baseBookPath + DIRECTORY_SEPERATOR + genres[i];
-        outstream.open(curBookPath.c_str(), std::ios_base::app);
-        outstream << path;
+        std::string bookPath;
+        bookPath = REQ_DIRS::SEARCH_BOOK_DATE + date;
+        std::ofstream outstream;
+        outstream.open(bookPath.c_str(),std::ios_base::app);
+        outstream<<path;
         outstream.close();
-
-        baseBookPath.pop_back();
     }
-}
-void BookDescriptor::createAllDirectories()
-{
-    createDir_Name();
-    createDir_author();
-    createDir_genre();
-    createDir_date();
-}
+    void BookDescriptor::createDir_genre()
+    {
+        std::vector<std::string> genres;
+        Utility::String::breakString(genre,genres,std::string(" $"));
+        std::string baseBookPath = REQ_DIRS::SEARCH_BOOK_GENRE;
+        std::string curBookPath;
+        std::ofstream outstream;
+        for(int i=0;i<genres.size();i++)
+        {
+            baseBookPath.push_back(genres[i][0]);
+
+            mkdir(baseBookPath.c_str());
+            curBookPath = baseBookPath + DIRECTORY_SEPERATOR + genres[i];
+            outstream.open(curBookPath.c_str(),std::ios_base::app);
+            outstream<<path;
+            outstream.close();
+
+            baseBookPath.pop_back();
+        }
+    }
+    void BookDescriptor::createAllDirectories()
+    {
+        createDir_Name();
+        createDir_author();
+        createDir_genre();
+        createDir_date();
+    }

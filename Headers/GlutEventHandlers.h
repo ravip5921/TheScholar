@@ -186,6 +186,10 @@ void mousePressed(int button, int state, int x, int y)
             activePage[LOGIN_P]->setText(&LogIn::passwordB, &userName);
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
             activePage[LOGIN_P]->setActiveBox(&LogIn::passwordB, false);
+            activePage[SIGNUP_P]->setText(&SignUp::userNameB, &userName);
+            activePage[SIGNUP_P]->setText(&SignUp::passwordB, &userName);
+            activePage[SIGNUP_P]->setActiveBox(&SignUp::userNameB);
+            activePage[SIGNUP_P]->setActiveBox(&SignUp::passwordB, false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
@@ -335,7 +339,7 @@ void keyPressed(unsigned char key, int x, int y)
 void mouseMotion(int x, int y)
 {
     activePage[PAGE]->mouseMotionHandler(x, y);
-        std::cout << "x= " << x << " y= " << y << '\n';
+    std::cout << "x= " << x << " y= " << y << '\n';
 }
 void createErrorWindow(const char *err)
 {

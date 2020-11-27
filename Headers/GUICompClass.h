@@ -241,14 +241,12 @@ public:
         glDrawRecOutlineCoordBox(dimensions);
         if (selected)
         {
-            glRasterPos2f(dimensions.getx() + 0.09, dimensions.gety() + 0.11);
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, 'x');
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, '/');
+            colr.briColor();
+            glDrawP(dimensions.getx() + 0.09, dimensions.gety() + 0.09, dimensions.getwidth() - 0.18, dimensions.getheight() - 0.15);
         }
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        std::cout << dimensions.getx() << " " << toFloatX(x);
         if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && !selected && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
         {
             setActive(true);
@@ -363,7 +361,7 @@ class ScrollBox : public GUIcomponent
     float dec;
 
 public:
-    ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B),Color _textC=Color(0,0,0),bool _scrollable=true) : dim(_dim), bgColor(_bgC),textC(_textC)
+    ScrollBox(std::vector<std::string> _data, Coord_Rect _dim, int _maxN, Color _bgC = Color(WC_R, WC_G, WC_B), Color _textC = Color(0, 0, 0), bool _scrollable = true) : dim(_dim), bgColor(_bgC), textC(_textC)
     {
         data = _data;
         maxN = _maxN;
@@ -382,7 +380,7 @@ public:
         }
         for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
-            Button button(data[i], bgColor,textC, bDim[i], 0.1, 0.1);
+            Button button(data[i], bgColor, textC, bDim[i], 0.1, 0.1);
             dataB.push_back(button);
         }
     }
@@ -416,18 +414,21 @@ public:
     void render()
     {
         glDrawRecOutlineCoordBox(dim);
-        if(scrollable)
+        if (scrollable)
         {
-        if (scrolled)
-        {
-            refreshBox();
-            scrolled = false;
-        }
-        bgColor.briColor();
-        glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
+            if (scrolled)
+            {
+                refreshBox();
+                scrolled = false;
+            }
+            if (data.size() > maxN)
+            {
+                bgColor.briColor();
+                glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
 
-        bgColor.dimColor();
-        glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+                bgColor.dimColor();
+                glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+            }
         }
         for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
@@ -448,49 +449,46 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if(scrollable)
+        if (scrollable)
         {
-        if (dim.liesInside(toFloatX(x), toFloatY(y)))
-        {
-            if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+            if (dim.liesInside(toFloatX(x), toFloatY(y)))
             {
-                top++;
-                scrolled = true;
+                if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+                {
+                    top++;
+                    scrolled = true;
+                }
+                else if (button == 3 && state == GLUT_DOWN && (top > 0))
+                {
+                    top--;
+                    scrolled = true;
+                }
+                else
+                {
+                    for (int i = 0; i < maxN; i++)
+                        dataB[i].mouseHandler(button, state, x, y);
+                }
             }
-            else if (button == 3 && state == GLUT_DOWN && (top > 0))
-            {
-                top--;
-                scrolled = true;
-            }
-            else
-            {
-                for (int i = 0; i < maxN; i++)
-                    dataB[i].mouseHandler(button, state, x, y);
-            }
-        }
         }
         else
         {
             for (int i = 0; i < maxN; i++)
-                    dataB[i].mouseHandler(button, state, x, y);
+                dataB[i].mouseHandler(button, state, x, y);
         }
-
     }
     void mouseMotionHandler(int x, int y)
     {
-        if(scrollable)
+        if (scrollable)
         {
-
-
-        Coord_Rect scroller(scrollerX,scrollerY-top*dec,scrollerW,scrollerH);
-        if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN))
-        {
-            top++;
-        }
-        /*else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top>0 && top< data.size()-maxN)
-        {
-            top--;
-        }*/
+            Coord_Rect scroller(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+            if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN))
+            {
+                top++;
+            }
+            else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top > 0)
+            {
+                top--;
+            }
         }
         return;
     }

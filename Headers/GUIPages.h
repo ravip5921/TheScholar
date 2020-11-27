@@ -62,7 +62,7 @@ namespace LogIn
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
-    Text logInScreen(-2, 5, pageTextC, "LOGIN SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+    Text logInScreen(-2, 5, pageTextC, "The Scholar", GLUT_BITMAP_TIMES_ROMAN_24);
     Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
     Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
@@ -114,7 +114,7 @@ namespace SignUp
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
-    Text signUpScreen(-2, 5, pageTextC, "SIGNUP SCREEN", GLUT_BITMAP_TIMES_ROMAN_24);
+    Text signUpScreen(-2, 5, pageTextC, "The Scholar", GLUT_BITMAP_TIMES_ROMAN_24);
     Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
     Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);

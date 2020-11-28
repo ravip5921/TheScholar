@@ -219,14 +219,19 @@ namespace BookDetail
     Color ButtonsC(0.6, 0.5, 0.8);
     Color openButtonC(0.1, 0.3, 0.9);
     Color textC(1, 1, 1);
+    Color reviewNumC(0.978, 0.849, 0.9055);
+    Color boxTextC(0.23, 0.17, 0.91);
 
+    Coord_Rect bookmarkD(2, -2.6, 3.2, 1);
+    Coord_Rect shareUserD(2, -1.3, 4.8, 1);
+    Coord_Rect reviewNumD(5.15, 0, 1, 1);
     Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
-    Coord_Rect reading(5, 2.6, 3, 0.9);
-    Coord_Rect completed(5, 1.3, 2.5, 0.9);
-    Coord_Rect review(5, 0, 1.75, 0.85);
-    Coord_Rect shared(5, -1.3, 1.6, 0.85);
-    Coord_Rect favourite(5, -2.6, 3.1, 0.9);
-    Coord_Rect bookmark(5, -3.9, 3, 0.9);
+    Coord_Rect reading(2, 1.3, 3, 0.9);
+    Coord_Rect favourite(5.5, 1.3, 3.1, 0.9);
+    Coord_Rect completed(2, 0, 2.5, 0.9);
+    Coord_Rect review(6.85, 0, 1.75, 0.85);
+    Coord_Rect shared(7, -1.3, 1.6, 0.85);
+    Coord_Rect bookmark(5.6, -2.6, 3, 0.9);
     Coord_Rect openBook(5, -7, 3, 1);
 
     Text nameBook(-9, 4.5, textC, "NAME OF BOOK", GLUT_BITMAP_HELVETICA_18);
@@ -238,6 +243,7 @@ namespace BookDetail
     Text DateBook(-4, -0.5, textC, "Date", GLUT_BITMAP_HELVETICA_18);
     Text extraDisBook(-8, -2, textC, "Extra Description:", GLUT_BITMAP_HELVETICA_18);
     Text descriptionBook(-7, -4, textC, ".....Description of the books.....", GLUT_BITMAP_HELVETICA_18);
+    Text reviewTot(6.3, 0.25, textC, "/5", GLUT_BITMAP_HELVETICA_18);
 
     Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
     Button readingButton("Add to reading", ButtonsC, backButtonTextC, reading, CHAR_WIDTH * 1.5, CHAR_WIDTH);
@@ -247,6 +253,10 @@ namespace BookDetail
     Button favouriteButton("Add to favourite", ButtonsC, backButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button bookmarkButton("Add bookmark", ButtonsC, backButtonTextC, bookmark, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button openBookButton("OPEN BOOK", openButtonC, backButtonTextC, openBook, CHAR_WIDTH * 1.5, CHAR_WIDTH);
+
+    TextBox reviewNum(reviewNumD, reviewNumC, boxTextC);
+    TextBox shareUser(shareUserD, reviewNumC, boxTextC);
+    TextBox bookmarkText(bookmarkD, reviewNumC, boxTextC);
 
     void addBookDetailComponents(GUIPage *_bookDetailPage)
     {
@@ -267,5 +277,9 @@ namespace BookDetail
         _bookDetailPage->addComponent(&DateBook);
         _bookDetailPage->addComponent(&extraDisBook);
         _bookDetailPage->addComponent(&descriptionBook);
+        _bookDetailPage->addComponent(&reviewTot);
+        _bookDetailPage->addComponent(&reviewNum);
+        _bookDetailPage->addComponent(&shareUser);
+        _bookDetailPage->addComponent(&bookmarkText);
     }
 }; // namespace BookDetail

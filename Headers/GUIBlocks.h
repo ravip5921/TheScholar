@@ -9,7 +9,7 @@ namespace readingN
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListReading(dataf, BookListD, 8, scrollBoxC);
-    Button refreshButton("Refresh1", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
+    Button refreshButton("Refresh", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
 
     void addReadingComponents(GUIBlock *_readingPage)
     {
@@ -30,7 +30,7 @@ namespace completedN
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListCompleted(dataf, BookListD, 8, scrollBoxC);
-    Button refreshButton("Refresh2", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
+    Button refreshButton("Refresh", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
 
     void addCompletedComponents(GUIBlock *_completedPage)
     {
@@ -49,7 +49,7 @@ namespace favouriteN
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListFavourite(dataf, BookListD, 8, scrollBoxC);
-    Button refreshButton("Refresh3", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
+    Button refreshButton("Refresh", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
 
     void addFavouriteComponents(GUIBlock *_favouritePage)
     {
@@ -68,7 +68,7 @@ namespace sharedN
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListShare(dataf, BookListD, 8, scrollBoxC);
-    Button refreshButton("Refresh4", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
+    Button refreshButton("Refresh", refreshButtonC, refreshButtonTextC, refreshButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.3);
 
     void addSharedComponents(GUIBlock *_sharedPage)
     {

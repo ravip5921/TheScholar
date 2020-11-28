@@ -1,6 +1,9 @@
+#Ignoring all the executables
 *.exe
+#ignoring all .o outputs 
 *.o
+#ignoring Users, data, search and .vscode directories
 Users/*
 data/*
 search/*
-.vscode./*
+.vscode/*

@@ -21,10 +21,10 @@ int main(int argc, char **argv) //default arguments of main
     /***** Home Page *****/
     Home::addHomeComponents(&homePage);
     /****Blocks of HOME Page***/
-        readingN::addReadingComponents(&readingB);
-        completedN::addCompletedComponents(&completedB);
-        favouriteN::addFavouriteComponents(&favouriteB);
-        sharedN::addSharedComponents(&shareB);
+    readingN::addReadingComponents(&readingB);
+    completedN::addCompletedComponents(&completedB);
+    favouriteN::addFavouriteComponents(&favouriteB);
+    sharedN::addSharedComponents(&shareB);
     //end of blocks
     /******* Book Detail Page *******/
     BookDetail::addBookDetailComponents(&bookDetailPage);

@@ -14,6 +14,7 @@ void ReshapeCallBack(int wid, int heig);
 void createErrorWindow(const char *);
 void setFonts();
 void showClock();
+void getSearchResults();
 int windowWidth();
 int windowHeight();
 
@@ -53,7 +54,7 @@ enum
     FAVOURITE_MP = 2,
     SHARED_MP = 3
 };
-std::vector<GUIBlock *> activeBlock = {&readingB, &completedB , &favouriteB , &shareB};
+std::vector<GUIBlock *> activeBlock = {&readingB, &completedB, &favouriteB, &shareB};
 //end blocks
 
 void callBackFun()
@@ -66,7 +67,8 @@ void callBackFun()
     setFonts();
 
     activePage[PAGE]->render();
-    if(PAGE == HOME_P){
+    if (PAGE == HOME_P)
+    {
         activeBlock[BLOCK]->render();
     }
 
@@ -128,19 +130,19 @@ void mousePressed(int button, int state, int x, int y)
 
                 FileReader fr(userName);
                 //reading scroll box
-                dataf = fr.Reader(READING_MP+1);
+                dataf = fr.Reader(READING_MP + 1);
                 activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
 
                 //completed scroll box
-                dataf = fr.Reader(COMPLETED_MP+1);
+                dataf = fr.Reader(COMPLETED_MP + 1);
                 activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
 
                 //favourite scroll box
-                dataf = fr.Reader(FAVOURITE_MP+1);
+                dataf = fr.Reader(FAVOURITE_MP + 1);
                 activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
 
                 //share scroll box
-                dataf = fr.Reader(SHARED_MP+1);
+                dataf = fr.Reader(SHARED_MP + 1);
                 activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
             }
             else
@@ -188,19 +190,19 @@ void mousePressed(int button, int state, int x, int y)
 
                     FileReader fr(userNameN);
                     //reading scroll box
-                    dataf = fr.Reader(READING_MP+1);
+                    dataf = fr.Reader(READING_MP + 1);
                     activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
 
                     //completed scroll box
-                    dataf = fr.Reader(COMPLETED_MP+1);
+                    dataf = fr.Reader(COMPLETED_MP + 1);
                     activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
 
                     //favourite scroll box
-                    dataf = fr.Reader(FAVOURITE_MP+1);
+                    dataf = fr.Reader(FAVOURITE_MP + 1);
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
 
                     //share scroll box
-                    dataf = fr.Reader(SHARED_MP+1);
+                    dataf = fr.Reader(SHARED_MP + 1);
                     activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
                 }
             }
@@ -215,8 +217,8 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == HOME_P)
     {
-        activeBlock[BLOCK]->mouseHandler(button,state,x,y);
-        activeBlock[BLOCK]->mouseMotionHandler(x,y);
+        activeBlock[BLOCK]->mouseHandler(button, state, x, y);
+        activeBlock[BLOCK]->mouseMotionHandler(x, y);
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
@@ -231,23 +233,32 @@ void mousePressed(int button, int state, int x, int y)
             activePage[SIGNUP_P]->setActiveBox(&SignUp::userNameB);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::passwordB, false);
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::readingButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
+        {
             BLOCK = READING_MP;
         }
-        else if (activePage[PAGE]->buttonPressed(&Home::completedButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
+        {
             BLOCK = COMPLETED_MP;
-         }
-        else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton)){
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
+        {
             BLOCK = FAVOURITE_MP;
-         }
-        else if (activePage[PAGE]->buttonPressed(&Home::sharedButton)){
+        }
+        else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
+        {
             BLOCK = SHARED_MP;
-         }
+        }
         //trial for book detail page
-        else if (activePage[PAGE]->buttonPressed(&Home::bookButton)){
+        else if (activePage[PAGE]->buttonPressed(&Home::bookButton))
+        {
             PAGE = BOOK_DETAIL_P;
         }
-/*** Blocks ****
+        else if (activePage[PAGE]->buttonPressed(&Home::searchButton))
+        {
+            getSearchResults();
+        }
+        /*** Blocks ****
         if(BLOCK = READING_MP){
             //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
             if(activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton)){
@@ -273,7 +284,6 @@ void mousePressed(int button, int state, int x, int y)
             }
         }
 */
-
     }
     else if (PAGE == BOOK_DETAIL_P)
     {
@@ -334,19 +344,19 @@ void keyPressed(unsigned char key, int x, int y)
 
                     FileReader fr(userName);
                     //reading scroll box
-                    dataf = fr.Reader(READING_MP+1);
+                    dataf = fr.Reader(READING_MP + 1);
                     activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
 
                     //completed scroll box
-                    dataf = fr.Reader(COMPLETED_MP+1);
+                    dataf = fr.Reader(COMPLETED_MP + 1);
                     activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
 
                     //favourite scroll box
-                    dataf = fr.Reader(FAVOURITE_MP+1);
+                    dataf = fr.Reader(FAVOURITE_MP + 1);
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
 
                     //share scroll box
-                    dataf = fr.Reader(SHARED_MP+1);
+                    dataf = fr.Reader(SHARED_MP + 1);
                     activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
                 }
                 else
@@ -356,7 +366,7 @@ void keyPressed(unsigned char key, int x, int y)
             }
         }
     }
-    if (PAGE == SIGNUP_P)
+    else if (PAGE == SIGNUP_P)
     {
         if (activePage[PAGE]->isActiveBox(&SignUp::userNameB) && (key == ENTER_KEY || key == TAB_KEY))
         {
@@ -399,23 +409,48 @@ void keyPressed(unsigned char key, int x, int y)
                         PAGE = HOME_P;
 
                         FileReader fr(userNameN);
-                    //reading scroll box
-                        dataf = fr.Reader(READING_MP+1);
+                        //reading scroll box
+                        dataf = fr.Reader(READING_MP + 1);
                         activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
 
-                    //completed scroll box
-                        dataf = fr.Reader(COMPLETED_MP+1);
+                        //completed scroll box
+                        dataf = fr.Reader(COMPLETED_MP + 1);
                         activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
 
-                    //favourite scroll box
-                        dataf = fr.Reader(FAVOURITE_MP+1);
+                        //favourite scroll box
+                        dataf = fr.Reader(FAVOURITE_MP + 1);
                         activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
 
-                    //share scroll box
-                        dataf = fr.Reader(SHARED_MP+1);
+                        //share scroll box
+                        dataf = fr.Reader(SHARED_MP + 1);
                         activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
                     }
                 }
+            }
+        }
+    }
+    else if (PAGE == HOME_P)
+    {
+        if (key == ENTER_KEY || key == TAB_KEY)
+        {
+            if (activePage[PAGE]->isActiveBox(&Home::SNameB))
+            {
+                activePage[PAGE]->setActiveBox(&Home::SAuthorB, true);
+                activePage[PAGE]->setActiveBox(&Home::SNameB, false);
+            }
+            else if (activePage[PAGE]->isActiveBox(&Home::SAuthorB))
+            {
+                activePage[PAGE]->setActiveBox(&Home::SGenreB, true);
+                activePage[PAGE]->setActiveBox(&Home::SAuthorB, false);
+            }
+            else if (activePage[PAGE]->isActiveBox(&Home::SGenreB))
+            {
+                activePage[PAGE]->setActiveBox(&Home::SDateB, true);
+                activePage[PAGE]->setActiveBox(&Home::SGenreB, false);
+            }
+            else if (activePage[PAGE]->isActiveBox(&Home::SDateB) && key == ENTER_KEY)
+            {
+                getSearchResults();
             }
         }
     }
@@ -448,4 +483,19 @@ void showClock()
     s1.displayCalendar(-5, -2.5, GLUT_BITMAP_HELVETICA_18);
     glutPostRedisplay();
     glutSwapBuffers();
+}
+void getSearchResults()
+{
+    std::cout << activePage[PAGE]->getText(&Home::SNameB) << std::endl;
+    std::cout << activePage[PAGE]->getText(&Home::SAuthorB) << std::endl;
+    std::cout << activePage[PAGE]->getText(&Home::SGenreB) << std::endl;
+    std::cout << activePage[PAGE]->getText(&Home::SDateB) << std::endl;
+    activePage[PAGE]->setText(&Home::SNameB, "");
+    activePage[PAGE]->setText(&Home::SAuthorB, "");
+    activePage[PAGE]->setText(&Home::SGenreB, "");
+    activePage[PAGE]->setText(&Home::SDateB, "");
+    activePage[PAGE]->setActiveBox(&Home::SNameB, true);
+    activePage[PAGE]->setActiveBox(&Home::SAuthorB, false);
+    activePage[PAGE]->setActiveBox(&Home::SGenreB, false);
+    activePage[PAGE]->setActiveBox(&Home::SDateB, false);
 }

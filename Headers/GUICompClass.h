@@ -374,7 +374,7 @@ public:
         scrollerW = dim.getwidth() / 15;
         scrollerH = dim.getheight() / 5;
         dec = 0;
-        prevY = scrollerY+scrollerH;
+        prevY = scrollerY + scrollerH;
         for (int i = 1; i <= maxN; i++)
         {
             Coord_Rect d(dim.getx(), dim.getyh() - (i * (dim.getheight() / maxN)), dim.getwidth(), (dim.getheight() / maxN));
@@ -453,7 +453,7 @@ public:
     {
         if (scrollable)
         {
-            prevY=toFloatY(y);
+            prevY = toFloatY(y);
             if (dim.liesInside(toFloatX(x), toFloatY(y)))
             {
                 if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
@@ -483,19 +483,19 @@ public:
     {
         if (scrollable)
         {
-            std::cout<<"\ny= "<<y<<"fy= "<<toFloatY(y)<<'\n';
+            std::cout << "\ny= " << y << "fy= " << toFloatY(y) << '\n';
             Coord_Rect scroller(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
-            if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN) && toFloatY(y)<=prevY)
+            if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN) && toFloatY(y) <= prevY)
             {
                 top++;
                 refreshBox();
-                prevY= toFloatY(y);
+                prevY = toFloatY(y);
             }
-            else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top > 0 && toFloatY(y)>prevY)
+            else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top > 0 && toFloatY(y) > prevY)
             {
                 top--;
                 refreshBox();
-                prevY=toFloatY(y);
+                prevY = toFloatY(y);
             }
         }
         return;

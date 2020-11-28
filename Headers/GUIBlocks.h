@@ -13,6 +13,7 @@ namespace readingN
 
     void addReadingComponents(GUIBlock *_readingPage)
     {
+        BookListReading.setActive(true);
         _readingPage->addComponent(&BookListReading);
         _readingPage->addComponent(&refreshButton);
     }

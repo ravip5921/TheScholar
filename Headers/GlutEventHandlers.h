@@ -96,6 +96,7 @@ void setFonts()
 void mousePressed(int button, int state, int x, int y)
 {
     activePage[PAGE]->mouseHandler(button, state, x, y);
+
     if (PAGE == WELCOME_P)
     {
         if (activePage[PAGE]->buttonPressed(&welcome::signupButton))
@@ -214,6 +215,8 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == HOME_P)
     {
+        activeBlock[BLOCK]->mouseHandler(button,state,x,y);
+        activeBlock[BLOCK]->mouseMotionHandler(x,y);
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;

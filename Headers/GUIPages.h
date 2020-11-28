@@ -188,6 +188,8 @@ namespace Home
 
     void addHomeComponents(GUIPage *_homePage)
     {
+        searchButton.setFont(GLUT_BITMAP_HELVETICA_18);
+
         _homePage->addComponent(&logoutButton);
         _homePage->addComponent(&User);
         _homePage->addComponent(&readingButton);
@@ -196,7 +198,6 @@ namespace Home
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&bookButton);
         _homePage->addComponent(&background);
-
         _homePage->addComponent(&SNameT);
         _homePage->addComponent(&SAuthorT);
         _homePage->addComponent(&SGenreT);
@@ -205,7 +206,6 @@ namespace Home
         _homePage->addComponent(&SAuthorB);
         _homePage->addComponent(&SGenreB);
         _homePage->addComponent(&SDateB);
-        searchButton.setFont(GLUT_BITMAP_HELVETICA_18);
         _homePage->addComponent(&searchButton);
     }
 }; //namespace Home

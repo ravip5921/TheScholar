@@ -156,7 +156,7 @@ namespace Home
     Color searchBoxTextC(0, 0, 0);
 
     Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
-    Coord_Rect backgroundD(-9, -8, 9.237, 13.65);
+    Coord_Rect backgroundD(-9, -8, 9.25, 13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
@@ -223,7 +223,7 @@ namespace BookDetail
     Color boxTextC(0.23, 0.17, 0.91);
 
     Coord_Rect bookmarkD(2, -2.6, 3.2, 1);
-    Coord_Rect shareUserD(2, -1.3, 4.8, 1);
+    Coord_Rect shareUserD(2, -1.3, 4., 1);
     Coord_Rect reviewNumD(5.15, 0, 1, 1);
     Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
     Coord_Rect reading(2, 1.3, 3, 0.9);

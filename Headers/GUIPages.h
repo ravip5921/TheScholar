@@ -156,7 +156,7 @@ namespace Home
     Color searchBoxTextC(0, 0, 0);
 
     Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
-    Coord_Rect backgroundD(-9, -8, 9.235, 13.65);
+    Coord_Rect backgroundD(-9, -8, 9.237, 13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);

@@ -415,7 +415,6 @@ public:
     }
     void render()
     {
-        glDrawRecOutlineCoordBox(dim);
         if (scrollable)
         {
             if (scrolled)
@@ -425,6 +424,7 @@ public:
             }
             if (data.size() > maxN)
             {
+                glDrawRecOutlineCoordBox(dim);
                 bgColor.briColor();
                 glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
 
@@ -483,7 +483,6 @@ public:
     {
         if (scrollable)
         {
-            std::cout << "\ny= " << y << "fy= " << toFloatY(y) << '\n';
             Coord_Rect scroller(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
             if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN) && toFloatY(y) <= prevY)
             {

@@ -258,32 +258,28 @@ void mousePressed(int button, int state, int x, int y)
         {
             getSearchResults();
         }
-        /*** Blocks ****
-        if(BLOCK = READING_MP){
-            //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
-            if(activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton)){
-                readingN::BookListReading.refreshBox();
-            }
+        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
+        else if (activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton))
+        {
+            readingN::BookListReading.refreshBox();
         }
-        else if(BLOCK = COMPLETED_MP){
-            //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
-            if(activeBlock[BLOCK]->buttonPressed(&completedN::refreshButton)){
-                completedN::BookListCompleted.refreshBox();
-            }
+        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
+        else if (activeBlock[BLOCK]->buttonPressed(&completedN::refreshButton))
+        {
+            completedN::BookListCompleted.refreshBox();
         }
-        else if(BLOCK = FAVOURITE_MP){
-            //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
-            if(activeBlock[BLOCK]->buttonPressed(&favouriteN::refreshButton)){
-                favouriteN::BookListFavourite.refreshBox();
-            }
+
+        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
+        else if (activeBlock[BLOCK]->buttonPressed(&favouriteN::refreshButton))
+        {
+            favouriteN::BookListFavourite.refreshBox();
         }
-        else if(BLOCK = SHARED_MP){
-            //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
-            if(activeBlock[BLOCK]->buttonPressed(&sharedN::refreshButton)){
-                sharedN::BookListShare.refreshBox();
-            }
+
+        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
+        else if (activeBlock[BLOCK]->buttonPressed(&sharedN::refreshButton))
+        {
+            sharedN::BookListShare.refreshBox();
         }
-*/
     }
     else if (PAGE == BOOK_DETAIL_P)
     {

@@ -196,14 +196,8 @@ namespace BookDetails
     {
         _bdPage->addComponent(&page);
     }
-    void changeBookName(std::string _name)
-    {
-    }
-    void changeMode(char _mode)
-    {
-    }
 
-    /*
+/*
     Color backButtonC(0.1, 0.3, 0.7);
     Color backButtonTextC(1, 1, 1);
     Color ButtonsC(0.6, 0.5, 0.8);
@@ -211,6 +205,7 @@ namespace BookDetails
     Color textC(1, 1, 1);
     Color reviewNumC(0.978, 0.849, 0.9055);
     Color boxTextC(0.23, 0.17, 0.91);
+
     Coord_Rect bookmarkD(2, -3.7, 3.2, 1);
     Coord_Rect shareUserD(2, -1.9, 4.6, 1);
     Coord_Rect reviewNumD(5.15, 0, 1, 1);
@@ -222,6 +217,7 @@ namespace BookDetails
     Coord_Rect shared(7, -1.9, 1.6, 0.85);
     Coord_Rect bookmark(5.6, -3.7, 3, 0.9);
     Coord_Rect openBook(5, -7, 3, 1);
+
     Text nameBook(-9, 4.5, textC, "NAME OF BOOK", GLUT_BITMAP_HELVETICA_18);
     Text authorBook(-8, 2.5, textC, "Author:", GLUT_BITMAP_HELVETICA_18);
     Text authorNameBook(-6, 2.5, textC, "Author Name", GLUT_BITMAP_HELVETICA_18);
@@ -234,6 +230,7 @@ namespace BookDetails
     Text reviewTot(6.3, 0.25, textC, "0-5", GLUT_BITMAP_TIMES_ROMAN_10);
     Text shareUserName(2,-0.7,textC,"Enter username to share:",GLUT_BITMAP_HELVETICA_12);
     Text bookmarkDisplayText(2,-2.5,textC,"Enter page to bookmark:",GLUT_BITMAP_HELVETICA_12);
+
     Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
     Button readingButton("Add to reading", ButtonsC, backButtonTextC, reading, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button completedButton("Add to read", ButtonsC, backButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
@@ -242,9 +239,11 @@ namespace BookDetails
     Button favouriteButton("Add to favourite", ButtonsC, backButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button bookmarkButton("Add bookmark", ButtonsC, backButtonTextC, bookmark, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button openBookButton("OPEN BOOK", openButtonC, backButtonTextC, openBook, CHAR_WIDTH * 1.5, CHAR_WIDTH);
+
     TextBox reviewNum(reviewNumD, reviewNumC, boxTextC);
     TextBox shareUser(shareUserD, reviewNumC, boxTextC);
     TextBox bookmarkText(bookmarkD, reviewNumC, boxTextC);
+
     void addBookDetailComponents(GUIPage *_bookDetailPage)
     {
      //   reviewButton.show(false);
@@ -272,11 +271,14 @@ namespace BookDetails
         _bookDetailPage->addComponent(&shareUserName);
         _bookDetailPage->addComponent(&bookmarkDisplayText);
     }
-    }*/
+    */
 }; // namespace BookDetail
+
 /********** Search Page *************/
 namespace SearchN{
 
+    float searchX = 2.7;
+    float searchY = 4.5;
     float searchW = 7;
     float searchH = 1.3;
     float gap = 1;
@@ -286,21 +288,18 @@ namespace SearchN{
     Color userNameC(1, 1, 1);
     Color searchBoxC(0.9, 0.9, 0.8);
     Color searchBoxTextC(0, 0, 0);
-    Color searchButtonC(0.1, 0.3, 0.7);
-    Color ButtonsC(1, 0.5, 0.6);
 
-    Coord_Rect SNameD(-8,3, searchW, searchH);
-    Coord_Rect SAuthorD(2,3, searchW, searchH);
-    Coord_Rect SGenreD(-8,-4, searchW, searchH);
-    Coord_Rect SDateD(2,-4, searchW, searchH);
+    Coord_Rect SNameD(searchX, searchY - gap - 1.5, searchW, searchH);
+    Coord_Rect SAuthorD(SNameD, 'y', -gap - 1);
+    Coord_Rect SGenreD(SAuthorD, 'y', -gap - 1);
+    Coord_Rect SDateD(SGenreD, 'y', -gap - 1);
+    Coord_Rect SBoxD(searchX + 2, searchY - 11, 2.5, 1.1);
     Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
-    Coord_Rect SBoxD(-0.5, -7.5, 2.5, 1.1);
 
-    Text SearchDis(-5.5,6,userNameC,"Enter Details Of Book to be Searched:",GLUT_BITMAP_HELVETICA_18);
-    Text SNameT(-8,5, userNameC, "Name:", GLUT_BITMAP_HELVETICA_18);
-    Text SAuthorT(2,5, userNameC, "Author:", GLUT_BITMAP_HELVETICA_18);
-    Text SGenreT(-8, -2, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_18);
-    Text SDateT(2, -2, userNameC, "Date:", GLUT_BITMAP_HELVETICA_18);
+    Text SNameT(searchX, searchY - gap, userNameC, "Name:", GLUT_BITMAP_HELVETICA_12);
+    Text SAuthorT(searchX, searchY - gap - 2, userNameC, "Author:", GLUT_BITMAP_HELVETICA_12);
+    Text SGenreT(searchX, searchY - gap - 4, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_12);
+    Text SDateT(searchX, searchY - gap - 6, userNameC, "Date:", GLUT_BITMAP_HELVETICA_12);
 
     TextBox SNameB(SNameD, searchBoxC, searchBoxTextC, true);
     TextBox SAuthorB(SAuthorD, searchBoxC, searchBoxTextC);
@@ -308,7 +307,6 @@ namespace SearchN{
     TextBox SDateB(SDateD, searchBoxC, searchBoxTextC);
 
     Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
-    Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
 
     void addSearchComponents(GUIPage * _searchPage){
 
@@ -321,7 +319,5 @@ namespace SearchN{
         _searchPage->addComponent(&SGenreB);
         _searchPage->addComponent(&SDateB);
         _searchPage->addComponent(&backButton);
-        _searchPage->addComponent(&SearchDis);
-        _searchPage->addComponent(&searchButton);
     }
 }

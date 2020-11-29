@@ -32,3 +32,6 @@ std::string passwordN = "";
 std::vector<std::string> dataf = {"", "", "", "", "", "", "", "", "", ""};
 std::vector<std::string> books;
 std::string bookName = "";
+std::string bookmarkT;
+std::string reviewT;
+std::string shareT;

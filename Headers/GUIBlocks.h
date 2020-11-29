@@ -15,7 +15,7 @@ namespace readingN
     {
         BookListReading.setActive(true);
         _readingPage->addComponent(&BookListReading);
-//        _readingPage->addComponent(&refreshButton);
+        //        _readingPage->addComponent(&refreshButton);
     }
 
 } // namespace readingN
@@ -35,7 +35,7 @@ namespace completedN
     void addCompletedComponents(GUIBlock *_completedPage)
     {
         _completedPage->addComponent(&BookListCompleted);
-//        _completedPage->addComponent(&refreshButton);
+        //        _completedPage->addComponent(&refreshButton);
     }
 } // namespace completedN
 /**** favourite block *****/
@@ -54,7 +54,7 @@ namespace favouriteN
     void addFavouriteComponents(GUIBlock *_favouritePage)
     {
         _favouritePage->addComponent(&BookListFavourite);
-//        _favouritePage->addComponent(&refreshButton);
+        //        _favouritePage->addComponent(&refreshButton);
     }
 } // namespace favouriteN
 /**** shared block ****/
@@ -73,6 +73,6 @@ namespace sharedN
     void addSharedComponents(GUIBlock *_sharedPage)
     {
         _sharedPage->addComponent(&BookListShare);
-//        _sharedPage->addComponent(&refreshButton);
+        //        _sharedPage->addComponent(&refreshButton);
     }
 } // namespace sharedN

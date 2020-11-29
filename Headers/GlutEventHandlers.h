@@ -328,7 +328,6 @@ void mousePressed(int button, int state, int x, int y)
             activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.shareUser,"");
             std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
         }
-
     }
         /*if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
         {
@@ -483,10 +482,22 @@ void keyPressed(unsigned char key, int x, int y)
     }
     else if(PAGE==BOOK_DETAIL_P)
     {
-        //if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.bookmarkText) && key ==ENTER_KEY)
-        //{
-
-        //}
+        if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.bookmarkText) && key ==ENTER_KEY)
+        {
+            bookmarkT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.bookmarkText,"");
+        }
+        else if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.reviewNum) && key ==ENTER_KEY)
+        {
+            reviewT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.reviewNum);
+            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.reviewNum,"");
+        }
+        else if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.shareUser) && key ==ENTER_KEY)
+        {
+            shareT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.shareUser);
+            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.shareUser,"");
+            std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
+        }
     }
     else if (PAGE == SEARCH_P)
     {

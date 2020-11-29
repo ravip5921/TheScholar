@@ -158,8 +158,8 @@ namespace Home
     Coord_Rect SBoxD(-4, 7.5, 2.5, 1.1);
 
     Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
-    Text bookNameDis(-8,4,userNameC,"Book Name:",GLUT_BITMAP_HELVETICA_12);
-    Text bookmarkDis(0,4,userNameC,"Page bookmarked:",GLUT_BITMAP_HELVETICA_12);
+    Text bookNameDis(-8, 4, userNameC, "Book Name:", GLUT_BITMAP_HELVETICA_12);
+    Text bookmarkDis(0, 4, userNameC, "Page bookmarked:", GLUT_BITMAP_HELVETICA_12);
 
     rectBox background(backgroundD, miniButtonsC);
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
@@ -191,14 +191,15 @@ namespace Home
 /********* Book Detail Page *********/
 namespace BookDetails
 {
-    BookDetail page('R',"NAME");
-    void addBookDetailComponents(GUIPage * _bdPage)
+    BookDetail page('R', "NAME");
+    void addBookDetailComponents(GUIPage *_bdPage)
     {
         _bdPage->addComponent(&page);
     }
-}; // namespace BookDetail
+}; // namespace BookDetails
 /********** Search Page *************/
-namespace SearchN{
+namespace SearchN
+{
 
     float searchW = 7;
     float searchH = 1.3;
@@ -212,16 +213,16 @@ namespace SearchN{
     Color searchButtonC(0.1, 0.3, 0.7);
     Color ButtonsC(1, 0.5, 0.6);
 
-    Coord_Rect SNameD(-8,3, searchW, searchH);
-    Coord_Rect SAuthorD(2,3, searchW, searchH);
-    Coord_Rect SGenreD(-8,-4, searchW, searchH);
-    Coord_Rect SDateD(2,-4, searchW, searchH);
+    Coord_Rect SNameD(-8, 3, searchW, searchH);
+    Coord_Rect SAuthorD(2, 3, searchW, searchH);
+    Coord_Rect SGenreD(-8, -4, searchW, searchH);
+    Coord_Rect SDateD(2, -4, searchW, searchH);
     Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
     Coord_Rect SBoxD(-0.5, -7.5, 2.5, 1.1);
 
-    Text SearchDis(-5.5,6,userNameC,"Enter Details Of Book to be Searched:",GLUT_BITMAP_HELVETICA_18);
-    Text SNameT(-8,5, userNameC, "Name:", GLUT_BITMAP_HELVETICA_18);
-    Text SAuthorT(2,5, userNameC, "Author:", GLUT_BITMAP_HELVETICA_18);
+    Text SearchDis(-5.5, 6, userNameC, "Enter Details Of Book to be Searched:", GLUT_BITMAP_HELVETICA_18);
+    Text SNameT(-8, 5, userNameC, "Name:", GLUT_BITMAP_HELVETICA_18);
+    Text SAuthorT(2, 5, userNameC, "Author:", GLUT_BITMAP_HELVETICA_18);
     Text SGenreT(-8, -2, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_18);
     Text SDateT(2, -2, userNameC, "Date:", GLUT_BITMAP_HELVETICA_18);
 
@@ -233,7 +234,8 @@ namespace SearchN{
     Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
     Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
 
-    void addSearchComponents(GUIPage * _searchPage){
+    void addSearchComponents(GUIPage *_searchPage)
+    {
 
         _searchPage->addComponent(&SNameT);
         _searchPage->addComponent(&SAuthorT);
@@ -247,4 +249,4 @@ namespace SearchN{
         _searchPage->addComponent(&SearchDis);
         _searchPage->addComponent(&searchButton);
     }
-}
+} // namespace SearchN

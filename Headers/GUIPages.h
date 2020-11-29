@@ -243,7 +243,7 @@ namespace BookDetail
     Text DateBook(-4, -0.5, textC, "Date", GLUT_BITMAP_HELVETICA_18);
     Text extraDisBook(-8, -2, textC, "Extra Description:", GLUT_BITMAP_HELVETICA_18);
     Text descriptionBook(-7, -4, textC, ".....Description of the books.....", GLUT_BITMAP_HELVETICA_18);
-    Text reviewTot(6.3, 0.25, textC, "/5", GLUT_BITMAP_HELVETICA_18);
+    Text reviewTot(6.3, 0.25, textC, "0-5", GLUT_BITMAP_TIMES_ROMAN_10);
     Text shareUserName(2,-0.7,textC,"Enter username to share:",GLUT_BITMAP_HELVETICA_12);
     Text bookmarkDisplayText(2,-2.5,textC,"Enter page to bookmark:",GLUT_BITMAP_HELVETICA_12);
 
@@ -262,6 +262,7 @@ namespace BookDetail
 
     void addBookDetailComponents(GUIPage *_bookDetailPage)
     {
+     //   reviewButton.show(false);
         _bookDetailPage->addComponent(&backButton);
         _bookDetailPage->addComponent(&readingButton);
         _bookDetailPage->addComponent(&completedButton);

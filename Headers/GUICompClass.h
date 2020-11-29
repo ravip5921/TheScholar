@@ -25,14 +25,12 @@ protected:
     Color boxC;
     Color textC;
     void *f;
-    float padding;
 
 public:
     TextBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : position(pos), boxC(box), textC(txt)
     {
         selected = _selected;
         f = GLUT_BITMAP_HELVETICA_12;
-        padding = CHAR_WIDTH * 2;
     }
     std::string getText()
     {
@@ -45,10 +43,6 @@ public:
     void setFont(void *_f)
     {
         f = _f;
-    }
-    void setPadding(float _gap)
-    {
-        padding = _gap;
     }
     void setActive(bool _active = true)
     {
@@ -69,7 +63,7 @@ public:
         glDrawP(position);
         textC.applyColor();
         glDrawRecOutlineTextBox(position);
-        printTextInBox(textField, position, f,padding);
+        printTextInBox(textField, position, f);
         if (isActive())
         {
             if (blinkerT % 200 >= 0 && blinkerT % 200 <= 100)
@@ -275,7 +269,6 @@ public:
 };
 class Button : public GUIcomponent
 {
-    bool showB;
     bool pressed;
     std::string buttonText;
     Coord_Rect buttonDimension;
@@ -288,7 +281,6 @@ class Button : public GUIcomponent
 public:
     Button(const char *_text, Color _bColor, Color _tColor, Coord_Rect _dim, float _x = CHAR_WIDTH * 2, float _y = CHAR_WIDTH * 2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
-        showB=true;
         pressed = false;
         buttonText = std::string(_text);
         f = GLUT_BITMAP_HELVETICA_12;
@@ -297,7 +289,6 @@ public:
     }
     Button(std::string _text, Color _bColor, Color _tColor, Coord_Rect _dim, float _x = CHAR_WIDTH * 2, float _y = CHAR_WIDTH * 2) : buttonColor(_bColor), textColor(_tColor), buttonDimension(_dim)
     {
-        showB=true;
         pressed = false;
         buttonText = _text;
         f = GLUT_BITMAP_HELVETICA_12;
@@ -316,14 +307,8 @@ public:
     {
         f = _f;
     }
-    void show(bool _show)
-    {
-        showB=_show;
-    }
     void render()
     {
-        if(showB)
-        {
         setActive(pressed);
         if (isActive())
         {
@@ -336,12 +321,9 @@ public:
         glDrawP(buttonDimension);
         textColor.applyColor();
         printTextInButton(buttonText, buttonDimension, f, gapX, gapY);
-        }
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if(showB)
-        {
         if (buttonDimension.liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
         {
             pressed = true;
@@ -349,7 +331,6 @@ public:
         else
         {
             pressed = false;
-        }
         }
     }
     void keyboardHandler(unsigned char key, int x, int y)

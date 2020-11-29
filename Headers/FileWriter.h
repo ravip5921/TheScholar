@@ -21,10 +21,10 @@ public:
 
     FileWriter(std::string username) : username(std::move(username)) {}
 
-    void Writer(const int choice, std::string toWrite);
+    void Writer(const int choice, std::string toWrite, std::string bookmarkPage= "$");
 };
 
-void FileWriter::Writer(const int choice, std::string toWrite)
+void FileWriter::Writer(const int choice, std::string toWrite, std::string bookmarkPage)
 {
 
     if (username != "")
@@ -37,6 +37,7 @@ void FileWriter::Writer(const int choice, std::string toWrite)
             path = path + string("\\\\reading.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
+            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else if (choice == 2)
@@ -44,6 +45,7 @@ void FileWriter::Writer(const int choice, std::string toWrite)
             path = path + string("\\\\completed.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
+            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else if (choice == 3)
@@ -51,6 +53,7 @@ void FileWriter::Writer(const int choice, std::string toWrite)
             path = path + string("\\\\favourite.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
+            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else if (choice == 4)
@@ -58,6 +61,7 @@ void FileWriter::Writer(const int choice, std::string toWrite)
             path = path + string("\\\\share.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
+            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Headers/GlutEventHandlers.h"
-
+BookDetail a('R', "NAME");
 int main(int argc, char **argv) //default arguments of main
 {
     glutInit(&argc, argv);
@@ -27,7 +27,7 @@ int main(int argc, char **argv) //default arguments of main
     sharedN::addSharedComponents(&shareB);
     //end of blocks
     /******* Book Detail Page *******/
-    BookDetail::addBookDetailComponents(&bookDetailPage);
+    BookDetails::addBookDetailComponents(&bookDetailPage);
     /*********** Search Page ***************/
     SearchN::addSearchComponents(&searchingPage);
 

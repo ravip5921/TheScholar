@@ -304,7 +304,9 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == BOOK_DETAIL_P)
     {
-        if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
+
+    }
+        /*if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
         {
             PAGE = HOME_P;
         }
@@ -328,7 +330,7 @@ void mousePressed(int button, int state, int x, int y)
             FileWriter fw(userName);
             fw.Writer(4, "shared Book");
         }
-    }
+    }*/
     else if(PAGE == SEARCH_P){
         if(activePage[PAGE]->buttonPressed(&SearchN::backButton)){
             PAGE = HOME_P;

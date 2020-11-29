@@ -189,8 +189,21 @@ namespace Home
 }; //namespace Home
 
 /********* Book Detail Page *********/
-namespace BookDetail
+namespace BookDetails
 {
+    BookDetail page('R',"NAME");
+    void addBookDetailComponents(GUIPage * _bdPage)
+    {
+        _bdPage->addComponent(&page);
+    }
+    void changeBookName(std::string _name)
+    {
+    }
+    void changeMode(char _mode)
+    {
+    }
+
+    /*
     Color backButtonC(0.1, 0.3, 0.7);
     Color backButtonTextC(1, 1, 1);
     Color ButtonsC(0.6, 0.5, 0.8);
@@ -263,7 +276,7 @@ namespace BookDetail
         _bookDetailPage->addComponent(&bookmarkText);
         _bookDetailPage->addComponent(&shareUserName);
         _bookDetailPage->addComponent(&bookmarkDisplayText);
-    }
+    }*/
 }; // namespace BookDetail
 
 /********** Search Page *************/

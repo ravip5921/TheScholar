@@ -1,5 +1,4 @@
 #include "./RenderingFunction.h"
-
 class GUIcomponent
 {
 protected:
@@ -570,6 +569,169 @@ public:
         return;
     }
 };
+class BookDetail : public GUIcomponent
+{
+    std::string bookname;
+    std::vector<std::string> bookDes;
+    char mode;
+    float bookNamePosX;
+    float bookNamePosY;
+    float descriptionX;
+    float descriptionY;
+    float featureButtonX;
+    float featureButtonY;
+
+    Color navButtonC;
+    Color featureButtonC;
+    Color titleTextC;
+    Color subTitleTextC;
+    Color textboxC;
+    Color textboxTextC;
+
+    Coord_Rect backButtonD;
+    Coord_Rect openBookButtonD;
+
+    Button backButton;
+    Button openBookButton;
+    Button readingButton;
+    Button completedButton;
+    Button sharedButton;
+    Button favouriteButton;
+    Button reviewButton;
+    Button bookmarkButton;
+
+    void *f1;
+    void *f2;
+
+public:
+    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(1, 1, 1), Color _featureButtonC = Color(1, 1, 1), Color _titleTextC = Color(1, 1, 1), Color _subTitleTextC = Color(1, 1, 1), Color _textboxC = Color(1, 1, 1), Color _textboxTextC = Color(1, 1, 1), Coord_Rect _backButtonD = Coord_Rect(8, 8, 2, 1.7), Coord_Rect _openBookButtonD = Coord_Rect(7, -6, 2.5, 1.7), float _bookNamePosX = -4, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 1, float _featureButtonY = 1, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton)
+    {
+        mode = _mode;
+        bookname = _bookname;
+        bookNamePosX = _bookNamePosX;
+        bookNamePosY = _bookNamePosY;
+        descriptionX = _descriptionX;
+        descriptionY = _descriptionY;
+        featureButtonX = _featureButtonX;
+        featureButtonY = featureButtonY;
+        Button backButton("Back", navButtonC, titleTextC, backButtonD);
+        Button openBookButton("OPEN BOOK", navButtonC, titleTextC, openBookButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        setDescription();
+        setButtons();
+        f1 = GLUT_BITMAP_HELVETICA_18;
+        f2 = GLUT_BITMAP_HELVETICA_12;
+    }
+    void setDescription();
+    void setButtons();
+    void showBookDescription();
+    void render();
+    void mouseHandler(int button, int state, int x, int y);
+    void keyboardHandler(unsigned char key, int x, int y);
+    void mouseMotionHandler(int x, int y)
+    {
+        return;
+    }
+};
+void BookDetail::setDescription()
+{
+    bookDes.push_back(bookname);
+    bookDes.push_back("AName");
+    bookDes.push_back("Genre");
+    bookDes.push_back("Date");
+    bookDes.push_back("ExtraDes");
+    bookDes.push_back("Review");
+    bookDes.push_back("BookMark");
+}
+void BookDetail::setButtons()
+{
+    if (mode == 'R')
+    {
+        completedButton = Button("Add to read", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        favouriteButton = Button("Add to favourite", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        sharedButton = Button("share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+    }
+    else if (mode == 'C')
+    {
+        reviewButton = Button("review", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        favouriteButton = Button("Add to favourite", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        sharedButton = Button("share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+    }
+    else if (mode == 'F')
+    {
+        bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        sharedButton = Button("share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+    }
+    else if (mode == 'S')
+    {
+        readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2, 2.5, 1.5), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+    }
+}
+void BookDetail::showBookDescription()
+{
+    printText(bookNamePosX, bookNamePosY, titleTextC, bookDes[0], f1);
+    printText(bookNamePosX + 7, bookNamePosY, titleTextC, "Rating: ", f1);
+    printText(descriptionX, descriptionY, titleTextC, "Author Name:", f1);
+    printText(descriptionX, descriptionY - 1.5, titleTextC, "Genre:", f1);
+    printText(descriptionX, descriptionY - 3, titleTextC, "Published date:", f1);
+    printText(descriptionX, descriptionY - 4.5, titleTextC, "Description:", f1);
+    printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark", f1);
+  printText(descriptionX + 5, descriptionY, subTitleTextC, bookDes[1], f2);
+    printText(descriptionX + 5, descriptionY-1.5, subTitleTextC, bookDes[2], f2);
+      printText(descriptionX + 5, descriptionY-3, subTitleTextC, bookDes[3], f2);
+        printText(descriptionX + 5, descriptionY-4.5, subTitleTextC, bookDes[4], f2);
+          printText(descriptionX + 5, descriptionY-11, subTitleTextC, bookDes[6], f2);
+            textboxC.applyColor();
+          glDrawP(Coord_Rect(descriptionX,descriptionY-9.7,13,5));
+    printText(bookNamePosX + 10, bookNamePosY, subTitleTextC, bookDes[5], f1);
+}
+void BookDetail::render()
+{
+    showBookDescription();
+    if (mode == 'R')
+    {
+    }
+    else if (mode == 'C')
+    {
+    }
+    else if (mode == 'F')
+    {
+    }
+    else if (mode == 'S')
+    {
+    }
+}
+void BookDetail::mouseHandler(int button, int state, int x, int y)
+{
+    if (mode == 'R')
+    {
+    }
+    else if (mode == 'C')
+    {
+    }
+    else if (mode == 'F')
+    {
+    }
+    else if (mode == 'S')
+    {
+    }
+}
+void BookDetail::keyboardHandler(unsigned char key, int x, int y)
+{
+    if (mode == 'R')
+    {
+    }
+    else if (mode == 'C')
+    {
+    }
+    else if (mode == 'F')
+    {
+    }
+    else if (mode == 'S')
+    {
+    }
+}
 class GUIBlock
 {
     std::vector<GUIcomponent *> components;

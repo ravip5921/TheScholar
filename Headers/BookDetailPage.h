@@ -1,6 +1,4 @@
-#include "./GUICompClass.h"
-#include <vector>
-class BookDetail : GUIcomponent
+class BookDetail : public GUIcomponent
 {
     std::string bookname;
     std::vector<std::string> bookDes;

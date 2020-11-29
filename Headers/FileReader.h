@@ -24,7 +24,7 @@ public:
     FileReader(std::string username) : username(std::move(username)) {}
 
     std::vector<std::string> Reader(const int choice);
-    std::vector<std::string> ReaderPages(const int choice);
+    //std::vector<std::string> ReaderPages(const int choice);
 };
 
 std::vector<std::string> FileReader::Reader(const int choice)
@@ -39,8 +39,15 @@ std::vector<std::string> FileReader::Reader(const int choice)
             path = path + string("\\\\reading.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                books.push_back(myText);
                 getline(fileReader,pages);
+                if(pages == "$"){
+                    pages = "";
+                }
+                else{
+                    pages ="        Page " + pages;
+                }
+                myText = myText + pages;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -49,10 +56,16 @@ std::vector<std::string> FileReader::Reader(const int choice)
         {
             path = path + string("\\\\completed.txt");
             fileReader.open(path.c_str());
-            while (getline(fileReader, myText))
-            { // text data from text file stored in vector
-                books.push_back(myText);
+            while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
+                if(pages == "$"){
+                    pages = "";
+                }
+                else{
+                    pages ="        Page " + pages;
+                }
+                myText = myText + pages;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -61,10 +74,16 @@ std::vector<std::string> FileReader::Reader(const int choice)
         {
             path = path + string("\\\\share.txt");
             fileReader.open(path.c_str());
-            while (getline(fileReader, myText))
-            { // text data from text file stored in vector
-                books.push_back(myText);
+            while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
+                if(pages == "$"){
+                    pages = "";
+                }
+                else{
+                    pages ="        Page " + pages;
+                }
+                myText = myText + pages;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -73,10 +92,16 @@ std::vector<std::string> FileReader::Reader(const int choice)
         {
             path = path + string("\\\\favourite.txt");
             fileReader.open(path.c_str());
-            while (getline(fileReader, myText))
-            { // text data from text file stored in vector
-                books.push_back(myText);
+            while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
+                if(pages == "$"){
+                    pages = "";
+                }
+                else{
+                    pages ="        Page " + pages;
+                }
+                myText = myText + pages;
+                books.push_back(myText);
                 i++;
             }
             fileReader.close();
@@ -89,7 +114,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
     return books;
 }
 
-std::vector<std::string> FileReader::ReaderPages(const int choice)
+/*std::vector<std::string> FileReader::ReaderPages(const int choice)
 {
     if (username != "")
     {
@@ -146,4 +171,4 @@ std::vector<std::string> FileReader::ReaderPages(const int choice)
         }
     }
     return bookmarkPages;
-}
+}*/

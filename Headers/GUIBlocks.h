@@ -5,7 +5,7 @@ namespace readingN
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
-    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
+    Coord_Rect BookListD(-8.5, -6.5, 12, 10);
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListReading(dataf, BookListD, 8, scrollBoxC);
@@ -15,7 +15,7 @@ namespace readingN
     {
         BookListReading.setActive(true);
         _readingPage->addComponent(&BookListReading);
-        _readingPage->addComponent(&refreshButton);
+//        _readingPage->addComponent(&refreshButton);
     }
 
 } // namespace readingN
@@ -26,7 +26,7 @@ namespace completedN
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
-    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
+    Coord_Rect BookListD(-8.5, -6.5, 12, 10);
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListCompleted(dataf, BookListD, 8, scrollBoxC);
@@ -35,7 +35,7 @@ namespace completedN
     void addCompletedComponents(GUIBlock *_completedPage)
     {
         _completedPage->addComponent(&BookListCompleted);
-        _completedPage->addComponent(&refreshButton);
+//        _completedPage->addComponent(&refreshButton);
     }
 } // namespace completedN
 /**** favourite block *****/
@@ -45,7 +45,7 @@ namespace favouriteN
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
-    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
+    Coord_Rect BookListD(-8.5, -6.5, 12, 10);
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListFavourite(dataf, BookListD, 8, scrollBoxC);
@@ -54,7 +54,7 @@ namespace favouriteN
     void addFavouriteComponents(GUIBlock *_favouritePage)
     {
         _favouritePage->addComponent(&BookListFavourite);
-        _favouritePage->addComponent(&refreshButton);
+//        _favouritePage->addComponent(&refreshButton);
     }
 } // namespace favouriteN
 /**** shared block ****/
@@ -64,7 +64,7 @@ namespace sharedN
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
-    Coord_Rect BookListD(-8.5, -6.5, 8, 10);
+    Coord_Rect BookListD(-8.5, -6.5, 12, 10);
     Coord_Rect refreshButtonD(-8.75, -7.75, 1.9, 1);
 
     ScrollBox BookListShare(dataf, BookListD, 8, scrollBoxC);
@@ -73,6 +73,6 @@ namespace sharedN
     void addSharedComponents(GUIBlock *_sharedPage)
     {
         _sharedPage->addComponent(&BookListShare);
-        _sharedPage->addComponent(&refreshButton);
+//        _sharedPage->addComponent(&refreshButton);
     }
 } // namespace sharedN

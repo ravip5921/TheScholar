@@ -142,41 +142,25 @@ namespace SignUp
 /********* Home page **********/
 namespace Home
 {
-    float searchX = 2.7;
-    float searchY = 4.5;
-    float searchW = 7;
-    float searchH = 1.3;
-    float gap = 1;
-
     Color userNameC(1, 1, 1);
     Color logoutButtonC(0.1, 0.3, 0.7);
     Color logoutButtonTextC(1, 1, 1);
     Color miniButtonsC(1, 0.5, 0.6);
     Color searchBoxC(0.9, 0.9, 0.8);
-    Color searchBoxTextC(0, 0, 0);
 
     Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
-    Coord_Rect backgroundD(-9, -8, 9.25, 13.65);
+    Coord_Rect backgroundD(-9, -8, 18, 13.65);
     Coord_Rect reading(-9, 5.6, 2.3, 0.9);
     Coord_Rect completed(-6.5, 5.6, 2.3, 0.9);
     Coord_Rect favourite(-4, 5.6, 2.3, 0.9);
     Coord_Rect shared(-1.5, 5.6, 1.75, 0.9);
     Coord_Rect BookButtonD(-1, 7.5, 2.5, 1.1); //trial for book detail
-    Coord_Rect SNameD(searchX, searchY - gap - 1.5, searchW, searchH);
-    Coord_Rect SAuthorD(SNameD, 'y', -gap - 1);
-    Coord_Rect SGenreD(SAuthorD, 'y', -gap - 1);
-    Coord_Rect SDateD(SGenreD, 'y', -gap - 1);
-    Coord_Rect SBoxD(searchX + 2, searchY - 11, 2.5, 1.1);
+    Coord_Rect SBoxD(-4, 7.5, 2.5, 1.1);
 
     Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
-    Text SNameT(searchX, searchY - gap, userNameC, "Name:", GLUT_BITMAP_HELVETICA_12);
-    Text SAuthorT(searchX, searchY - gap - 2, userNameC, "Author:", GLUT_BITMAP_HELVETICA_12);
-    Text SGenreT(searchX, searchY - gap - 4, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_12);
-    Text SDateT(searchX, searchY - gap - 6, userNameC, "Date:", GLUT_BITMAP_HELVETICA_12);
-    TextBox SNameB(SNameD, searchBoxC, searchBoxTextC, true);
-    TextBox SAuthorB(SAuthorD, searchBoxC, searchBoxTextC);
-    TextBox SGenreB(SGenreD, searchBoxC, searchBoxTextC);
-    TextBox SDateB(SDateD, searchBoxC, searchBoxTextC);
+    Text bookNameDis(-8,4,userNameC,"Book Name:",GLUT_BITMAP_HELVETICA_12);
+    Text bookmarkDis(0,4,userNameC,"Page bookmarked:",GLUT_BITMAP_HELVETICA_12);
+
     rectBox background(backgroundD, miniButtonsC);
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
     Button bookButton("Book Detail", logoutButtonC, logoutButtonTextC, BookButtonD, CHAR_WIDTH * 1.3, CHAR_WIDTH * 1.3); //trial for book detail
@@ -198,22 +182,15 @@ namespace Home
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&bookButton);
         _homePage->addComponent(&background);
-        _homePage->addComponent(&SNameT);
-        _homePage->addComponent(&SAuthorT);
-        _homePage->addComponent(&SGenreT);
-        _homePage->addComponent(&SDateT);
-        _homePage->addComponent(&SNameB);
-        _homePage->addComponent(&SAuthorB);
-        _homePage->addComponent(&SGenreB);
-        _homePage->addComponent(&SDateB);
         _homePage->addComponent(&searchButton);
+        _homePage->addComponent(&bookmarkDis);
+        _homePage->addComponent(&bookNameDis);
     }
 }; //namespace Home
 
 /********* Book Detail Page *********/
 namespace BookDetail
 {
-
     Color backButtonC(0.1, 0.3, 0.7);
     Color backButtonTextC(1, 1, 1);
     Color ButtonsC(0.6, 0.5, 0.8);
@@ -288,3 +265,51 @@ namespace BookDetail
         _bookDetailPage->addComponent(&bookmarkDisplayText);
     }
 }; // namespace BookDetail
+
+/********** Search Page *************/
+namespace SearchN{
+
+    float searchX = 2.7;
+    float searchY = 4.5;
+    float searchW = 7;
+    float searchH = 1.3;
+    float gap = 1;
+
+    Color backButtonC(0.1, 0.3, 0.7);
+    Color backButtonTextC(1, 1, 1);
+    Color userNameC(1, 1, 1);
+    Color searchBoxC(0.9, 0.9, 0.8);
+    Color searchBoxTextC(0, 0, 0);
+
+    Coord_Rect SNameD(searchX, searchY - gap - 1.5, searchW, searchH);
+    Coord_Rect SAuthorD(SNameD, 'y', -gap - 1);
+    Coord_Rect SGenreD(SAuthorD, 'y', -gap - 1);
+    Coord_Rect SDateD(SGenreD, 'y', -gap - 1);
+    Coord_Rect SBoxD(searchX + 2, searchY - 11, 2.5, 1.1);
+    Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
+
+    Text SNameT(searchX, searchY - gap, userNameC, "Name:", GLUT_BITMAP_HELVETICA_12);
+    Text SAuthorT(searchX, searchY - gap - 2, userNameC, "Author:", GLUT_BITMAP_HELVETICA_12);
+    Text SGenreT(searchX, searchY - gap - 4, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_12);
+    Text SDateT(searchX, searchY - gap - 6, userNameC, "Date:", GLUT_BITMAP_HELVETICA_12);
+
+    TextBox SNameB(SNameD, searchBoxC, searchBoxTextC, true);
+    TextBox SAuthorB(SAuthorD, searchBoxC, searchBoxTextC);
+    TextBox SGenreB(SGenreD, searchBoxC, searchBoxTextC);
+    TextBox SDateB(SDateD, searchBoxC, searchBoxTextC);
+
+    Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
+
+    void addSearchComponents(GUIPage * _searchPage){
+
+        _searchPage->addComponent(&SNameT);
+        _searchPage->addComponent(&SAuthorT);
+        _searchPage->addComponent(&SGenreT);
+        _searchPage->addComponent(&SDateT);
+        _searchPage->addComponent(&SNameB);
+        _searchPage->addComponent(&SAuthorB);
+        _searchPage->addComponent(&SGenreB);
+        _searchPage->addComponent(&SDateB);
+        _searchPage->addComponent(&backButton);
+    }
+}

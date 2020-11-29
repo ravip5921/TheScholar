@@ -47,6 +47,20 @@ void printText(float x, float y, Color rgb = Color(1, 1, 1), const char *text = 
     glColor3f(1.0, 1.0, 0.0);
     glutPostRedisplay();
 }
+void printText(float x, float y, Color rgb = Color(1, 1, 1), std::string text = "", void *font = GLUT_BITMAP_HELVETICA_12)
+{
+    rgb.applyColor();
+    char *c;
+    glRasterPos2f(x, y);
+    char buf[100] = {0};
+    sprintf(buf, text.c_str());
+    for (c = buf; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(font, *c);
+    }
+    glColor3f(1.0, 1.0, 0.0);
+    glutPostRedisplay();
+}
 void printText(std::string tex, double x, double y, float max_x, void *font)
 {
     glRasterPos2d(x, y);

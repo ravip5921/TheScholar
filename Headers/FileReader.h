@@ -44,7 +44,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
                     pages = "";
                 }
                 else{
-                    pages ="        Page " + pages;
+                    pages ="                                                      Page " + pages;
                 }
                 myText = myText + pages;
                 books.push_back(myText);
@@ -62,7 +62,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
                     pages = "";
                 }
                 else{
-                    pages ="        Page " + pages;
+                    pages ="                                                      Page " + pages;
                 }
                 myText = myText + pages;
                 books.push_back(myText);
@@ -80,7 +80,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
                     pages = "";
                 }
                 else{
-                    pages ="        Page " + pages;
+                    pages ="                                                      Page " + pages;
                 }
                 myText = myText + pages;
                 books.push_back(myText);
@@ -98,7 +98,7 @@ std::vector<std::string> FileReader::Reader(const int choice)
                     pages = "";
                 }
                 else{
-                    pages ="        Page " + pages;
+                    pages ="                                                      Page " + pages;
                 }
                 myText = myText + pages;
                 books.push_back(myText);

@@ -28,6 +28,8 @@ int main(int argc, char **argv) //default arguments of main
     //end of blocks
     /******* Book Detail Page *******/
     BookDetail::addBookDetailComponents(&bookDetailPage);
+    /*********** Search Page ***************/
+    SearchN::addSearchComponents(&searchingPage);
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);

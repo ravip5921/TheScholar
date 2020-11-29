@@ -406,11 +406,12 @@ public:
     }
     std::string getButtonText(int button, int state, int x, int y)
     {
-        for (int i = 0; i < maxN; i++)
-            if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-            {
-                return dataB[i].getText();
-            }
+        if (isActive())
+            for (int i = 0; i < maxN; i++)
+                if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+                {
+                    return dataB[i].getText();
+                }
         return "";
     }
     void render()
@@ -564,6 +565,10 @@ public:
         if (_button->isActive())
             return true;
         return false;
+    }
+    void setActiveScrollBox(ScrollBox *_sb, bool _value)
+    {
+        _sb->setActive(_value);
     }
     std::string getText(TextBox *_textbox)
     {

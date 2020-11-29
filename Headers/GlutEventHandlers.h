@@ -236,18 +236,34 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
             BLOCK = READING_MP;
+            activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, true);
+            activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::completedButton))
         {
             BLOCK = COMPLETED_MP;
+            activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, true);
+            activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::favouriteButton))
         {
             BLOCK = FAVOURITE_MP;
+            activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, true);
+            activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::sharedButton))
         {
             BLOCK = SHARED_MP;
+            activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, true);
         }
         //trial for book detail page
         else if (activePage[PAGE]->buttonPressed(&Home::bookButton))
@@ -258,28 +274,30 @@ void mousePressed(int button, int state, int x, int y)
         {
             getSearchResults();
         }
-        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
+
         else if (activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton))
         {
             readingN::BookListReading.refreshBox();
         }
-        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
+
         else if (activeBlock[BLOCK]->buttonPressed(&completedN::refreshButton))
         {
             completedN::BookListCompleted.refreshBox();
         }
 
-        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
         else if (activeBlock[BLOCK]->buttonPressed(&favouriteN::refreshButton))
         {
             favouriteN::BookListFavourite.refreshBox();
         }
 
-        //std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
         else if (activeBlock[BLOCK]->buttonPressed(&sharedN::refreshButton))
         {
             sharedN::BookListShare.refreshBox();
         }
+        std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
+        std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
+        std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
+        std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
     }
     else if (PAGE == BOOK_DETAIL_P)
     {

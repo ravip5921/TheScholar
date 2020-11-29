@@ -24,6 +24,7 @@ GUIPage signupPage;
 GUIPage welcomePage;
 GUIPage homePage;
 GUIPage bookDetailPage;
+GUIPage searchingPage;
 
 /*** Navigate Pages ****/
 int PAGE = 0;
@@ -33,10 +34,11 @@ enum
     LOGIN_P = 1,
     SIGNUP_P = 2,
     HOME_P = 3,
-    BOOK_DETAIL_P = 4
+    BOOK_DETAIL_P = 4,
+    SEARCH_P =5
 };
 
-std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage, &homePage, &bookDetailPage};
+std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage, &homePage, &bookDetailPage, &searchingPage};
 //end of page navigator
 
 //for blocks
@@ -272,27 +274,9 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressed(&Home::searchButton))
         {
-            getSearchResults();
-        }
-        else if (activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton))
-        {
-            readingN::BookListReading.refreshBox();
+            PAGE = SEARCH_P;
         }
 
-        else if (activeBlock[BLOCK]->buttonPressed(&completedN::refreshButton))
-        {
-            completedN::BookListCompleted.refreshBox();
-        }
-
-        else if (activeBlock[BLOCK]->buttonPressed(&favouriteN::refreshButton))
-        {
-            favouriteN::BookListFavourite.refreshBox();
-        }
-
-        else if (activeBlock[BLOCK]->buttonPressed(&sharedN::refreshButton))
-        {
-            sharedN::BookListShare.refreshBox();
-        }
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
@@ -300,7 +284,9 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == BOOK_DETAIL_P)
     {
-        if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
+
+    }
+        /*if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
         {
             PAGE = HOME_P;
         }
@@ -323,6 +309,14 @@ void mousePressed(int button, int state, int x, int y)
         {
             FileWriter fw(userName);
             fw.Writer(4, "shared Book");
+        }*/
+    else if(PAGE == SEARCH_P){
+        if(activePage[PAGE]->buttonPressed(&SearchN::backButton)){
+            PAGE = HOME_P;
+        }
+        else if (activePage[PAGE]->buttonPressed(&SearchN::searchButton))
+        {
+            getSearchResults();
         }
     }
 }
@@ -442,26 +436,26 @@ void keyPressed(unsigned char key, int x, int y)
             }
         }
     }
-    else if (PAGE == HOME_P)
+    else if (PAGE == SEARCH_P)
     {
         if (key == ENTER_KEY || key == TAB_KEY)
         {
-            if (activePage[PAGE]->isActiveBox(&Home::SNameB))
+            if (activePage[PAGE]->isActiveBox(&SearchN::SNameB))
             {
-                activePage[PAGE]->setActiveBox(&Home::SAuthorB, true);
-                activePage[PAGE]->setActiveBox(&Home::SNameB, false);
+                activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, true);
+                activePage[PAGE]->setActiveBox(&SearchN::SNameB, false);
             }
-            else if (activePage[PAGE]->isActiveBox(&Home::SAuthorB))
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SAuthorB))
             {
-                activePage[PAGE]->setActiveBox(&Home::SGenreB, true);
-                activePage[PAGE]->setActiveBox(&Home::SAuthorB, false);
+                activePage[PAGE]->setActiveBox(&SearchN::SGenreB, true);
+                activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
             }
-            else if (activePage[PAGE]->isActiveBox(&Home::SGenreB))
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SGenreB))
             {
-                activePage[PAGE]->setActiveBox(&Home::SDateB, true);
-                activePage[PAGE]->setActiveBox(&Home::SGenreB, false);
+                activePage[PAGE]->setActiveBox(&SearchN::SDateB, true);
+                activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);
             }
-            else if (activePage[PAGE]->isActiveBox(&Home::SDateB) && key == ENTER_KEY)
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SDateB) && key == ENTER_KEY)
             {
                 getSearchResults();
             }
@@ -499,16 +493,16 @@ void showClock()
 }
 void getSearchResults()
 {
-    std::cout << activePage[PAGE]->getText(&Home::SNameB) << std::endl;
-    std::cout << activePage[PAGE]->getText(&Home::SAuthorB) << std::endl;
-    std::cout << activePage[PAGE]->getText(&Home::SGenreB) << std::endl;
-    std::cout << activePage[PAGE]->getText(&Home::SDateB) << std::endl;
-    activePage[PAGE]->setText(&Home::SNameB, "");
-    activePage[PAGE]->setText(&Home::SAuthorB, "");
-    activePage[PAGE]->setText(&Home::SGenreB, "");
-    activePage[PAGE]->setText(&Home::SDateB, "");
-    activePage[PAGE]->setActiveBox(&Home::SNameB, true);
-    activePage[PAGE]->setActiveBox(&Home::SAuthorB, false);
-    activePage[PAGE]->setActiveBox(&Home::SGenreB, false);
-    activePage[PAGE]->setActiveBox(&Home::SDateB, false);
+    std::cout << activePage[PAGE]->getText(&SearchN::SNameB) << std::endl;
+    std::cout << activePage[PAGE]->getText(&SearchN::SAuthorB) << std::endl;
+    std::cout << activePage[PAGE]->getText(&SearchN::SGenreB) << std::endl;
+   std::cout << activePage[PAGE]->getText(&SearchN::SDateB) << std::endl;
+    activePage[PAGE]->setText(&SearchN::SNameB, "");
+    activePage[PAGE]->setText(&SearchN::SAuthorB, "");
+    activePage[PAGE]->setText(&SearchN::SGenreB, "");
+    activePage[PAGE]->setText(&SearchN::SDateB, "");
+    activePage[PAGE]->setActiveBox(&SearchN::SNameB, true);
+    activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
+    activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);
+    activePage[PAGE]->setActiveBox(&SearchN::SDateB, false);
 }

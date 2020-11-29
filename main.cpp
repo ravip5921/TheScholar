@@ -26,6 +26,7 @@ int main(int argc, char **argv) //default arguments of main
     favouriteN::addFavouriteComponents(&favouriteB);
     sharedN::addSharedComponents(&shareB);
     //end of blocks
+
     /******* Book Detail Page *******/
     BookDetails::addBookDetailComponents(&bookDetailPage);
     /*********** Search Page ***************/

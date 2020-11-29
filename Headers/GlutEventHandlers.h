@@ -275,28 +275,8 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressed(&Home::searchButton))
         {
             PAGE = SEARCH_P;
-            //getSearchResults();
         }
 
-        else if (activeBlock[BLOCK]->buttonPressed(&readingN::refreshButton))
-        {
-            readingN::BookListReading.refreshBox();
-        }
-
-        else if (activeBlock[BLOCK]->buttonPressed(&completedN::refreshButton))
-        {
-            completedN::BookListCompleted.refreshBox();
-        }
-
-        else if (activeBlock[BLOCK]->buttonPressed(&favouriteN::refreshButton))
-        {
-            favouriteN::BookListFavourite.refreshBox();
-        }
-
-        else if (activeBlock[BLOCK]->buttonPressed(&sharedN::refreshButton))
-        {
-            sharedN::BookListShare.refreshBox();
-        }
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
         std::cout << activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
@@ -329,11 +309,14 @@ void mousePressed(int button, int state, int x, int y)
         {
             FileWriter fw(userName);
             fw.Writer(4, "shared Book");
-        }
-    }*/
+        }*/
     else if(PAGE == SEARCH_P){
         if(activePage[PAGE]->buttonPressed(&SearchN::backButton)){
             PAGE = HOME_P;
+        }
+        else if (activePage[PAGE]->buttonPressed(&SearchN::searchButton))
+        {
+            getSearchResults();
         }
     }
 }

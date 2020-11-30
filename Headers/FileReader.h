@@ -24,7 +24,7 @@ public:
     FileReader(std::string username) : username(std::move(username)) {}
 
     std::vector<std::string> Reader(const int choice);
-    //std::vector<std::string> ReaderPages(const int choice);
+    std::vector<std::string> ReaderPages(const int choice);
 };
 
 std::vector<std::string> FileReader::Reader(const int choice)
@@ -40,13 +40,13 @@ std::vector<std::string> FileReader::Reader(const int choice)
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(pages == "$"){
+             /*   if(pages == "$"){
                     pages = "";
                 }
                 else{
                     pages ="                                                      Page " + pages;
                 }
-                myText = myText + pages;
+                myText = myText + pages;*/
                 books.push_back(myText);
                 i++;
             }
@@ -58,13 +58,13 @@ std::vector<std::string> FileReader::Reader(const int choice)
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(pages == "$"){
+                /*if(pages == "$"){
                     pages = "";
                 }
                 else{
                     pages ="                                                      Page " + pages;
                 }
-                myText = myText + pages;
+                myText = myText + pages;*/
                 books.push_back(myText);
                 i++;
             }
@@ -76,13 +76,13 @@ std::vector<std::string> FileReader::Reader(const int choice)
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(pages == "$"){
+                /*if(pages == "$"){
                     pages = "";
                 }
                 else{
                     pages ="                                                      Page " + pages;
                 }
-                myText = myText + pages;
+                myText = myText + pages;*/
                 books.push_back(myText);
                 i++;
             }
@@ -94,13 +94,13 @@ std::vector<std::string> FileReader::Reader(const int choice)
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(pages == "$"){
+                /*if(pages == "$"){
                     pages = "";
                 }
                 else{
                     pages ="                                                      Page " + pages;
                 }
-                myText = myText + pages;
+                myText = myText + pages;*/
                 books.push_back(myText);
                 i++;
             }

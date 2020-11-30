@@ -159,7 +159,7 @@ namespace Home
 
     Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
     Text bookNameDis(-8, 4, userNameC, "Book Name:", GLUT_BITMAP_HELVETICA_12);
-    Text bookmarkDis(0, 4, userNameC, "Page bookmarked:", GLUT_BITMAP_HELVETICA_12);
+    //Text bookmarkDis(0, 4, userNameC, "Page bookmarked:", GLUT_BITMAP_HELVETICA_12);
 
     rectBox background(backgroundD, miniButtonsC);
     Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
@@ -183,7 +183,7 @@ namespace Home
         _homePage->addComponent(&bookButton);
         _homePage->addComponent(&background);
         _homePage->addComponent(&searchButton);
-        _homePage->addComponent(&bookmarkDis);
+        //_homePage->addComponent(&bookmarkDis);
         _homePage->addComponent(&bookNameDis);
     }
 }; //namespace Home

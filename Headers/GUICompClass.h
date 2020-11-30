@@ -404,6 +404,12 @@ public:
             dataB.push_back(button);
         }
     }
+    bool buttonPressed(int button,int state,int x,int y)
+    {
+        if(dim.liesInside(toFloatX(x),toFloatY(y)) && button==GLUT_LEFT && state== GLUT_DOWN)
+            return true;
+        return false;
+    }
     void refreshBox()
     {
         dec = ((scrollerY - dim.gety()) / (data.size() - maxN));
@@ -844,6 +850,10 @@ public:
         if (_button->isActive())
             return true;
         return false;
+    }
+    bool buttonPressed(int button,int state,int x,int y,ScrollBox * _sb)
+    {
+        return _sb->buttonPressed(button,state,x,y);
     }
     void setActiveScrollBox(ScrollBox *_sb, bool _value)
     {

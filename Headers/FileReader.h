@@ -135,6 +135,7 @@ std::string FileReader::ReaderPage(const int choice,string book){
             fileReader.close();
             return "";
         }
+        return "";
 
 
 }

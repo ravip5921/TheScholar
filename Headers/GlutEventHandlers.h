@@ -279,20 +279,24 @@ void mousePressed(int button, int state, int x, int y)
         if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&readingN::BookListReading))
         {
             bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
+            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
             PAGE=BOOK_DETAIL_P;
         }
-        else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&completedN::BookListCompleted))
+        else if(activeBlock[COMPLETED_MP]->buttonPressed(button,state,x,y,&completedN::BookListCompleted))
         {
+            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
             bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
             PAGE=BOOK_DETAIL_P;
         }
         else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&favouriteN::BookListFavourite))
         {
+            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
             bookNameSB=activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
             PAGE=BOOK_DETAIL_P;
         }
         else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&sharedN::BookListShare))
         {
+            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
             PAGE=BOOK_DETAIL_P;
         }

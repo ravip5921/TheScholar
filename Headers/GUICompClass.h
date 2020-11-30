@@ -321,7 +321,7 @@ public:
     }
     void render()
     {
-        if (showB)
+          if (showB)
         {
             setActive(pressed);
             if (isActive())
@@ -384,7 +384,9 @@ public:
     {
         data = _data;
         maxN = _maxN;
-        top = 0;
+        //if(maxN>=data.size())
+        //{
+          top = 0;
         scrolled = false;
         scrollable = _scrollable;
         scrollerX = dim.getxw();
@@ -403,9 +405,12 @@ public:
             Button button(data[i], bgColor, textC, bDim[i], 0.1, 0.1);
             dataB.push_back(button);
         }
+       // }
+
     }
     bool buttonPressed(int button,int state,int x,int y)
     {
+        if(isActive())
         if(dim.liesInside(toFloatX(x),toFloatY(y)) && button==GLUT_LEFT && state== GLUT_DOWN)
             return true;
         return false;
@@ -418,10 +423,10 @@ public:
         {
             dataB[i].setText(data[i + top]);
         }
-        for (int j = i; j < maxN; j++)
+        /*for (int j = i; j < maxN; j++)
         {
             dataB[j].setText("");
-        }
+        }*/
     }
     void setData(std::vector<std::string> _data)
     {
@@ -438,6 +443,17 @@ public:
                 }
         return "";
     }
+    int getButtonIndex(int button, int state, int x, int y)
+    {
+        if (isActive())
+            for (int i = 0; i < maxN; i++)
+                if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+                {
+                    return i+top;
+                }
+        return 0;
+    }
+
     void render()
     {
         if (scrollable)
@@ -493,14 +509,14 @@ public:
                 }
                 else
                 {
-                    for (int i = 0; i < maxN; i++)
+                    for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
                         dataB[i].mouseHandler(button, state, x, y);
                 }
             }
         }
         else
         {
-            for (int i = 0; i < maxN; i++)
+            for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
                 dataB[i].mouseHandler(button, state, x, y);
         }
     }
@@ -891,6 +907,10 @@ public:
     {
         return sb->getButtonText(button, state, x, y);
     }
+    int getButtonIndex(int button, int state, int x, int y, ScrollBox *sb)
+    {
+        return sb->getButtonIndex(button, state, x, y);
+    }
     void render()
     {
         for (int i = 0; i < components.size(); i++)
@@ -931,6 +951,10 @@ public:
     {
         return _bd->buttonPressed(_button);
     }
+    bool buttonPressed(int button,int state,int x,int y,ScrollBox * _sb)
+    {
+        return _sb->buttonPressed(button,state,x,y);
+    }
     std::string getText(TextBox *_textbox)
     {
         return _textbox->getText();
@@ -970,6 +994,10 @@ public:
     std::string getButtonText(int button, int state, int x, int y, ScrollBox *sb)
     {
         return sb->getButtonText(button, state, x, y);
+    }
+    int getButtonIndex(int button, int state, int x, int y, ScrollBox *sb)
+    {
+        return sb->getButtonIndex(button, state, x, y);
     }
     void setTextBD(BookDetail *_bd, TextBox *_box, std::string _text)
     {

@@ -29,7 +29,7 @@ std::string userName = "";
 std::string password = "";
 std::string userNameN = "";
 std::string passwordN = "";
-std::vector<std::string> dataf = {"", "", "", "", "", "", "", "", "", ""};
+std::vector<std::string> dataf={"","","","","","","","","","","","","","","","",""};
 std::vector<std::string> books;
 std::string bookName = "";
 std::string bookmarkT;

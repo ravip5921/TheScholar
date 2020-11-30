@@ -397,6 +397,7 @@ void keyPressed(unsigned char key, int x, int y)
                     //reading scroll box
                     dataf = fr.Reader(READING_MP + 1);
                     activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
+                    //std::cout<<fr.ReaderPage(1,"reading Book 10")<<endl;
 
                     //completed scroll box
                     dataf = fr.Reader(COMPLETED_MP + 1);

@@ -24,7 +24,8 @@ public:
     FileReader(std::string username) : username(std::move(username)) {}
 
     std::vector<std::string> Reader(const int choice);
-    std::vector<std::string> ReaderPages(const int choice);
+    //std::vector<std::string> ReaderPages(const int choice);
+    std::string ReaderPage(const int choice,string book);
 };
 
 std::vector<std::string> FileReader::Reader(const int choice)
@@ -112,6 +113,30 @@ std::vector<std::string> FileReader::Reader(const int choice)
         }
     }
     return books;
+}
+
+std::string FileReader::ReaderPage(const int choice,string book){
+
+    ifstream fileReader;
+        path = std::string(".\\\\") + std::string("Users\\\\") + username;
+        if (choice == 1)
+        {
+            path = path + string("\\\\reading.txt");
+            fileReader.open(path.c_str());
+            while (getline(fileReader, myText)){ // text data from text file stored in vector
+                getline(fileReader,pages);
+                if(myText == book){
+                    fileReader.close();
+                    if(pages == "$")
+                        pages ="";
+                    return pages;
+                }
+            }
+            fileReader.close();
+            return "";
+        }
+
+
 }
 
 /*std::vector<std::string> FileReader::ReaderPages(const int choice)

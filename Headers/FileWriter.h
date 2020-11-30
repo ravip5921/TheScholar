@@ -7,7 +7,6 @@ Write string in .txt file,choice are:
     4.Share
 
 ******/
-
 class FileWriter
 {
 private:
@@ -20,13 +19,14 @@ public:
     }
 
     FileWriter(std::string username) : username(std::move(username)) {}
-
     void Writer(const int choice, std::string toWrite, std::string bookmarkPage= "$");
+    void maskBookName(const int position, char choice);
+    bool UserExists();
+
 };
 
 void FileWriter::Writer(const int choice, std::string toWrite, std::string bookmarkPage)
 {
-
     if (username != "")
     {
         ofstream fileWrite;
@@ -53,7 +53,6 @@ void FileWriter::Writer(const int choice, std::string toWrite, std::string bookm
             path = path + string("\\\\favourite.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
-            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else if (choice == 4)
@@ -61,7 +60,6 @@ void FileWriter::Writer(const int choice, std::string toWrite, std::string bookm
             path = path + string("\\\\share.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
-            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else
@@ -69,4 +67,15 @@ void FileWriter::Writer(const int choice, std::string toWrite, std::string bookm
             cout << "Invalid choice,unable to write";
         }
     }
+}
+
+bool FileWriter::UserExists()
+{
+    DirectoryHandler checkUserDir;
+    std::string checkDirPath = std::string(".\\\\") + std::string("Users\\\\") + username;
+    checkUserDir.setDirName(checkDirPath.data());
+    if (checkUserDir.exists()){
+        return true;
+    }
+    return false;
 }

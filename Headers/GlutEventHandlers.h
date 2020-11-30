@@ -219,7 +219,6 @@ void mousePressed(int button, int state, int x, int y)
     }
     else if (PAGE == HOME_P)
     {
-        std::string bookNameSB;
         activeBlock[BLOCK]->mouseHandler(button, state, x, y);
         activeBlock[BLOCK]->mouseMotionHandler(x, y);
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
@@ -320,6 +319,15 @@ void mousePressed(int button, int state, int x, int y)
         {
             shareT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.shareUser,"");
+        //write in share of another user
+            FileWriter shareWriter(shareT);
+            if(!shareWriter.UserExists()){
+                createErrorWindow("User does not exist");
+            }
+            else{
+                shareWriter.Writer(4,bookNameSB);
+            }
+
             std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
         }
     }

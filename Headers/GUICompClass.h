@@ -544,7 +544,6 @@ public:
 class BookDetail : public GUIcomponent
 {
     std::string bookname;
-    std::vector<std::string> bookDes;
     char mode;
     float bookNamePosX;
     float bookNamePosY;
@@ -566,6 +565,7 @@ class BookDetail : public GUIcomponent
     void *f2;
 
 public:
+    std::vector<std::string> bookDes;
     Button backButton;
     Button openBookButton;
     Button readingButton;

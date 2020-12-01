@@ -4,6 +4,7 @@
 #include "./GUIPages.h"
 #include "./ErrorWindow.h"
 #include "./GUIBlocks.h"
+#include "DatabaseSearch.h"
 //#include "./Events.h"
 
 void mousePressed(int button, int state, int x, int y);
@@ -563,18 +564,26 @@ void showClock()
 }
 void getSearchResults()
 {
-    std::cout << activePage[PAGE]->getText(&SearchN::SNameB) << std::endl;
-    std::cout << activePage[PAGE]->getText(&SearchN::SAuthorB) << std::endl;
-    std::cout << activePage[PAGE]->getText(&SearchN::SGenreB) << std::endl;
-   std::cout << activePage[PAGE]->getText(&SearchN::SDateB) << std::endl;
+    DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::NAME] = activePage[PAGE]->getText(&SearchN::SNameB);
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::AUTHOR] = activePage[PAGE]->getText(&SearchN::SAuthorB);
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = activePage[PAGE]->getText(&SearchN::SDateB);
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::GENRE] = activePage[PAGE]->getText(&SearchN::SGenreB);
+    DATABASE_SEARCH::bdlist.clear();
+    DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist);
+
+    std::vector<std::string> searchBookNameList;
+    for(int i=0; i<DATABASE_SEARCH::bdlist.size(); i++)
+        searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
+    SearchN::searchResultList.setData(searchBookNameList);
+
     activePage[PAGE]->setText(&SearchN::SNameB, "");
     activePage[PAGE]->setText(&SearchN::SAuthorB, "");
     activePage[PAGE]->setText(&SearchN::SGenreB, "");
     activePage[PAGE]->setText(&SearchN::SDateB, "");
-    activePage[PAGE]->setActiveBox(&SearchN::SNameB, true);
+    activePage[PAGE]->setActiveBox(&SearchN::SNameB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SDateB, false);
 }
-
 

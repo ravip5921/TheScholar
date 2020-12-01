@@ -288,6 +288,8 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
+            FileWriter masker(userName);
+            masker.maskBookName(bookNameIndex, 'C', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &favouriteN::BookListFavourite))
@@ -302,6 +304,8 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
+            FileWriter masker(userName);
+            masker.maskBookName(bookNameIndex, 'S', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         activePage[BOOK_DETAIL_P]->setDetails(&BookDetails::page, bookNameSB);

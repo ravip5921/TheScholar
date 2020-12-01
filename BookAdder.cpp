@@ -14,6 +14,8 @@ void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
 void getValues(BookDescriptor);
+void sortF();
+void finalSortF();
 int windowWidth();
 int windowHeight();
 
@@ -75,6 +77,14 @@ void mousePressed(int button, int state, int x, int y)
     {
         getValues(bd);
     }
+    else if(BookAdderPage.buttonPressed(&BookAdder::sortButton))
+    {
+        sortF();
+    }
+    else if(BookAdderPage.buttonPressed(&BookAdder::finalSortButton))
+    {
+        finalSortF();
+    }
 }
 void keyPressed(unsigned char key, int x, int y)
 {
@@ -127,12 +137,20 @@ void getValues(BookDescriptor bd)
     BookAdderPage.setActiveBox(&BookAdder::NameDataB, false);
     BookAdderPage.setActiveBox(&BookAdder::NameB, true);
 
-    BookAdderPage.setText(&BookAdder::NameB, "");
+    /*BookAdderPage.setText(&BookAdder::NameB, "");
     BookAdderPage.setText(&BookAdder::AuthorB, "");
     BookAdderPage.setText(&BookAdder::GenreB, "");
     BookAdderPage.setText(&BookAdder::DateB, "");
     BookAdderPage.setText(&BookAdder::ExtraDesB, "");
-    BookAdderPage.setText(&BookAdder::NameDataB, "");
+    BookAdderPage.setText(&BookAdder::NameDataB, "");*/
+}
+void sortF()
+{
+std::cout<<"Sort";
+}
+void finalSortF()
+{
+std::cout<<"Final Sort.";
 }
 int windowWidth()
 {

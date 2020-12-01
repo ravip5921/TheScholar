@@ -18,6 +18,8 @@ namespace BookAdder
     Coord_Rect ExtraDesD(DateD, 'y', -gap);
     Coord_Rect NameDataD(ExtraDesD, 'y', -gap);
     Coord_Rect addBookButtonD(X + 4, Y - (6.5 * gap), 3.4, 1.8);
+    Coord_Rect sortButtonD(X-5,Y-(7.5*gap),3,1);
+    Coord_Rect finalSortButtonD(X+8,Y-(7.5*gap),3,1);
 
     Text titleT(X + 1, Y + 2, titleC, "Add a new book:", GLUT_BITMAP_TIMES_ROMAN_24, true, addButtonC, 5, 1.5);
     Text NameT(X - 6, Y, textC, "Name:", GLUT_BITMAP_HELVETICA_18);
@@ -36,10 +38,14 @@ namespace BookAdder
     TextBox NameDataB(NameDataD, boxC, boxTextC);
 
     Button AddBookButton("Add Book ", addButtonC, textC, addBookButtonD);
+    Button sortButton("Sort ", addButtonC, textC,sortButtonD,CHAR_WIDTH*3.5,CHAR_WIDTH);
+    Button finalSortButton("Final Sort", addButtonC, textC,finalSortButtonD,CHAR_WIDTH,CHAR_WIDTH);
 
     void addBookAdderComponents(GUIPage *_page)
     {
         AddBookButton.setFont(GLUT_BITMAP_HELVETICA_18);
+        sortButton.setFont(GLUT_BITMAP_9_BY_15);
+        finalSortButton.setFont(GLUT_BITMAP_9_BY_15);
         _page->addComponent(&titleT);
         _page->addComponent(&NameT);
         _page->addComponent(&AuthorT);
@@ -55,6 +61,8 @@ namespace BookAdder
         _page->addComponent(&ExtraDesB);
         _page->addComponent(&NameDataB);
         _page->addComponent(&AddBookButton);
+        _page->addComponent(&sortButton);
+        _page->addComponent(&finalSortButton);
     }
 
 } // namespace BookAdder

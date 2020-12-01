@@ -76,8 +76,6 @@ public:
                 glutBitmapCharacter(f, '|');
             blinkerT++;
         }
-        else
-            blinkerT = 0;
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {

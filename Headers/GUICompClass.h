@@ -1,4 +1,5 @@
 #include "./RenderingFunction.h"
+#include "DatabaseSearch.h"
 class GUIcomponent
 {
 protected:
@@ -598,6 +599,7 @@ public:
         f2 = GLUT_BITMAP_HELVETICA_12;
     }
     void setDescription();
+    void setDescription(DATABASE_SEARCH::BookDescriptor& bd, std::string bookmark);
     void setButtonAndTextBox();
     void showBookDescription();
     void render();
@@ -647,6 +649,38 @@ void BookDetail::setDescription()
     bookDes.push_back("Review");
     bookDes.push_back("BookMark");
 }
+void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor& bd, std::string bookmark)
+{
+    bookDes.push_back(bd.name);
+    std::string AName = "";
+    for(int i=0; i<bd.authors_display.size();i++)
+    {
+         AName+= bd.authors_display[i];
+         if(i<bd.authors_display.size()-1)
+            AName+= ", ";
+    }
+    bookDes.push_back(AName);
+    std::string genre = "";
+    for(int i=0; i<bd.genres.size();i++)
+    {
+         genre+= bd.genres[i];
+         if(i<bd.genres.size()-1)
+            genre+= ", ";
+    }
+    bookDes.push_back(genre);
+    bookDes.push_back(bd.date);
+    std::string extdes = "";
+    for(int i=0; i<bd.genres.size();i++)
+    {
+         extdes+= bd.genres[i];
+         if(i<bd.genres.size()-1)
+            extdes+= ". ";
+    }
+    bookDes.push_back(extdes);
+    bookDes.push_back(std::to_string(bd.review));
+    bookDes.push_back(bookmark);
+}
+
 void BookDetail::setButtonAndTextBox()
 {
     if (mode == 'R')

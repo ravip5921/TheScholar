@@ -36,7 +36,7 @@ enum
     SIGNUP_P = 2,
     HOME_P = 3,
     BOOK_DETAIL_P = 4,
-    SEARCH_P =5
+    SEARCH_P = 5
 };
 
 std::vector<GUIPage *> activePage = {&welcomePage, &loginPage, &signupPage, &homePage, &bookDetailPage, &searchingPage};
@@ -276,69 +276,71 @@ void mousePressed(int button, int state, int x, int y)
         {
             PAGE = SEARCH_P;
         }
-        if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&readingN::BookListReading))
+        if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &readingN::BookListReading))
         {
-            bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
-            bookNameIndex= activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
+            bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
+            bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
             FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex,'R',bookNameSB);
-            PAGE=BOOK_DETAIL_P;
+            masker.maskBookName(bookNameIndex, 'R', bookNameSB);
+            PAGE = BOOK_DETAIL_P;
         }
-        else if(activeBlock[COMPLETED_MP]->buttonPressed(button,state,x,y,&completedN::BookListCompleted))
+        else if (activeBlock[COMPLETED_MP]->buttonPressed(button, state, x, y, &completedN::BookListCompleted))
         {
-            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
-            bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
-            PAGE=BOOK_DETAIL_P;
+            bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
+            bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
+            PAGE = BOOK_DETAIL_P;
         }
-        else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&favouriteN::BookListFavourite))
+        else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &favouriteN::BookListFavourite))
         {
-            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
-            bookNameSB=activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
+            bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
+            bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
             FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex,'F',bookNameSB);
-            PAGE=BOOK_DETAIL_P;
+            masker.maskBookName(bookNameIndex, 'F', bookNameSB);
+            PAGE = BOOK_DETAIL_P;
         }
-        else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&sharedN::BookListShare))
+        else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &sharedN::BookListShare))
         {
-            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
+            bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
-            PAGE=BOOK_DETAIL_P;
+            PAGE = BOOK_DETAIL_P;
         }
-       activePage[BOOK_DETAIL_P]->setDetails(&BookDetails::page,bookNameSB);
+        activePage[BOOK_DETAIL_P]->setDetails(&BookDetails::page, bookNameSB);
     }
     else if (PAGE == BOOK_DETAIL_P)
     {
-        if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.backButton))
-            PAGE= HOME_P;
-        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.bookmarkButton))
+        if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.backButton))
+            PAGE = HOME_P;
+        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton))
         {
-            bookmarkT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.bookmarkText);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.bookmarkText,"");
+            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
         }
-        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.reviewButton))
+        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.reviewButton))
         {
-            reviewT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.reviewNum);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.reviewNum,"");
+            reviewT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.reviewNum);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.reviewNum, "");
         }
-        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.sharedButton))
+        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.sharedButton))
         {
-            shareT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.shareUser);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.shareUser,"");
-        //write in share of another user
+            shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
+            //write in share of another user
             FileWriter shareWriter(shareT);
-            if(!shareWriter.UserExists()){
+            if (!shareWriter.UserExists())
+            {
                 createErrorWindow("User does not exist");
             }
-            else{
-                shareWriter.Writer(4,bookNameSB);
+            else
+            {
+                shareWriter.Writer(4, bookNameSB);
             }
 
-            std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
+            std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
     }
-    else if(PAGE == SEARCH_P)
-        {
-        if(activePage[PAGE]->buttonPressed(&SearchN::backButton))
+    else if (PAGE == SEARCH_P)
+    {
+        if (activePage[PAGE]->buttonPressed(&SearchN::backButton))
         {
             PAGE = HOME_P;
         }
@@ -346,9 +348,11 @@ void mousePressed(int button, int state, int x, int y)
         {
             getSearchResults();
         }
-        else if(activePage[SEARCH_P]->buttonPressed(button,state,x,y,&SearchN::searchResultList))
+        else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::searchResultList))
         {
-            std::cout<<activePage[PAGE]->getButtonIndex(button,state,x,y,&SearchN::searchResultList);
+            std::cout << activePage[PAGE]->getButtonIndex(button, state, x, y, &SearchN::searchResultList);
+            BookDetails::page.changeName("res");
+            PAGE == BOOK_DETAIL_P;
         }
     }
 }
@@ -469,23 +473,23 @@ void keyPressed(unsigned char key, int x, int y)
             }
         }
     }
-    else if(PAGE==BOOK_DETAIL_P)
+    else if (PAGE == BOOK_DETAIL_P)
     {
-        if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.bookmarkText) && key ==ENTER_KEY)
+        if (activePage[PAGE]->isActiveBox(&BookDetails::page, &BookDetails::page.bookmarkText) && key == ENTER_KEY)
         {
-            bookmarkT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.bookmarkText);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.bookmarkText,"");
+            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
         }
-        else if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.reviewNum) && key ==ENTER_KEY)
+        else if (activePage[PAGE]->isActiveBox(&BookDetails::page, &BookDetails::page.reviewNum) && key == ENTER_KEY)
         {
-            reviewT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.reviewNum);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.reviewNum,"");
+            reviewT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.reviewNum);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.reviewNum, "");
         }
-        else if(activePage[PAGE]->isActiveBox(&BookDetails::page,&BookDetails::page.shareUser) && key ==ENTER_KEY)
+        else if (activePage[PAGE]->isActiveBox(&BookDetails::page, &BookDetails::page.shareUser) && key == ENTER_KEY)
         {
-            shareT= activePage[PAGE]->getTextBD(&BookDetails::page,&BookDetails::page.shareUser);
-            activePage[PAGE]->setTextBD(&BookDetails::page,&BookDetails::page.shareUser,"");
-            std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
+            shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
+            std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
     }
     else if (PAGE == SEARCH_P)
@@ -554,7 +558,7 @@ void getSearchResults()
     DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist);
 
     std::vector<std::string> searchBookNameList;
-    for(int i=0; i<DATABASE_SEARCH::bdlist.size(); i++)
+    for (int i = 0; i < DATABASE_SEARCH::bdlist.size(); i++)
         searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
     SearchN::searchResultList.setData(searchBookNameList);
 
@@ -567,4 +571,3 @@ void getSearchResults()
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SDateB, false);
 }
-

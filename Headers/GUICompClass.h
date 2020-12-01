@@ -322,7 +322,7 @@ public:
     }
     void render()
     {
-          if (showB)
+        if (showB)
         {
             setActive(pressed);
             if (isActive())
@@ -405,11 +405,11 @@ public:
             dataB.push_back(button);
         }
     }
-    bool buttonPressed(int button,int state,int x,int y)
+    bool buttonPressed(int button, int state, int x, int y)
     {
-        if(isActive())
-        if(dim.liesInside(toFloatX(x),toFloatY(y)) && button==GLUT_LEFT && state== GLUT_DOWN)
-            return true;
+        if (isActive())
+            if (dim.liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT && state == GLUT_DOWN)
+                return true;
         return false;
     }
     void refreshBox()
@@ -442,44 +442,44 @@ public:
             for (int i = 0; i < maxN; i++)
                 if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
                 {
-                    return i+top;
+                    return i + top;
                 }
         return 0;
     }
 
     void render()
     {
-        if(data[0]!="")
+        if (data[0] != "")
         {
-        if (scrollable)
-        {
-            if (scrolled)
+            if (scrollable)
             {
-                refreshBox();
-                scrolled = false;
-            }
-            if (data.size() > maxN)
-            {
-                glDrawRecOutlineCoordBox(dim);
-                bgColor.briColor();
-                glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
+                if (scrolled)
+                {
+                    refreshBox();
+                    scrolled = false;
+                }
+                if (data.size() > maxN)
+                {
+                    glDrawRecOutlineCoordBox(dim);
+                    bgColor.briColor();
+                    glDrawP(dim.getxw(), dim.gety(), scrollerW, dim.getheight());
 
-                bgColor.dimColor();
-                glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+                    bgColor.dimColor();
+                    glDrawP(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+                }
             }
-        }
-        for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
-        {
-            dataB[i].render();
-            if (i != 0)
+            for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
             {
-                textC.applyColor();
-                glBegin(GL_LINES);
-                glVertex2f(bDim[i].getx(), bDim[i].getyh());
-                glVertex2f(bDim[i].getxw(), bDim[i].getyh());
-                glEnd();
+                dataB[i].render();
+                if (i != 0)
+                {
+                    textC.applyColor();
+                    glBegin(GL_LINES);
+                    glVertex2f(bDim[i].getx(), bDim[i].getyh());
+                    glVertex2f(bDim[i].getxw(), bDim[i].getyh());
+                    glEnd();
+                }
             }
-        }
         }
     }
     void keyboardHandler(unsigned char key, int x, int y)
@@ -488,53 +488,59 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if (scrollable)
+        if (data[0] != "")
         {
-            prevY = toFloatY(y);
-            if (dim.liesInside(toFloatX(x), toFloatY(y)))
+            if (scrollable)
             {
-                if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+                prevY = toFloatY(y);
+                if (dim.liesInside(toFloatX(x), toFloatY(y)))
                 {
-                    top++;
-                    scrolled = true;
-                }
-                else if (button == 3 && state == GLUT_DOWN && (top > 0))
-                {
-                    top--;
-                    scrolled = true;
-                }
-                else
-                {
-                    for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
-                        dataB[i].mouseHandler(button, state, x, y);
+                    if (button == 4 && state == GLUT_DOWN && (data.size() - top > maxN))
+                    {
+                        top++;
+                        scrolled = true;
+                    }
+                    else if (button == 3 && state == GLUT_DOWN && (top > 0))
+                    {
+                        top--;
+                        scrolled = true;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
+                            dataB[i].mouseHandler(button, state, x, y);
+                    }
                 }
             }
-        }
-        else
-        {
-            for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
-                dataB[i].mouseHandler(button, state, x, y);
+            else
+            {
+                for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
+                    dataB[i].mouseHandler(button, state, x, y);
+            }
         }
     }
     void mouseMotionHandler(int x, int y)
     {
-        if (scrollable)
+        if (data[0] != "")
         {
-            Coord_Rect scroller(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
-            if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN) && toFloatY(y) <= prevY)
+            if (scrollable)
             {
-                top++;
-                refreshBox();
-                prevY = toFloatY(y);
+                Coord_Rect scroller(scrollerX, scrollerY - top * dec, scrollerW, scrollerH);
+                if (scroller.liesInside(toFloatX(x), toFloatY(y)) && (data.size() - top > maxN) && toFloatY(y) <= prevY)
+                {
+                    top++;
+                    refreshBox();
+                    prevY = toFloatY(y);
+                }
+                else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top > 0 && toFloatY(y) > prevY)
+                {
+                    top--;
+                    refreshBox();
+                    prevY = toFloatY(y);
+                }
             }
-            else if (scroller.liesInside(toFloatX(x), toFloatY(y)) && top > 0 && toFloatY(y) > prevY)
-            {
-                top--;
-                refreshBox();
-                prevY = toFloatY(y);
-            }
+            return;
         }
-        return;
     }
 };
 class BookDetail : public GUIcomponent
@@ -594,7 +600,7 @@ public:
         f2 = GLUT_BITMAP_HELVETICA_12;
     }
     void setDescription();
-    void setDescription(DATABASE_SEARCH::BookDescriptor& bd, std::string bookmark);
+    void setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark);
     void setButtonAndTextBox();
     void showBookDescription();
     void render();
@@ -644,32 +650,32 @@ void BookDetail::setDescription()
     bookDes.push_back("Review");
     bookDes.push_back("BookMark");
 }
-void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor& bd, std::string bookmark)
+void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
     bookDes.push_back(bd.name);
     std::string AName = "";
-    for(int i=0; i<bd.authors_display.size();i++)
+    for (int i = 0; i < bd.authors_display.size(); i++)
     {
-         AName+= bd.authors_display[i];
-         if(i<bd.authors_display.size()-1)
-            AName+= ", ";
+        AName += bd.authors_display[i];
+        if (i < bd.authors_display.size() - 1)
+            AName += ", ";
     }
     bookDes.push_back(AName);
     std::string genre = "";
-    for(int i=0; i<bd.genres.size();i++)
+    for (int i = 0; i < bd.genres.size(); i++)
     {
-         genre+= bd.genres[i];
-         if(i<bd.genres.size()-1)
-            genre+= ", ";
+        genre += bd.genres[i];
+        if (i < bd.genres.size() - 1)
+            genre += ", ";
     }
     bookDes.push_back(genre);
     bookDes.push_back(bd.date);
     std::string extdes = "";
-    for(int i=0; i<bd.genres.size();i++)
+    for (int i = 0; i < bd.genres.size(); i++)
     {
-         extdes+= bd.genres[i];
-         if(i<bd.genres.size()-1)
-            extdes+= ". ";
+        extdes += bd.genres[i];
+        if (i < bd.genres.size() - 1)
+            extdes += ". ";
     }
     bookDes.push_back(extdes);
     bookDes.push_back(std::to_string(bd.review));
@@ -896,9 +902,9 @@ public:
             return true;
         return false;
     }
-    bool buttonPressed(int button,int state,int x,int y,ScrollBox * _sb)
+    bool buttonPressed(int button, int state, int x, int y, ScrollBox *_sb)
     {
-        return _sb->buttonPressed(button,state,x,y);
+        return _sb->buttonPressed(button, state, x, y);
     }
     void setActiveScrollBox(ScrollBox *_sb, bool _value)
     {
@@ -980,10 +986,10 @@ public:
     {
         return _bd->buttonPressed(_button);
     }
-    bool buttonPressed(int button,int state,int x,int y,ScrollBox * _sb)
+    bool buttonPressed(int button, int state, int x, int y, ScrollBox *_sb)
     {
         _sb->setActive(true);
-        return _sb->buttonPressed(button,state,x,y);
+        return _sb->buttonPressed(button, state, x, y);
     }
     std::string getText(TextBox *_textbox)
     {

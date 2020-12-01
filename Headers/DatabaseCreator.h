@@ -205,7 +205,7 @@ void BookDescriptor::createDir_date()
     bookPath = REQ_DIRS::SEARCH_BOOK_DATE + date;
     std::ofstream outstream;
     outstream.open(bookPath.c_str(), std::ios_base::app);
-    outstream << path;
+    outstream << path << '\n';
     outstream.close();
 }
 void BookDescriptor::createDir_genre()
@@ -222,7 +222,7 @@ void BookDescriptor::createDir_genre()
         mkdir(baseBookPath.c_str());
         curBookPath = baseBookPath + DIRECTORY_SEPERATOR + genres[i];
         outstream.open(curBookPath.c_str(), std::ios_base::app);
-        outstream << path;
+        outstream << path << '\n';
         outstream.close();
 
         baseBookPath.pop_back();

@@ -1,3 +1,6 @@
+#ifndef UTILITY
+#define UTILITY
+
 #include <dirent.h>
 namespace Utility
 {
@@ -79,3 +82,4 @@ namespace Utility
         }
     } // namespace DirectoryHandler
 } // namespace Utility
+#endif // UTILITY

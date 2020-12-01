@@ -35,3 +35,4 @@ std::string bookNameSB;
 std::string bookmarkT;
 std::string reviewT;
 std::string shareT;
+int bookNameIndex;

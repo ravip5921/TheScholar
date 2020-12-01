@@ -1,6 +1,6 @@
 #include "./vars.h"
 #include "./GUICompClass.h"
-#include "./FileReader.h"
+#include "./FileHandler.h"
 #include "./GUIPages.h"
 #include "./ErrorWindow.h"
 #include "./GUIBlocks.h"
@@ -278,24 +278,28 @@ void mousePressed(int button, int state, int x, int y)
         if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&readingN::BookListReading))
         {
             bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
-            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
+            bookNameIndex= activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
+            FileWriter masker(userName);
+            masker.maskBookName(bookNameIndex,'R',bookNameSB);
             PAGE=BOOK_DETAIL_P;
         }
         else if(activeBlock[COMPLETED_MP]->buttonPressed(button,state,x,y,&completedN::BookListCompleted))
         {
-            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
+            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
             bookNameSB= activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
             PAGE=BOOK_DETAIL_P;
         }
         else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&favouriteN::BookListFavourite))
         {
-            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
+            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
             bookNameSB=activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
+            FileWriter masker(userName);
+            masker.maskBookName(bookNameIndex,'F',bookNameSB);
             PAGE=BOOK_DETAIL_P;
         }
         else if(activeBlock[BLOCK]->buttonPressed(button,state,x,y,&sharedN::BookListShare))
         {
-            std::cout<<activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
+            bookNameIndex=activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
             PAGE=BOOK_DETAIL_P;
         }

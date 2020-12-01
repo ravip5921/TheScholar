@@ -385,9 +385,7 @@ public:
     {
         data = _data;
         maxN = _maxN;
-        //if(maxN>=data.size())
-        //{
-          top = 0;
+        top = 0;
         scrolled = false;
         scrollable = _scrollable;
         scrollerX = dim.getxw();
@@ -406,8 +404,6 @@ public:
             Button button(data[i], bgColor, textC, bDim[i], 0.1, 0.1);
             dataB.push_back(button);
         }
-       // }
-
     }
     bool buttonPressed(int button,int state,int x,int y)
     {
@@ -424,10 +420,6 @@ public:
         {
             dataB[i].setText(data[i + top]);
         }
-        /*for (int j = i; j < maxN; j++)
-        {
-            dataB[j].setText("");
-        }*/
     }
     void setData(std::vector<std::string> _data)
     {
@@ -457,6 +449,8 @@ public:
 
     void render()
     {
+        if(data[0]!="")
+        {
         if (scrollable)
         {
             if (scrolled)
@@ -485,6 +479,7 @@ public:
                 glVertex2f(bDim[i].getxw(), bDim[i].getyh());
                 glEnd();
             }
+        }
         }
     }
     void keyboardHandler(unsigned char key, int x, int y)
@@ -987,6 +982,7 @@ public:
     }
     bool buttonPressed(int button,int state,int x,int y,ScrollBox * _sb)
     {
+        _sb->setActive(true);
         return _sb->buttonPressed(button,state,x,y);
     }
     std::string getText(TextBox *_textbox)

@@ -336,38 +336,19 @@ void mousePressed(int button, int state, int x, int y)
             std::cout<<bookmarkT<<" "<<reviewT<<" "<<shareT<<"\n";
         }
     }
-        /*if (activePage[PAGE]->buttonPressed(&BookDetail::backButton))
-        {
-            PAGE = HOME_P;
-        }
-        else if (activePage[PAGE]->buttonPressed(&BookDetail::readingButton))
-        {
-            FileWriter fw(userName);
-            fw.Writer(1, "reading Book");
-        }
-        else if (activePage[PAGE]->buttonPressed(&BookDetail::completedButton))
-        {
-            FileWriter fw(userName);
-            fw.Writer(2, "read Book");
-        }
-        else if (activePage[PAGE]->buttonPressed(&BookDetail::favouriteButton))
-        {
-            FileWriter fw(userName);
-            fw.Writer(3, "favourite Book");
-        }
-        else if (activePage[PAGE]->buttonPressed(&BookDetail::sharedButton))
-        {
-            FileWriter fw(userName);
-            fw.Writer(4, "shared Book");
-        }*/
     else if(PAGE == SEARCH_P)
         {
-        if(activePage[PAGE]->buttonPressed(&SearchN::backButton)){
+        if(activePage[PAGE]->buttonPressed(&SearchN::backButton))
+        {
             PAGE = HOME_P;
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::searchButton))
         {
             getSearchResults();
+        }
+        else if(activePage[SEARCH_P]->buttonPressed(button,state,x,y,&SearchN::searchResultList))
+        {
+            std::cout<<activePage[PAGE]->getButtonIndex(button,state,x,y,&SearchN::searchResultList);
         }
     }
 }

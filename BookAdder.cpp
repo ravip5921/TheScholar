@@ -7,6 +7,7 @@
 #include "Headers/GUICompClass.h"
 #include "Headers/BookAdderPage.h"
 #include "Headers/DatabaseCreator.h"
+#include "Headers/SortAuthorHeader.h"
 
 void mousePressed(int button, int state, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
@@ -146,11 +147,13 @@ void getValues(BookDescriptor bd)
 }
 void sortF()
 {
-std::cout<<"Sort";
+    SORT_AUTHOR_HEADERS::sortAuthorHeaderFiles(FILE_NOT_SORTED);
+    std::cout<<"Sorted";
 }
 void finalSortF()
 {
-std::cout<<"Final Sort.";
+    SORT_AUTHOR_HEADERS::sortAuthorHeaderFiles(FILE_SORTED);
+    std::cout<<"Final Sorted.";
 }
 int windowWidth()
 {

@@ -8,7 +8,7 @@ protected:
 public:
     GUIcomponent() { active = false; }
     bool isActive() { return active; }
-    void setActive(bool _active) { active = _active; }
+    void setActive(bool _active = true) { active = _active; }
 
     virtual void render() = 0;
     virtual void mouseHandler(int button, int state, int x, int y) = 0;
@@ -26,6 +26,7 @@ protected:
     Color textC;
     void *f;
     float padding;
+    long blinker;
 
 public:
     TextBox(Coord_Rect pos, Color box = Color(0, 0, 0), Color txt = Color(1, 1, 1), bool _selected = false) : position(pos), boxC(box), textC(txt)
@@ -72,10 +73,12 @@ public:
         printTextInBox(textField, position, f, padding);
         if (isActive())
         {
-            if (blinkerT % 200 >= 0 && blinkerT % 200 <= 100)
+            if (blinker % 200 >= 0 && blinker % 200 <= 100)
                 glutBitmapCharacter(f, '|');
-            blinkerT++;
+            blinker++;
         }
+        else
+            blinker = 0;
     }
     void keyboardHandler(unsigned char key, int x, int y)
     {
@@ -155,12 +158,12 @@ public:
             printTextPass(TextBox::textField, TextBox::position, GLUT_BITMAP_TIMES_ROMAN_24);
         if (isActive())
         {
-            if (blinkerP % 200 >= 0 && blinkerP % 200 <= 100)
+            if (blinker % 200 >= 0 && blinker % 200 <= 100)
                 glutBitmapCharacter(f, '|');
-            blinkerP++;
+            blinker++;
         }
         else
-            blinkerP = 0;
+            blinker = 0;
     }
 };
 class Text : public GUIcomponent
@@ -221,23 +224,33 @@ class CheckBox : public GUIcomponent
     Coord_Rect dimensions;
     Color colr;
     PasswordBox *parent;
+    char mode;
+    CheckBox *twin;
 
 public:
-    CheckBox(PasswordBox *_parent, Coord_Rect _dimensions, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(_dimensions), colr(_colr)
-    {
-        parent = _parent;
-        selected = _selected;
-    }
     CheckBox(PasswordBox *_parent, float x, float y, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(x, y, CHECK_BOX_DIMENSION, CHECK_BOX_DIMENSION), colr(_colr)
     {
         parent = _parent;
         selected = _selected;
+        mode = 'P';
+    }
+    CheckBox(float x, float y, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(x, y, CHECK_BOX_DIMENSION, CHECK_BOX_DIMENSION), colr(_colr)
+    {
+        parent = nullptr;
+        selected = _selected;
+        mode = 'A';
+        twin = nullptr;
+    }
+    void setTwin(CheckBox *_cb)
+    {
+        twin = _cb;
     }
     void setActive(bool _active)
     {
         active = _active;
         selected = active;
-        parent->setActive();
+        if (mode == 'P')
+            parent->setActive(_active);
     }
     void render()
     {
@@ -251,15 +264,31 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && !selected && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+        if (mode == 'P')
         {
-            setActive(true);
-            parent->showPass(true);
+            if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+            {
+                setActive(!selected);
+                parent->showPass(selected);
+            }
+            // else if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+            // {
+            //     setActive(false);
+            //     parent->showPass(false);
+            // }
         }
-        else if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+        else if (mode == 'A')
         {
-            setActive(false);
-            parent->showPass(false);
+            if (dimensions.liesInside(toFloatX(x), toFloatY(y)) && state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+            {
+                // if (twin->isActive())
+                // {
+                //     twin->setActive(false);
+                //     setActive(true);
+                // }
+                setActive(twin->isActive());
+                twin->setActive(!twin->isActive());
+            }
         }
     }
     void keyboardHandler(unsigned char key, int x, int y)
@@ -406,8 +435,7 @@ public:
     bool buttonPressed(int button, int state, int x, int y)
     {
         if (isActive())
-            if (isActive())
-           for(int i=0; i<(maxN < data.size() ? maxN : data.size()); i++)
+            for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
                 if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT && state == GLUT_DOWN)
                     return true;
         return false;
@@ -449,7 +477,7 @@ public:
 
     void render()
     {
-        if (data[0] != "")
+        if (isActive())
         {
             if (scrollable)
             {
@@ -488,7 +516,7 @@ public:
     }
     void mouseHandler(int button, int state, int x, int y)
     {
-        if (data[0] != "")
+        if (isActive())
         {
             if (scrollable)
             {
@@ -576,12 +604,13 @@ public:
     Button favouriteButton;
     Button reviewButton;
     Button bookmarkButton;
+    Button removeButton;
 
     TextBox reviewNum;
     TextBox shareUser;
     TextBox bookmarkText;
 
-    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.1, 0.3, 0.7), Color _featureButtonC = Color(0.6, 0.5, 0.8), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(1, 1, 0), Color _textboxC = Color(0.23, 0.17, 0.91), Color _textboxTextC = Color(0.978, 0.849, 0.9055), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(7, -9, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox)
+    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.1, 0.3, 0.7), Color _featureButtonC = Color(0.6, 0.5, 0.8), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(1, 1, 0), Color _textboxC = Color(0.23, 0.17, 0.91), Color _textboxTextC = Color(0.978, 0.849, 0.9055), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox)
     {
         mode = _mode;
         bookname = _bookname;
@@ -594,6 +623,7 @@ public:
         backButton = Button("Back", navButtonC, titleTextC, backButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.2);
         openBookButton = Button("OPEN BOOK", navButtonC, titleTextC, openBookButtonD, CHAR_WIDTH, CHAR_WIDTH);
         openBookButton.setFont(GLUT_BITMAP_9_BY_15);
+        removeButton = Button("Remove", navButtonC, titleTextC, Coord_Rect(openBookButtonD, 'x', 4), CHAR_WIDTH * 3, CHAR_WIDTH);
         setDescription();
         setButtonAndTextBox();
         f1 = GLUT_BITMAP_HELVETICA_18;
@@ -650,9 +680,27 @@ void BookDetail::setDescription()
     bookDes.push_back("AName");
     bookDes.push_back("Genre");
     bookDes.push_back("Date");
-    bookDes.push_back("ExtraDes");
-    bookDes.push_back("Review");
+    bookDes.push_back("Extrades");
+    bookDes.push_back("0.0000000");
     bookDes.push_back("BookMark");
+    bookDes.push_back("10000");
+
+    // std::vector<std::string> brText(6);
+    // std::string temp;
+    // for(int i =0 ;i<bookDes[4].size();i++)
+    // {
+    //         temp.push_back(bookDes[4][i]);
+    //     if((i%30)==0)
+    //     {
+    //         //std::cout<<temp<<"eeee";
+    //         brText.push_back(temp);
+    //         temp.clear();
+    //         std::cout<<brText[0]<<std::endl;
+    //     }
+    //     if(brText.size()==6)
+    //         break;
+    // }
+    // std::cout<<"asd"<<brText[0];
 }
 void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
@@ -729,27 +777,32 @@ void BookDetail::setButtonAndTextBox()
 }
 void BookDetail::showBookDescription()
 {
+    textboxC.applyColor();
+    glDrawP(Coord_Rect(descriptionX, descriptionY - 9.7, 13, 5));
     printText(bookNamePosX, bookNamePosY, titleTextC, bookDes[0], f1);
-    printText(bookNamePosX + 14, bookNamePosY, titleTextC, "Rating: ", f1);
+    printText(bookNamePosX + 11, bookNamePosY + 1, titleTextC, "Rating: ", f1);
     printText(descriptionX, descriptionY, titleTextC, "Author Name:", f1);
     printText(descriptionX, descriptionY - 1.5, titleTextC, "Genre:", f1);
     printText(descriptionX, descriptionY - 3, titleTextC, "Published date:", f1);
     printText(descriptionX, descriptionY - 4.5, titleTextC, "Description:", f1);
     printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark:", f1);
+    printText(bookNamePosX + 11, bookNamePosY, titleTextC, "Number Of Reviews: ", f1);
     printText(descriptionX + 5, descriptionY, subTitleTextC, bookDes[1], f2);
     printText(descriptionX + 5, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
     printText(descriptionX + 5, descriptionY - 3, subTitleTextC, bookDes[3], f2);
-    printText(descriptionX + 5, descriptionY - 4.5, subTitleTextC, bookDes[4], f2);
+    printText(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 15, f2);
     printText(descriptionX + 5, descriptionY - 11, subTitleTextC, bookDes[6], f2);
-    textboxC.applyColor();
-    glDrawP(Coord_Rect(descriptionX, descriptionY - 9.7, 13, 5));
-    printText(bookNamePosX + 15.8, bookNamePosY, subTitleTextC, bookDes[5], f1);
+    printText(bookNamePosX + 12.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
+    printText(bookNamePosX + 16, bookNamePosY, subTitleTextC, bookDes[7], f1);
+    glColor3f(WC_R, WC_G, WC_B);
+    glDrawP(bookNamePosX + 13.5, bookNamePosY + 0.8, 2, 1);
 }
 void BookDetail::render()
 {
     showBookDescription();
     backButton.render();
     openBookButton.render();
+    removeButton.render();
     if (mode == 'R')
     {
         completedButton.render();
@@ -788,6 +841,7 @@ void BookDetail::mouseHandler(int button, int state, int x, int y)
 {
     openBookButton.mouseHandler(button, state, x, y);
     backButton.mouseHandler(button, state, x, y);
+    removeButton.mouseHandler(button, state, x, y);
     if (mode == 'R')
     {
         completedButton.mouseHandler(button, state, x, y);

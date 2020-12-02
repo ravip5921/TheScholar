@@ -7,3 +7,5 @@ Users/*
 data/*
 search/*
 .vscode/*
+#Ignoring errors.txt file
+errors.txt

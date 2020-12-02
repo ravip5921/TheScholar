@@ -202,6 +202,7 @@ namespace SearchN
     float searchW = 7;
     float searchH = 1.3;
     float gap = 1;
+    int searchIndex=0;
 
     Color userNameC(1, 1, 1);
     Color searchBoxC(0.9, 0.9, 0.8);
@@ -218,22 +219,36 @@ namespace SearchN
     Coord_Rect SDateD(SGenreD, 'y', -gap - 1);
     Coord_Rect SBoxD(searchX + 2, searchY - 11, 2.5, 1.1);
     Coord_Rect backButtonD(7, 7.5, 1.60, 1.0);
+    Coord_Rect nextButtonD(2,-8,1.8,1);
+    Coord_Rect prevButtonD(nextButtonD,'x',6);
 
     Text PageTitle(-8, 6.3, userNameC, "Enter details to Search:                      Results:", GLUT_BITMAP_HELVETICA_18);
     Text SNameT(searchX, searchY - gap, userNameC, "Name:", GLUT_BITMAP_HELVETICA_12);
     Text SAuthorT(searchX, searchY - gap - 2, userNameC, "Author:", GLUT_BITMAP_HELVETICA_12);
     Text SGenreT(searchX, searchY - gap - 4, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_12);
     Text SDateT(searchX, searchY - gap - 6, userNameC, "Date:", GLUT_BITMAP_HELVETICA_12);
+    Text Book_Article(searchX, searchY - gap - 12.5, userNameC, "Book           Article", GLUT_BITMAP_HELVETICA_18);
     TextBox SNameB(SNameD, searchBoxC, searchBoxTextC, true);
     TextBox SAuthorB(SAuthorD, searchBoxC, searchBoxTextC);
     TextBox SGenreB(SGenreD, searchBoxC, searchBoxTextC);
     TextBox SDateB(SDateD, searchBoxC, searchBoxTextC);
     Button backButton("Back", backButtonC, searchBoxC, backButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
+    Button nextButton("Next", backButtonC, searchBoxC, nextButtonD, CHAR_WIDTH * 1.8, CHAR_WIDTH * 1.5);
+    Button prevButton("Previous", backButtonC, searchBoxC, prevButtonD, CHAR_WIDTH * 1, CHAR_WIDTH * 1.5);
+    CheckBox bookCB(-7.3,-7,userNameC,true);
+    CheckBox articleCB(-4.3,-7,userNameC);
+
     Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
     ScrollBox searchResultList(dataf, BookListD, 15, scrollBoxC);
+    ScrollBox relevantOptionsList(dataf,BookListD,15,scrollBoxC);
 
     void addSearchComponents(GUIPage *_searchPage)
     {
+        relevantOptionsList.setActive(false);
+        searchResultList.setActive(false);
+        prevButton.show(false);
+        bookCB.setTwin(&articleCB);
+        articleCB.setTwin(&bookCB);
         _searchPage->addComponent(&PageTitle);
         _searchPage->addComponent(&SNameT);
         _searchPage->addComponent(&SAuthorT);
@@ -245,54 +260,12 @@ namespace SearchN
         _searchPage->addComponent(&SDateB);
         _searchPage->addComponent(&backButton);
         _searchPage->addComponent(&searchButton);
+        _searchPage->addComponent(&nextButton);
+        _searchPage->addComponent(&prevButton);
+        _searchPage->addComponent(&bookCB);
+        _searchPage->addComponent(&articleCB);
+        _searchPage->addComponent(&Book_Article);
         _searchPage->addComponent(&searchResultList);
-    } /*
-    float searchW = 7;
-    float searchH = 1.3;
-    float gap = 1;
-
-    Color backButtonC(0.1, 0.3, 0.7);
-    Color backButtonTextC(1, 1, 1);
-    Color userNameC(1, 1, 1);
-    Color searchBoxC(0.9, 0.9, 0.8);
-    Color searchBoxTextC(0, 0, 0);
-    Color searchButtonC(0.1, 0.3, 0.7);
-    Color ButtonsC(1, 0.5, 0.6);
-
-    Coord_Rect SNameD(-8, 3, searchW, searchH);
-    Coord_Rect SAuthorD(2, 3, searchW, searchH);
-    Coord_Rect SGenreD(-8, -4, searchW, searchH);
-    Coord_Rect SDateD(2, -4, searchW, searchH);
-    Coord_Rect backButtonD(7, 7.5, 1.75, 1.25);
-    Coord_Rect SBoxD(-0.5, -7.5, 2.5, 1.1);
-
-    Text SearchDis(-5.5, 6, userNameC, "Enter Details Of Book to be Searched:", GLUT_BITMAP_HELVETICA_18);
-    Text SNameT(-8, 5, userNameC, "Name:", GLUT_BITMAP_HELVETICA_18);
-    Text SAuthorT(2, 5, userNameC, "Author:", GLUT_BITMAP_HELVETICA_18);
-    Text SGenreT(-8, -2, userNameC, "Genre:", GLUT_BITMAP_HELVETICA_18);
-    Text SDateT(2, -2, userNameC, "Date:", GLUT_BITMAP_HELVETICA_18);
-
-    TextBox SNameB(SNameD, searchBoxC, searchBoxTextC, true);
-    TextBox SAuthorB(SAuthorD, searchBoxC, searchBoxTextC);
-    TextBox SGenreB(SGenreD, searchBoxC, searchBoxTextC);
-    TextBox SDateB(SDateD, searchBoxC, searchBoxTextC);
-
-    Button backButton("Back", backButtonC, backButtonTextC, backButtonD);
-    Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
-
-    void addSearchComponents(GUIPage *_searchPage)
-    {
-
-        _searchPage->addComponent(&SNameT);
-        _searchPage->addComponent(&SAuthorT);
-        _searchPage->addComponent(&SGenreT);
-        _searchPage->addComponent(&SDateT);
-        _searchPage->addComponent(&SNameB);
-        _searchPage->addComponent(&SAuthorB);
-        _searchPage->addComponent(&SGenreB);
-        _searchPage->addComponent(&SDateB);
-        _searchPage->addComponent(&backButton);
-        _searchPage->addComponent(&SearchDis);
-        _searchPage->addComponent(&searchButton);
-    }*/
+        _searchPage->addComponent(&relevantOptionsList);
+    }
 } // namespace SearchN

@@ -78,7 +78,6 @@ void printText(std::string tex, double x, double y, float max_x, void *font)
     glColor3f(0, 0, 0);
     glutPostRedisplay();
 }
-
 void printTextInBox(std::string tex, Coord_Rect pos, void *font, float GAP = CHAR_WIDTH * 2)
 {
     float x = pos.getx() + GAP;

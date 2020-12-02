@@ -298,32 +298,32 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
-            FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex, 'R', bookNameSB);
+            //FileWriter masker(userName);
+            //masker.maskBookName(bookNameIndex, 'R', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         else if (activeBlock[COMPLETED_MP]->buttonPressed(button, state, x, y, &completedN::BookListCompleted))
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
-            FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex, 'C', bookNameSB);
+            //FileWriter masker(userName);
+            //masker.maskBookName(bookNameIndex, 'C', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &favouriteN::BookListFavourite))
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
-            FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex, 'F', bookNameSB);
+            //FileWriter masker(userName);
+            //masker.maskBookName(bookNameIndex, 'F', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &sharedN::BookListShare))
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
-            FileWriter masker(userName);
-            masker.maskBookName(bookNameIndex, 'S', bookNameSB);
+            //FileWriter masker(userName);
+            //masker.maskBookName(bookNameIndex, 'S', bookNameSB);
             PAGE = BOOK_DETAIL_P;
         }
         activePage[BOOK_DETAIL_P]->setDetails(&BookDetails::page, bookNameSB);
@@ -356,12 +356,42 @@ void mousePressed(int button, int state, int x, int y)
             {
                 shareWriter.Writer(4, bookNameSB);
             }
-
             std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
-        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.readingButton) && (BookDetails::page.getMode()== 'S' || BookDetails::page.getMode()== 'F' ))
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.readingButton) && (BookDetails::page.getMode()== 'S'))
         {
-            std::cout<<"Reading Button Pressed.";
+            std::cout<<"Reading Button Pressed. in share";
+            FileWriter fw(userName);
+            fw.Writer(1,bookNameSB);
+            fw.maskBookName(bookNameIndex,'S',bookNameSB);
+        }
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.readingButton) && (BookDetails::page.getMode()== 'F'))
+        {
+            std::cout<<"Reading Button Pressed in fav";
+            FileWriter fw(userName);
+            fw.Writer(1,bookNameSB);
+            fw.maskBookName(bookNameIndex,'F',bookNameSB);
+        }
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.favouriteButton) && (BookDetails::page.getMode()== 'C'))
+        {
+            std::cout<<"Fav Button Pressed in completed";
+            FileWriter fw(userName);
+            fw.Writer(3,bookNameSB);
+            fw.maskBookName(bookNameIndex,'C',bookNameSB);
+        }
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.completedButton) && (BookDetails::page.getMode()== 'R'))
+        {
+            std::cout<<"Read Button Pressed in reading";
+            FileWriter fw(userName);
+            fw.Writer(2,bookNameSB);
+            fw.maskBookName(bookNameIndex,'R',bookNameSB);
+        }
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.favouriteButton) && (BookDetails::page.getMode()== 'R'))
+        {
+            std::cout<<"Fav Button Pressed in reading";
+            FileWriter fw(userName);
+            fw.Writer(3,bookNameSB);
+            fw.maskBookName(bookNameIndex,'R',bookNameSB);
         }
     }
     else if (PAGE == SEARCH_P)

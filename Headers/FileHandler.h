@@ -194,7 +194,6 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
         std::string pathTemp = path;
         std::string toWrite,skipper;
         int i = 0;
-        std::cout<<"position:"<<position<<std::endl;
         if (choice == 'R')
         {
             path = path + string("\\\\reading.txt");
@@ -205,7 +204,6 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             position = 2*position +1;
             while(getline(fileReader,toWrite)){
                 if(i != position){
-                    std::cout<<i<<"."<<toWrite<<std::endl;
                     fileWrite<<toWrite<<std::endl;
                 }
                 else{
@@ -231,12 +229,10 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             position = 2*position +1;
             while(getline(fileReader,toWrite)){
                 if(i != position){
-                    std::cout<<i<<toWrite<<std::endl;
                     fileWrite<<toWrite<<std::endl;
                 }
                 else{
                     getline(fileReader,toWrite);
-                    std::cout<<std::endl;
                 }
                 i++;
             }
@@ -257,11 +253,8 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             fileWrite.open(pathTemp.c_str());
             while(getline(fileReader,toWrite)){
                 if(i != position){
-                    std::cout<<i<<"."<<toWrite<<std::endl;
                     fileWrite<<toWrite<<std::endl;
                 }
-                else
-                    std::cout<<std::endl;
                 i++;
             }
             fileReader.close();
@@ -279,7 +272,6 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             fileWrite.open(pathTemp.c_str());
             while(getline(fileReader,toWrite)){
                 if(i != position){
-                    std::cout<<i<<toWrite<<std::endl;
                     fileWrite<<toWrite<<std::endl;
                 }
                 i++;

@@ -406,8 +406,10 @@ public:
     bool buttonPressed(int button, int state, int x, int y)
     {
         if (isActive())
-            if (dim.liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT && state == GLUT_DOWN)
-                return true;
+            if (isActive())
+           for(int i=0; i<(maxN < data.size() ? maxN : data.size()); i++)
+                if (bDim[i].liesInside(toFloatX(x), toFloatY(y)) && button == GLUT_LEFT && state == GLUT_DOWN)
+                    return true;
         return false;
     }
     void refreshBox()

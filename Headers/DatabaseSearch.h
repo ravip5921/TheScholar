@@ -82,6 +82,11 @@ namespace DATABASE_SEARCH
         std::string genre;
         std::string extrade;
         std::ifstream inStream(path.c_str());
+        if(!inStream.good())
+        {
+            std::cout<<"book doesn't exist at specified path";
+            return;
+        }
         getline(inStream, bookPath);
         getline(inStream, name);
         getline(inStream, author);

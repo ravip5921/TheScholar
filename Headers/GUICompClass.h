@@ -990,7 +990,6 @@ public:
     }
     bool buttonPressed(int button, int state, int x, int y, ScrollBox *_sb)
     {
-        _sb->setActive(true);
         return _sb->buttonPressed(button, state, x, y);
     }
     std::string getText(TextBox *_textbox)
@@ -1008,6 +1007,10 @@ public:
     void setActiveBox(TextBox *_textbox, bool _value = true)
     {
         _textbox->setActive(_value);
+    }
+    void setActiveBox(ScrollBox *_sbox, bool _value = true)
+    {
+        _sbox->setActive(_value);
     }
     void setText(Text *_textB, std::string *_text)
     {

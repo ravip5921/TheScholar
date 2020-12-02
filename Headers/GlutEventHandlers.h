@@ -359,6 +359,10 @@ void mousePressed(int button, int state, int x, int y)
 
             std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
+        else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.readingButton) && (BookDetails::page.getMode()== 'S' || BookDetails::page.getMode()== 'F' ))
+        {
+            std::cout<<"Reading Button Pressed.";
+        }
     }
     else if (PAGE == SEARCH_P)
     {

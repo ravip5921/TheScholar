@@ -619,6 +619,10 @@ public:
         bookDes.clear();
         setDescription();
     }
+    char getMode()
+    {
+        return mode;
+    }
     std::string getText(TextBox *_box)
     {
         return _box->getText();

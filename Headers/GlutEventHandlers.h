@@ -332,11 +332,6 @@ void mousePressed(int button, int state, int x, int y)
     {
         if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.backButton))
             PAGE = HOME_P;
-        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton))
-        {
-            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
-            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
-        }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.reviewButton))
         {
             reviewT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.reviewNum);
@@ -346,7 +341,7 @@ void mousePressed(int button, int state, int x, int y)
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            //write in share of another user
+        //write in share of another user
             FileWriter shareWriter(shareT);
             if (!shareWriter.UserExists())
             {
@@ -379,6 +374,14 @@ void mousePressed(int button, int state, int x, int y)
             fw.Writer(3,bookNameSB);
             fw.maskBookName(bookNameIndex,'C',bookNameSB);
         }
+        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode()== 'C')){
+
+            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
+            std::cout<<"bookmark in completed";
+            FileWriter fw(userName);
+            fw.updateBookmark(bookNameIndex,'C',bookNameSB,bookmarkT);
+        }
         else if(activePage[PAGE]->buttonPressedBD(&BookDetails::page,&BookDetails::page.completedButton) && (BookDetails::page.getMode()== 'R'))
         {
             std::cout<<"Read Button Pressed in reading";
@@ -392,6 +395,14 @@ void mousePressed(int button, int state, int x, int y)
             FileWriter fw(userName);
             fw.Writer(3,bookNameSB);
             fw.maskBookName(bookNameIndex,'R',bookNameSB);
+        }
+        else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode()== 'R')){
+
+            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
+            std::cout<<"bookmark in reading";
+            FileWriter fw(userName);
+            fw.updateBookmark(bookNameIndex,'R',bookNameSB,bookmarkT);
         }
     }
     else if (PAGE == SEARCH_P)

@@ -129,7 +129,7 @@ public:
     void Writer(const int choice, std::string toWrite, std::string bookmarkPage= "$");
     void maskBookName(int position, char choice, std::string bookName);
     bool UserExists();
-
+    void updateBookmark(int position,char choice,std::string bookName,std::string newBookmark);
 };
 
 void FileWriter::Writer(const int choice, std::string toWrite, std::string bookmarkPage)
@@ -208,7 +208,6 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
                 }
                 else{
                     getline(fileReader,toWrite);
-                    std::cout<<std::endl;
                 }
                 i++;
             }
@@ -283,6 +282,59 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             remove((path+"\\\\share.txt").c_str());
             rename((path+"\\\\tempS.txt").c_str(),(path+"\\\\share.txt").c_str());
         }
+}
 
+void FileWriter::updateBookmark(int position,char choice,std::string bookName,std::string newBookmark){
+    ofstream fileWrite;
+    ifstream fileReader;
+    std::string path = std::string(".\\\\") + std::string("Users\\\\") + username;
+    std::string pathTemp = path;
+    std::string toWrite;
+    int i = 0;
+    if (choice == 'R')
+    {
+        path = path + string("\\\\reading.txt");
+        fileReader.open(path.c_str());
+        pathTemp = pathTemp +string("\\\\tempR.txt");
+        fileWrite.open(pathTemp.c_str());
+        position = 2*position +1;
+        while(getline(fileReader,toWrite)){
+            if(i != position){
+                fileWrite<<toWrite<<std::endl;
+            }
+            else{
+                fileWrite<<newBookmark<<std::endl;
+            }
+            i++;
+        }
+        fileReader.close();
+        fileWrite.close();
 
+        path = std::string(".\\\\") + std::string("Users\\\\") + username;
+        remove((path+"\\\\reading.txt").c_str());
+        rename((path+"\\\\tempR.txt").c_str(),(path+"\\\\reading.txt").c_str());
+    }
+    else if (choice == 'C')
+    {
+        path = path + string("\\\\completed.txt");
+        fileReader.open(path.c_str());
+        pathTemp = pathTemp + string("\\\\tempC.txt");
+        fileWrite.open(pathTemp.c_str());
+        position = 2*position +1;
+        while(getline(fileReader,toWrite)){
+            if(i != position){
+                fileWrite<<toWrite<<std::endl;
+            }
+            else{
+                fileWrite<<newBookmark<<std::endl;
+            }
+            i++;
+        }
+        fileReader.close();
+        fileWrite.close();
+
+        path = std::string(".\\\\") + std::string("Users\\\\") + username;
+        remove((path+"\\\\completed.txt").c_str());
+        rename((path+"\\\\tempC.txt").c_str(),(path+"\\\\completed.txt").c_str());
+        }
 }

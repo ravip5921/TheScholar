@@ -669,10 +669,10 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
     bookDes.push_back(genre);
     bookDes.push_back(bd.date);
     std::string extdes = "";
-    for (int i = 0; i < bd.genres.size(); i++)
+    for (int i = 0; i < bd.extrades.size(); i++)
     {
-        extdes += bd.genres[i];
-        if (i < bd.genres.size() - 1)
+        extdes += bd.extrades[i];
+        if (i < bd.extrades.size() - 1)
             extdes += ". ";
     }
     bookDes.push_back(extdes);

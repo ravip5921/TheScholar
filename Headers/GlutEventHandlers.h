@@ -5,6 +5,7 @@
 #include "./ErrorWindow.h"
 #include "./GUIBlocks.h"
 #include "DatabaseSearch.h"
+#include "RelavantOptions.h"
 //#include "./Events.h"
 
 void mousePressed(int button, int state, int x, int y);
@@ -58,6 +59,23 @@ enum
     SHARED_MP = 3
 };
 std::vector<GUIBlock *> activeBlock = {&readingB, &completedB, &favouriteB, &shareB};
+
+namespace USERS_BOOKS
+{
+    std::vector<DATABASE_SEARCH::BookDescriptor> reading;
+    //std::vector<std::string> reading_bookmark;
+    std::vector<DATABASE_SEARCH::BookDescriptor> completed;
+    std::vector<DATABASE_SEARCH::BookDescriptor> shared;
+    std::vector<DATABASE_SEARCH::BookDescriptor> favourite;
+
+    void clearAll()
+    {
+        reading.clear();
+        completed.clear();
+        shared.clear();
+        favourite.clear();
+    }
+}
 
 //end blocks
 void callBackFun()
@@ -354,9 +372,10 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::searchResultList))
         {
-            std::cout << activePage[PAGE]->getButtonIndex(button, state, x, y, &SearchN::searchResultList);
-            BookDetails::page.changeName("res");
-            PAGE == BOOK_DETAIL_P;
+            int bindex = activePage[PAGE]->getButtonIndex(button, state, x, y, &SearchN::searchResultList);
+            std::cout<<bindex;
+            BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
+            PAGE = BOOK_DETAIL_P;
         }
     }
 }
@@ -518,6 +537,33 @@ void keyPressed(unsigned char key, int x, int y)
             else if (activePage[PAGE]->isActiveBox(&SearchN::SDateB) && key == ENTER_KEY)
             {
                 getSearchResults();
+            }
+        }
+        else
+        {
+            if (activePage[PAGE]->isActiveBox(&SearchN::SNameB) && SearchN::SNameB.getText().size()>0)
+            {
+                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
+                RELEVANT_OPTIONS::results.clear();
+                RELEVANT_OPTIONS::result_size = 0;
+                RELEVANT_OPTIONS::getRelevantBookNames(SearchN::SNameB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                SearchN::searchResultList.setData(RELEVANT_OPTIONS::results);
+            }
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SAuthorB) && SearchN::SAuthorB.getText().size()>0)
+            {
+                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
+                RELEVANT_OPTIONS::results.clear();
+                RELEVANT_OPTIONS::result_size = 0;
+                RELEVANT_OPTIONS::getRelevantBookAuthors(SearchN::SAuthorB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                SearchN::searchResultList.setData(RELEVANT_OPTIONS::results);
+            }
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SGenreB) && SearchN::SGenreB.getText().size()>0)
+            {
+                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
+                RELEVANT_OPTIONS::results.clear();
+                RELEVANT_OPTIONS::result_size = 0;
+                RELEVANT_OPTIONS::getRelevantBookGenres(SearchN::SGenreB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                SearchN::searchResultList.setData(RELEVANT_OPTIONS::results);
             }
         }
     }

@@ -665,4 +665,5 @@ void getSearchResults()
     activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SDateB, false);
+    activePage[SEARCH_P]->setActiveBox(&SearchN::searchResultList,true);
 }

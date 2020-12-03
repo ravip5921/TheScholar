@@ -873,7 +873,7 @@ void BookDetail::mouseHandler(int button, int state, int x, int y)
         shareUser.mouseHandler(button, state, x, y);
         reviewNum.mouseHandler(button, state, x, y);
     }
-    else if (mode == 'S')
+    else if (mode == 'S' || mode == 'O')
     {
         readingButton.mouseHandler(button, state, x, y);
     }

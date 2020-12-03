@@ -30,7 +30,7 @@ GUIPage bookDetailPage;
 GUIPage searchingPage;
 
 /*** Navigate Pages ****/
-int PAGE = 4;
+int PAGE = 0;
 enum
 {
     WELCOME_P = 0,
@@ -49,6 +49,8 @@ GUIBlock readingB;
 GUIBlock completedB;
 GUIBlock favouriteB;
 GUIBlock shareB;
+
+int article_flag = 1;
 
 /**** Navigate Blocks in HOME_PAGE *****/
 int BLOCK = 0;
@@ -441,6 +443,7 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << bindex;
             BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
             PAGE = BOOK_DETAIL_P;
+            /**********************************************************************************************************/
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::relevantOptionsList))
         {
@@ -448,18 +451,40 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << bindex;
             //BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
            // PAGE = BOOK_DETAIL_P;
+           /**********************************************************************************************************/
         }
         else if(activePage[PAGE]->buttonPressed(&SearchN::nextButton))
         {
             SearchN::searchIndex++;
+             std::cout << SearchN::searchIndex;
             SearchN::prevButton.show(true);
         }
         else if(activePage[PAGE]->buttonPressed(&SearchN::prevButton))
         {
             SearchN::searchIndex--;
+             std::cout << SearchN::searchIndex;
             if(SearchN::searchIndex==0)
             {
                 SearchN::prevButton.show(false);
+            }
+        }
+        else if(SearchN::bookCB.isActive())
+        {
+            //std::cout<<"\n1111";
+            if(article_flag == 1)
+            {
+                article_flag = 0;
+                DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
+                std::cout<<"\nbookCB";
+            }
+        }
+        else if(SearchN::articleCB.isActive())
+        {
+            if(article_flag == 0)
+            {
+                article_flag = 1;
+                DATABASE_SEARCH::SEARCH_DIRS::setDirsForArticle();
+                std::cout<<"\narticleCB";
             }
         }
     }
@@ -690,7 +715,7 @@ void showClock()
 }
 void getSearchResults()
 {
-    DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
+    //DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::NAME] = activePage[PAGE]->getText(&SearchN::SNameB);
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::AUTHOR] = activePage[PAGE]->getText(&SearchN::SAuthorB);
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = activePage[PAGE]->getText(&SearchN::SDateB);

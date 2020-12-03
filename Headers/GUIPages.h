@@ -249,6 +249,7 @@ namespace SearchN
         prevButton.show(false);
         bookCB.setTwin(&articleCB);
         articleCB.setTwin(&bookCB);
+        bookCB.setActive(true);
         _searchPage->addComponent(&PageTitle);
         _searchPage->addComponent(&SNameT);
         _searchPage->addComponent(&SAuthorT);

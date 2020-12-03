@@ -233,6 +233,7 @@ public:
         parent = _parent;
         selected = _selected;
         mode = 'P';
+        twin = nullptr;
     }
     CheckBox(float x, float y, Color _colr = Color(1, 1, 1), bool _selected = false) : dimensions(x, y, CHECK_BOX_DIMENSION, CHECK_BOX_DIMENSION), colr(_colr)
     {
@@ -346,6 +347,12 @@ public:
     void show(bool _show)
     {
         showB = _show;
+    }
+    bool isActive()
+    {
+        if(showB)
+            return active;
+        return false;
     }
     void render()
     {
@@ -704,6 +711,7 @@ void BookDetail::setDescription()
 }
 void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
+    bookDes.clear();
     bookDes.push_back(bd.name);
     std::string AName = "";
     for (int i = 0; i < bd.authors_display.size(); i++)
@@ -732,6 +740,7 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
     bookDes.push_back(extdes);
     bookDes.push_back(std::to_string(bd.review));
     bookDes.push_back(bookmark);
+    bookDes.push_back(std::to_string(bd.noOfReveiws));
 }
 
 void BookDetail::setButtonAndTextBox()
@@ -769,10 +778,12 @@ void BookDetail::setButtonAndTextBox()
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 2.9, 1.1), textboxC, textboxTextC);
         shareUser.setPadding(0.25);
         reviewNum.setPadding(0.23);
+        //removeButton.show(true);
     }
     else if (mode == 'S')
     {
         readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
+        //removeButton.show(false);
     }
 }
 void BookDetail::showBookDescription()

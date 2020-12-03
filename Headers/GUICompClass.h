@@ -691,23 +691,6 @@ void BookDetail::setDescription()
     bookDes.push_back("0.0000000");
     bookDes.push_back("BookMark");
     bookDes.push_back("10000");
-
-    // std::vector<std::string> brText(6);
-    // std::string temp;
-    // for(int i =0 ;i<bookDes[4].size();i++)
-    // {
-    //         temp.push_back(bookDes[4][i]);
-    //     if((i%30)==0)
-    //     {
-    //         //std::cout<<temp<<"eeee";
-    //         brText.push_back(temp);
-    //         temp.clear();
-    //         std::cout<<brText[0]<<std::endl;
-    //     }
-    //     if(brText.size()==6)
-    //         break;
-    // }
-    // std::cout<<"asd"<<brText[0];
 }
 void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
@@ -755,6 +738,7 @@ void BookDetail::setButtonAndTextBox()
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 4.6, 2.9, 1.1), textboxC, textboxTextC);
         bookmarkText.setPadding(0.25);
         shareUser.setPadding(0.25);
+        removeButton.show(true);
     }
     else if (mode == 'C')
     {
@@ -768,6 +752,7 @@ void BookDetail::setButtonAndTextBox()
         bookmarkText.setPadding(0.25);
         shareUser.setPadding(0.25);
         reviewNum.setPadding(0.23);
+        removeButton.show(true);
     }
     else if (mode == 'F')
     {
@@ -778,12 +763,17 @@ void BookDetail::setButtonAndTextBox()
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 2.9, 1.1), textboxC, textboxTextC);
         shareUser.setPadding(0.25);
         reviewNum.setPadding(0.23);
-        //removeButton.show(true);
+        removeButton.show(true);
     }
     else if (mode == 'S')
     {
         readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
-        //removeButton.show(false);
+        removeButton.show(true);
+    }
+    else if (mode == 'O')
+    {
+        readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
+        removeButton.show(false);
     }
 }
 void BookDetail::showBookDescription()
@@ -843,7 +833,7 @@ void BookDetail::render()
         reviewNum.render();
         printText(featureButtonX - 1.1, featureButtonY - 1.8, titleTextC, "[0-5]", f2);
     }
-    else if (mode == 'S')
+    else if (mode == 'S' || mode == 'O')
     {
         readingButton.render();
     }

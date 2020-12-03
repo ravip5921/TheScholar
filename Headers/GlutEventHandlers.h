@@ -50,8 +50,6 @@ GUIBlock completedB;
 GUIBlock favouriteB;
 GUIBlock shareB;
 
-int article_flag = 1;
-
 /**** Navigate Blocks in HOME_PAGE *****/
 int BLOCK = 0;
 enum
@@ -256,6 +254,11 @@ void mousePressed(int button, int state, int x, int y)
             activePage[SIGNUP_P]->setText(&SignUp::passwordB, &userName);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::userNameB);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::passwordB, false);
+            BLOCK = READING_MP;
+            activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, true);
+            activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
+            activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
@@ -418,12 +421,12 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.openBookButton))
         {
-            std::cout<<"Open Book button pressed.\n";
+            std::cout << "Open Book button pressed.\n";
             removeBook();
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.removeButton))
         {
-            std::cout<<"Remove button pressed.\n";
+            std::cout << "Remove button pressed.\n";
             removeBook();
         }
     }
@@ -443,48 +446,59 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << bindex;
             BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
             PAGE = BOOK_DETAIL_P;
+            BookDetails::page.changeMode('O');
             /**********************************************************************************************************/
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::relevantOptionsList))
         {
-            int bindex = activePage[PAGE]->getButtonIndex(button, state, x, y, &SearchN::relevantOptionsList);
-            std::cout << bindex;
-            //BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
-           // PAGE = BOOK_DETAIL_P;
-           /**********************************************************************************************************/
+            std::string bText = activePage[PAGE]->getButtonText(button, state, x, y, &SearchN::relevantOptionsList);
+            std::cout << bText;
+            if (activePage[PAGE]->isActiveBox(&SearchN::SNameB))
+            {
+                SearchN::SNameB.setText(bText);
+            }
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SAuthorB))
+            {
+                SearchN::SAuthorB.setText(bText);
+            }
+            else if (activePage[PAGE]->isActiveBox(&SearchN::SGenreB))
+            {
+                SearchN::SGenreB.setText(bText);
+            }
+            /**********************************************************************************************************/
         }
-        else if(activePage[PAGE]->buttonPressed(&SearchN::nextButton))
+        else if (activePage[PAGE]->buttonPressed(&SearchN::nextButton))
         {
             SearchN::searchIndex++;
-             std::cout << SearchN::searchIndex;
+            std::cout << SearchN::searchIndex;
             SearchN::prevButton.show(true);
         }
-        else if(activePage[PAGE]->buttonPressed(&SearchN::prevButton))
+        else if (activePage[PAGE]->buttonPressed(&SearchN::prevButton))
         {
             SearchN::searchIndex--;
-             std::cout << SearchN::searchIndex;
-            if(SearchN::searchIndex==0)
+            std::cout << SearchN::searchIndex;
+            if (SearchN::searchIndex == 0)
             {
                 SearchN::prevButton.show(false);
             }
         }
-        else if(SearchN::bookCB.isActive())
+        else if (SearchN::bookCB.isActive())
         {
             //std::cout<<"\n1111";
-            if(article_flag == 1)
+            if (article_flag == 1)
             {
                 article_flag = 0;
                 DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
-                std::cout<<"\nbookCB";
+                std::cout << "\nbookCB";
             }
         }
-        else if(SearchN::articleCB.isActive())
+        else if (SearchN::articleCB.isActive())
         {
-            if(article_flag == 0)
+            if (article_flag == 0)
             {
                 article_flag = 1;
                 DATABASE_SEARCH::SEARCH_DIRS::setDirsForArticle();
-                std::cout<<"\narticleCB";
+                std::cout << "\narticleCB";
             }
         }
     }
@@ -741,5 +755,4 @@ void getSearchResults()
 }
 void removeBook()
 {
-
 }

@@ -22,6 +22,7 @@ int mainWindowIndex;
 int WID;
 int HEI;
 int PREV_PAGE;
+int article_flag = 1;
 char CHAR_MASK = '*';
 std::string userName = "";
 std::string password = "";

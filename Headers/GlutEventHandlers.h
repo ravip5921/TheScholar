@@ -74,9 +74,16 @@ namespace USERS_BOOKS
     std::vector<DATABASE_SEARCH::BookDescriptor> shared;
     std::vector<std::string> share_name;
     std::vector<std::string> shared_bookmark;
-
+    std::vector<std::string> rBookPath;
+    std::vector<std::string> cBookPath;
+    std::vector<std::string> fBookPath;
+    std::vector<std::string> sBookPath;
     void clearAll()
     {
+        rBookPath.clear();
+        cBookPath.clear();
+        fBookPath.clear();
+        sBookPath.clear();
         reading_name.clear();
         completed_name.clear();
         reading_bookmark.clear();
@@ -101,11 +108,13 @@ void callBackFun()
     WID = windowWidth();
     HEI = windowHeight();
     setFonts();
+
     activePage[PAGE]->render();
     if (PAGE == HOME_P)
     {
         activeBlock[BLOCK]->render();
     }
+
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -173,6 +182,7 @@ void mousePressed(int button, int state, int x, int y)
                             bdReading.readFromFile();
                             USERS_BOOKS::reading.push_back(bdReading);
                             USERS_BOOKS::reading_name.push_back(bdReading.name);
+                            USERS_BOOKS::rBookPath.push_back(bdReading.bookPath);
                         }
                         else{
                             USERS_BOOKS::reading_bookmark.push_back(*it);
@@ -191,6 +201,7 @@ void mousePressed(int button, int state, int x, int y)
                             bdCompleted.readFromFile();
                             USERS_BOOKS::completed.push_back(bdCompleted);
                             USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                            USERS_BOOKS::cBookPath.push_back(bdCompleted.bookPath);
                         }
                         else{
                             USERS_BOOKS::completed_bookmark.push_back(*it);
@@ -207,7 +218,7 @@ void mousePressed(int button, int state, int x, int y)
                         bdFavourite.readFromFile();
                         USERS_BOOKS::favourite.push_back(bdFavourite);
                         USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
-
+                        USERS_BOOKS::fBookPath.push_back(bdFavourite.bookPath);
                     }
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
                     dataf.clear();
@@ -221,6 +232,7 @@ void mousePressed(int button, int state, int x, int y)
                             bdShare.readFromFile();
                             USERS_BOOKS::shared.push_back(bdShare);
                             USERS_BOOKS::share_name.push_back(bdShare.name);
+                            USERS_BOOKS::sBookPath.push_back(bdShare.bookPath);
                         }
                         else{
                             USERS_BOOKS::shared_bookmark.push_back(*it);
@@ -278,14 +290,13 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(READING_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdReading;
                     int i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
-                        {
-                        if(i%2 == 0)
-                        {
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
                             bdReading.path =*it;
                             bdReading.readFromFile();
                             USERS_BOOKS::reading.push_back(bdReading);
                             USERS_BOOKS::reading_name.push_back(bdReading.name);
+                            USERS_BOOKS::rBookPath.push_back(bdReading.bookPath);
                         }
                         else{
                             USERS_BOOKS::reading_bookmark.push_back(*it);
@@ -298,14 +309,13 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(COMPLETED_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdCompleted;
                     i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
-                     {
-                        if(i%2 == 0)
-                            {
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
                             bdCompleted.path= *it;
                             bdCompleted.readFromFile();
                             USERS_BOOKS::completed.push_back(bdCompleted);
                             USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                            USERS_BOOKS::cBookPath.push_back(bdCompleted.bookPath);
                         }
                         else{
                             USERS_BOOKS::completed_bookmark.push_back(*it);
@@ -317,13 +327,12 @@ void mousePressed(int button, int state, int x, int y)
                 //favourite scroll box
                     dataf = fr.Reader(FAVOURITE_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdFavourite;
-                    for(auto it:dataf)
-                        {
+                    for(auto it:dataf){
                         bdFavourite.path= it;
                         bdFavourite.readFromFile();
                         USERS_BOOKS::favourite.push_back(bdFavourite);
                         USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
-
+                        USERS_BOOKS::fBookPath.push_back(bdFavourite.bookPath);
                     }
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
                     dataf.clear();
@@ -331,14 +340,13 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(SHARED_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdShare;
                     i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
-                        {
-                        if(i%2 == 0)
-                            {
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
                             bdShare.path= *it;
                             bdShare.readFromFile();
                             USERS_BOOKS::shared.push_back(bdShare);
                             USERS_BOOKS::share_name.push_back(bdShare.name);
+                            USERS_BOOKS::sBookPath.push_back(bdShare.bookPath);
                         }
                         else{
                             USERS_BOOKS::shared_bookmark.push_back(*it);
@@ -365,7 +373,6 @@ void mousePressed(int button, int state, int x, int y)
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
-            BLOCK = READING_MP;
             userName = "";
             password = "";
             activePage[LOGIN_P]->setText(&LogIn::userNameB, &userName);
@@ -376,12 +383,13 @@ void mousePressed(int button, int state, int x, int y)
             activePage[SIGNUP_P]->setText(&SignUp::passwordB, &userName);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::userNameB);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::passwordB, false);
+            BLOCK = READING_MP;
             activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, true);
             activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
             activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
             activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
+            BLOCK = READING_MP;
             BookDetails::page.changeMode('R');
-            SearchN::prevButton.show(false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
@@ -471,7 +479,7 @@ void mousePressed(int button, int state, int x, int y)
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
             bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
-            //write in share of another user
+        //write in share of another user
             FileWriter shareWriter(shareT);
             if (!shareWriter.UserExists())
             {
@@ -479,7 +487,12 @@ void mousePressed(int button, int state, int x, int y)
             }
             else
             {
-                shareWriter.Writer(4, bookNameSB,bookmarkT);
+                if(BookDetails::page.getMode() == 'R')
+                    shareWriter.Writer(4, USERS_BOOKS::rBookPath[bookNameIndex],bookmarkT);
+                else if(BookDetails::page.getMode() == 'C')
+                    shareWriter.Writer(4, USERS_BOOKS::cBookPath[bookNameIndex],bookmarkT);
+                else if(BookDetails::page.getMode() == 'F')
+                    shareWriter.Writer(4, USERS_BOOKS::fBookPath[bookNameIndex]);
             }
             std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
@@ -487,59 +500,55 @@ void mousePressed(int button, int state, int x, int y)
         {
             std::cout << "Reading Button Pressed. in share";
             FileWriter fw(userName);
-            fw.Writer(1, bookNameSB);
+            fw.Writer(1, USERS_BOOKS::sBookPath[bookNameIndex]);
             fw.maskBookName(bookNameIndex, 'S');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.readingButton) && (BookDetails::page.getMode() == 'F'))
         {
             std::cout << "Reading Button Pressed in fav";
             FileWriter fw(userName);
-            fw.Writer(1, bookNameSB);
+            fw.Writer(1, USERS_BOOKS::fBookPath[bookNameIndex]);
             fw.maskBookName(bookNameIndex, 'F');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'C'))
         {
             std::cout << "Fav Button Pressed in completed";
             FileWriter fw(userName);
-            fw.Writer(3, bookNameSB);
+            fw.Writer(3, USERS_BOOKS::cBookPath[bookNameIndex]);
             fw.maskBookName(bookNameIndex, 'C');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode() == 'C'))
         {
-
             bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             std::cout << "bookmark in completed";
             FileWriter fw(userName);
-            fw.updateBookmark(bookNameIndex, 'C', bookNameSB, bookmarkT);
+            fw.updateBookmark(bookNameIndex, 'C', USERS_BOOKS::cBookPath[bookNameIndex], bookmarkT);
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.completedButton) && (BookDetails::page.getMode() == 'R'))
         {
             std::cout << "Read Button Pressed in reading";
             FileWriter fw(userName);
-            fw.Writer(2, bookNameSB);
+            fw.Writer(2, USERS_BOOKS::rBookPath[bookNameIndex]);
             fw.maskBookName(bookNameIndex, 'R');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'R'))
         {
             std::cout << "Fav Button Pressed in reading";
             FileWriter fw(userName);
-            fw.Writer(3, bookNameSB);
+            fw.Writer(3, USERS_BOOKS::rBookPath[bookNameIndex]);
             fw.maskBookName(bookNameIndex, 'R');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode() == 'R'))
         {
-
             bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             std::cout << "bookmark in reading";
             FileWriter fw(userName);
-            fw.updateBookmark(bookNameIndex, 'R', bookNameSB, bookmarkT);
+            fw.updateBookmark(bookNameIndex, 'R', USERS_BOOKS::rBookPath[bookNameIndex], bookmarkT);
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.openBookButton))
         {
-            std::cout<<BookDetails::page.getBookPath();
-            Utility::FileHandler::openFileExternal(BookDetails::page.getBookPath());
             std::cout << "Open Book button pressed.\n";
             //removeBook();
         }
@@ -567,6 +576,7 @@ void mousePressed(int button, int state, int x, int y)
             BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
             PAGE = BOOK_DETAIL_P;
             BookDetails::page.changeMode('O');
+            /**********************************************************************************************************/
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::relevantOptionsList))
         {
@@ -584,18 +594,18 @@ void mousePressed(int button, int state, int x, int y)
             {
                 SearchN::SGenreB.setText(bText);
             }
+            /**********************************************************************************************************/
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::nextButton))
         {
             SearchN::searchIndex++;
+            std::cout << SearchN::searchIndex;
             SearchN::prevButton.show(true);
-            getSearchResults();
-
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::prevButton))
         {
             SearchN::searchIndex--;
-            getSearchResults();
+            std::cout << SearchN::searchIndex;
             if (SearchN::searchIndex == 0)
             {
                 SearchN::prevButton.show(false);
@@ -603,6 +613,7 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (SearchN::bookCB.isActive())
         {
+            //std::cout<<"\n1111";
             if (article_flag == 1)
             {
                 article_flag = 0;
@@ -649,12 +660,10 @@ void keyPressed(unsigned char key, int x, int y)
                 {
                     PAGE = HOME_P;
                     activePage[HOME_P]->setText(&Home::User, &userName);
-
                     USERS_BOOKS::clearAll();
                     FileReader fr(userName);
                 //reading scroll box
                     dataf = fr.Reader(READING_MP + 1);
-
                     DATABASE_SEARCH::BookDescriptor bdReading;
                     int i=0;
                     for(auto it = dataf.begin(); it != dataf.end(); ++it) {
@@ -663,6 +672,7 @@ void keyPressed(unsigned char key, int x, int y)
                             bdReading.readFromFile();
                             USERS_BOOKS::reading.push_back(bdReading);
                             USERS_BOOKS::reading_name.push_back(bdReading.name);
+                            USERS_BOOKS::rBookPath.push_back(bdReading.bookPath);
                         }
                         else{
                             USERS_BOOKS::reading_bookmark.push_back(*it);
@@ -681,6 +691,7 @@ void keyPressed(unsigned char key, int x, int y)
                             bdCompleted.readFromFile();
                             USERS_BOOKS::completed.push_back(bdCompleted);
                             USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                            USERS_BOOKS::cBookPath.push_back(bdCompleted.bookPath);
                         }
                         else{
                             USERS_BOOKS::completed_bookmark.push_back(*it);
@@ -697,6 +708,7 @@ void keyPressed(unsigned char key, int x, int y)
                         bdFavourite.readFromFile();
                         USERS_BOOKS::favourite.push_back(bdFavourite);
                         USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
+                        USERS_BOOKS::fBookPath.push_back(bdFavourite.bookPath);
 
                     }
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
@@ -711,6 +723,7 @@ void keyPressed(unsigned char key, int x, int y)
                             bdShare.readFromFile();
                             USERS_BOOKS::shared.push_back(bdShare);
                             USERS_BOOKS::share_name.push_back(bdShare.name);
+                            USERS_BOOKS::sBookPath.push_back(bdShare.bookPath);
                         }
                         else{
                             USERS_BOOKS::shared_bookmark.push_back(*it);
@@ -780,6 +793,7 @@ void keyPressed(unsigned char key, int x, int y)
                             bdReading.readFromFile();
                             USERS_BOOKS::reading.push_back(bdReading);
                             USERS_BOOKS::reading_name.push_back(bdReading.name);
+                            USERS_BOOKS::rBookPath.push_back(bdReading.bookPath);
                         }
                         else{
                             USERS_BOOKS::reading_bookmark.push_back(*it);
@@ -798,6 +812,8 @@ void keyPressed(unsigned char key, int x, int y)
                             bdCompleted.readFromFile();
                             USERS_BOOKS::completed.push_back(bdCompleted);
                             USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                            USERS_BOOKS::cBookPath.push_back(bdCompleted.bookPath);
+
                         }
                         else{
                             USERS_BOOKS::completed_bookmark.push_back(*it);
@@ -814,6 +830,7 @@ void keyPressed(unsigned char key, int x, int y)
                         bdFavourite.readFromFile();
                         USERS_BOOKS::favourite.push_back(bdFavourite);
                         USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
+                        USERS_BOOKS::fBookPath.push_back(bdFavourite.bookPath);
 
                     }
                     activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
@@ -828,6 +845,7 @@ void keyPressed(unsigned char key, int x, int y)
                             bdShare.readFromFile();
                             USERS_BOOKS::shared.push_back(bdShare);
                             USERS_BOOKS::share_name.push_back(bdShare.name);
+                            USERS_BOOKS::sBookPath.push_back(bdShare.bookPath);
                         }
                         else{
                             USERS_BOOKS::shared_bookmark.push_back(*it);
@@ -956,15 +974,17 @@ void getSearchResults()
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = activePage[PAGE]->getText(&SearchN::SDateB);
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::GENRE] = activePage[PAGE]->getText(&SearchN::SGenreB);
     DATABASE_SEARCH::bdlist.clear();
-    SearchN::nextButton.show(DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist,SearchN::searchIndex*DATABASE_SEARCH::MAX_SEARCH_RESULT));
+    DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist);
+
     std::vector<std::string> searchBookNameList;
     for (int i = 0; i < DATABASE_SEARCH::bdlist.size(); i++)
         searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
     SearchN::searchResultList.setData(searchBookNameList);
-    /*activePage[PAGE]->setText(&SearchN::SNameB, "");
+
+    activePage[PAGE]->setText(&SearchN::SNameB, "");
     activePage[PAGE]->setText(&SearchN::SAuthorB, "");
     activePage[PAGE]->setText(&SearchN::SGenreB, "");
-    activePage[PAGE]->setText(&SearchN::SDateB, "");*/
+    activePage[PAGE]->setText(&SearchN::SDateB, "");
     activePage[PAGE]->setActiveBox(&SearchN::SNameB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);

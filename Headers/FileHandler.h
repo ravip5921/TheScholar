@@ -119,7 +119,7 @@ public:
 
     FileWriter(std::string username) : username(std::move(username)) {}
     void Writer(const int choice, std::string toWrite, std::string bookmarkPage= "$");
-    void maskBookName(int position, char choice, std::string bookName);
+    void maskBookName(int position, char choice);
     bool UserExists();
     void updateBookmark(int position,char choice,std::string bookName,std::string newBookmark);
 };
@@ -182,7 +182,7 @@ bool FileWriter::UserExists()
     return false;
 }
 
-void FileWriter::maskBookName(int position, char choice,std::string bookName){
+void FileWriter::maskBookName(int position, char choice){
         ofstream fileWrite;
         ifstream fileReader;
         std::string path = std::string(".\\\\") + std::string("Users\\\\") + username;

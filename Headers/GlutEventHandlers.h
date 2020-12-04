@@ -18,7 +18,6 @@ void createErrorWindow(const char *);
 void setFonts();
 void showClock();
 void getSearchResults();
-void removeBook();
 int windowWidth();
 int windowHeight();
 //For pages
@@ -365,21 +364,21 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "Reading Button Pressed. in share";
             FileWriter fw(userName);
             fw.Writer(1, bookNameSB);
-            fw.maskBookName(bookNameIndex, 'S', bookNameSB);
+            fw.maskBookName(bookNameIndex, 'S');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.readingButton) && (BookDetails::page.getMode() == 'F'))
         {
             std::cout << "Reading Button Pressed in fav";
             FileWriter fw(userName);
             fw.Writer(1, bookNameSB);
-            fw.maskBookName(bookNameIndex, 'F', bookNameSB);
+            fw.maskBookName(bookNameIndex, 'F');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'C'))
         {
             std::cout << "Fav Button Pressed in completed";
             FileWriter fw(userName);
             fw.Writer(3, bookNameSB);
-            fw.maskBookName(bookNameIndex, 'C', bookNameSB);
+            fw.maskBookName(bookNameIndex, 'C');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode() == 'C'))
         {
@@ -395,14 +394,14 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "Read Button Pressed in reading";
             FileWriter fw(userName);
             fw.Writer(2, bookNameSB);
-            fw.maskBookName(bookNameIndex, 'R', bookNameSB);
+            fw.maskBookName(bookNameIndex, 'R');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'R'))
         {
             std::cout << "Fav Button Pressed in reading";
             FileWriter fw(userName);
             fw.Writer(3, bookNameSB);
-            fw.maskBookName(bookNameIndex, 'R', bookNameSB);
+            fw.maskBookName(bookNameIndex, 'R');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.bookmarkButton) && (BookDetails::page.getMode() == 'R'))
         {
@@ -416,12 +415,13 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.openBookButton))
         {
             std::cout << "Open Book button pressed.\n";
-            removeBook();
+            //removeBook();
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.removeButton))
         {
             std::cout << "Remove button pressed.\n";
-            removeBook();
+            FileWriter fw(userName);
+            fw.maskBookName(bookNameIndex, BookDetails::page.getMode());
         }
     }
     else if (PAGE == SEARCH_P)
@@ -747,6 +747,4 @@ void getSearchResults()
     activePage[SEARCH_P]->setActiveBox(&SearchN::relevantOptionsList, false);
     activePage[SEARCH_P]->setActiveBox(&SearchN::searchResultList, true);
 }
-void removeBook()
-{
-}
+

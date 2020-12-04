@@ -39,8 +39,6 @@ std::vector<std::string> FileReader::Reader(const int choice){
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(myText[0] == '$')
-                    continue;
                 books.push_back(myText);
                 i++;
             }
@@ -52,8 +50,6 @@ std::vector<std::string> FileReader::Reader(const int choice){
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
                 getline(fileReader,pages);
-                if(myText[0] == '$')
-                    continue;
                 books.push_back(myText);
                 i++;
             }
@@ -64,8 +60,6 @@ std::vector<std::string> FileReader::Reader(const int choice){
             path = path + string("\\\\favourite.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                if(myText[0] == '$')
-                    continue;
                 books.push_back(myText);
                 i++;
             }
@@ -76,8 +70,7 @@ std::vector<std::string> FileReader::Reader(const int choice){
             path = path + string("\\\\share.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                if(myText[0] == '$')
-                    continue;
+                getline(fileReader,pages);
                 books.push_back(myText);
                 i++;
             }
@@ -120,8 +113,7 @@ private:
     std::string username;
 
 public:
-    FileWriter()
-    {
+    FileWriter(){
         username = "";
     }
 
@@ -138,6 +130,8 @@ void FileWriter::Writer(const int choice, std::string toWrite, std::string bookm
     {
         ofstream fileWrite;
         string path = std::string(".\\\\") + std::string("Users\\\\") + username;
+        if(bookmarkPage=="")
+            bookmarkPage="$";
 
         if (choice == 1)
         {
@@ -167,6 +161,7 @@ void FileWriter::Writer(const int choice, std::string toWrite, std::string bookm
             path = path + string("\\\\share.txt");
             fileWrite.open(path.c_str(), ios::app);
             fileWrite << toWrite << endl;
+            fileWrite << bookmarkPage <<endl;
             fileWrite.close();
         }
         else
@@ -269,9 +264,14 @@ void FileWriter::maskBookName(int position, char choice,std::string bookName){
             fileReader.open(path.c_str());
             pathTemp = pathTemp + string("\\\\tempS.txt");
             fileWrite.open(pathTemp.c_str());
+            i=1;
+            position = 2*position +1;
             while(getline(fileReader,toWrite)){
                 if(i != position){
                     fileWrite<<toWrite<<std::endl;
+                }
+                else{
+                    getline(fileReader,toWrite);
                 }
                 i++;
             }
@@ -337,4 +337,27 @@ void FileWriter::updateBookmark(int position,char choice,std::string bookName,st
         remove((path+"\\\\completed.txt").c_str());
         rename((path+"\\\\tempC.txt").c_str(),(path+"\\\\completed.txt").c_str());
         }
+    else if (choice == 'S')
+    {
+        path = path + string("\\\\share.txt");
+        fileReader.open(path.c_str());
+        pathTemp = pathTemp + string("\\\\tempS.txt");
+        fileWrite.open(pathTemp.c_str());
+        position = 2*position +1;
+        while(getline(fileReader,toWrite)){
+            if(i != position){
+                fileWrite<<toWrite<<std::endl;
+            }
+            else{
+                fileWrite<<newBookmark<<std::endl;
+            }
+            i++;
+        }
+        fileReader.close();
+        fileWrite.close();
+
+        path = std::string(".\\\\") + std::string("Users\\\\") + username;
+        remove((path+"\\\\share.txt").c_str());
+        rename((path+"\\\\tempS.txt").c_str(),(path+"\\\\share.txt").c_str());
+    }
 }

@@ -305,8 +305,6 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &readingN::BookListReading);
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &readingN::BookListReading);
-            //FileWriter masker(userName);
-            //masker.maskBookName(bookNameIndex, 'R', bookNameSB);
             PAGE = BOOK_DETAIL_P;
             PREV_PAGE = HOME_P;
         }
@@ -314,8 +312,6 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &completedN::BookListCompleted);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &completedN::BookListCompleted);
-            //FileWriter masker(userName);
-            //masker.maskBookName(bookNameIndex, 'C', bookNameSB);
             PAGE = BOOK_DETAIL_P;
             PREV_PAGE = HOME_P;
         }
@@ -323,8 +319,6 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &favouriteN::BookListFavourite);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &favouriteN::BookListFavourite);
-            //FileWriter masker(userName);
-            //masker.maskBookName(bookNameIndex, 'F', bookNameSB);
             PAGE = BOOK_DETAIL_P;
             PREV_PAGE = HOME_P;
         }
@@ -332,8 +326,6 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookNameIndex = activeBlock[BLOCK]->getButtonIndex(button, state, x, y, &sharedN::BookListShare);
             bookNameSB = activeBlock[BLOCK]->getButtonText(button, state, x, y, &sharedN::BookListShare);
-            //FileWriter masker(userName);
-            //masker.maskBookName(bookNameIndex, 'S', bookNameSB);
             PAGE = BOOK_DETAIL_P;
             PREV_PAGE = HOME_P;
         }
@@ -354,6 +346,8 @@ void mousePressed(int button, int state, int x, int y)
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
+            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             //write in share of another user
             FileWriter shareWriter(shareT);
             if (!shareWriter.UserExists())
@@ -362,7 +356,7 @@ void mousePressed(int button, int state, int x, int y)
             }
             else
             {
-                shareWriter.Writer(4, bookNameSB);
+                shareWriter.Writer(4, bookNameSB,bookmarkT);
             }
             std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }

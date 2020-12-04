@@ -180,7 +180,6 @@ namespace Home
         _homePage->addComponent(&sharedButton);
         _homePage->addComponent(&background);
         _homePage->addComponent(&searchButton);
-        //_homePage->addComponent(&bookmarkDis);
         _homePage->addComponent(&bookNameDis);
     }
 }; //namespace Home
@@ -212,14 +211,14 @@ namespace SearchN
     Color backButtonC(0.1, 0.3, 0.7);
     Color scrollBoxC(0, 1, 0);
 
-    Coord_Rect BookListD(0.5, -8.5, 8, 14);
+    Coord_Rect BookListD(0.5, -8.1, 8, 14);
     Coord_Rect SNameD(searchX, searchY - gap - 1.5, searchW, searchH);
     Coord_Rect SAuthorD(SNameD, 'y', -gap - 1);
     Coord_Rect SGenreD(SAuthorD, 'y', -gap - 1);
     Coord_Rect SDateD(SGenreD, 'y', -gap - 1);
     Coord_Rect SBoxD(searchX + 2, searchY - 11, 2.5, 1.1);
     Coord_Rect backButtonD(7, 7.5, 1.60, 1.0);
-    Coord_Rect nextButtonD(2,-8,1.8,1);
+    Coord_Rect nextButtonD(2,-9.5,1.8,1);
     Coord_Rect prevButtonD(nextButtonD,'x',6);
 
     Text PageTitle(-8, 6.3, userNameC, "Enter details to Search:                      Results:", GLUT_BITMAP_HELVETICA_18);
@@ -250,6 +249,7 @@ namespace SearchN
         bookCB.setTwin(&articleCB);
         articleCB.setTwin(&bookCB);
         bookCB.setActive(true);
+        nextButton.show(false);
         _searchPage->addComponent(&PageTitle);
         _searchPage->addComponent(&SNameT);
         _searchPage->addComponent(&SAuthorT);

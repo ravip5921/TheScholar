@@ -101,13 +101,11 @@ void callBackFun()
     WID = windowWidth();
     HEI = windowHeight();
     setFonts();
-
     activePage[PAGE]->render();
     if (PAGE == HOME_P)
     {
         activeBlock[BLOCK]->render();
     }
-
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -280,8 +278,10 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(READING_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdReading;
                     int i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
-                        if(i%2 == 0){
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
+                        {
+                        if(i%2 == 0)
+                        {
                             bdReading.path =*it;
                             bdReading.readFromFile();
                             USERS_BOOKS::reading.push_back(bdReading);
@@ -298,8 +298,10 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(COMPLETED_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdCompleted;
                     i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
-                        if(i%2 == 0){
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
+                     {
+                        if(i%2 == 0)
+                            {
                             bdCompleted.path= *it;
                             bdCompleted.readFromFile();
                             USERS_BOOKS::completed.push_back(bdCompleted);
@@ -315,7 +317,8 @@ void mousePressed(int button, int state, int x, int y)
                 //favourite scroll box
                     dataf = fr.Reader(FAVOURITE_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdFavourite;
-                    for(auto it:dataf){
+                    for(auto it:dataf)
+                        {
                         bdFavourite.path= it;
                         bdFavourite.readFromFile();
                         USERS_BOOKS::favourite.push_back(bdFavourite);
@@ -328,8 +331,10 @@ void mousePressed(int button, int state, int x, int y)
                     dataf = fr.Reader(SHARED_MP + 1);
                     DATABASE_SEARCH::BookDescriptor bdShare;
                     i=0;
-                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
-                        if(i%2 == 0){
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it)
+                        {
+                        if(i%2 == 0)
+                            {
                             bdShare.path= *it;
                             bdShare.readFromFile();
                             USERS_BOOKS::shared.push_back(bdShare);
@@ -360,6 +365,7 @@ void mousePressed(int button, int state, int x, int y)
         if (activePage[PAGE]->buttonPressed(&Home::logoutButton))
         {
             PAGE = LOGIN_P;
+            BLOCK = READING_MP;
             userName = "";
             password = "";
             activePage[LOGIN_P]->setText(&LogIn::userNameB, &userName);
@@ -370,13 +376,12 @@ void mousePressed(int button, int state, int x, int y)
             activePage[SIGNUP_P]->setText(&SignUp::passwordB, &userName);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::userNameB);
             activePage[SIGNUP_P]->setActiveBox(&SignUp::passwordB, false);
-            BLOCK = READING_MP;
             activeBlock[BLOCK]->setActiveScrollBox(&readingN::BookListReading, true);
             activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
             activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
             activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
-            BLOCK = READING_MP;
             BookDetails::page.changeMode('R');
+            SearchN::prevButton.show(false);
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
@@ -533,6 +538,8 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.openBookButton))
         {
+            std::cout<<BookDetails::page.getBookPath();
+            Utility::FileHandler::openFileExternal(BookDetails::page.getBookPath());
             std::cout << "Open Book button pressed.\n";
             //removeBook();
         }
@@ -560,7 +567,6 @@ void mousePressed(int button, int state, int x, int y)
             BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
             PAGE = BOOK_DETAIL_P;
             BookDetails::page.changeMode('O');
-            /**********************************************************************************************************/
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::relevantOptionsList))
         {
@@ -578,18 +584,18 @@ void mousePressed(int button, int state, int x, int y)
             {
                 SearchN::SGenreB.setText(bText);
             }
-            /**********************************************************************************************************/
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::nextButton))
         {
             SearchN::searchIndex++;
-            std::cout << SearchN::searchIndex;
             SearchN::prevButton.show(true);
+            getSearchResults();
+
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::prevButton))
         {
             SearchN::searchIndex--;
-            std::cout << SearchN::searchIndex;
+            getSearchResults();
             if (SearchN::searchIndex == 0)
             {
                 SearchN::prevButton.show(false);
@@ -597,7 +603,6 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (SearchN::bookCB.isActive())
         {
-            //std::cout<<"\n1111";
             if (article_flag == 1)
             {
                 article_flag = 0;
@@ -951,17 +956,15 @@ void getSearchResults()
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = activePage[PAGE]->getText(&SearchN::SDateB);
     DATABASE_SEARCH::keywords[DATABASE_SEARCH::GENRE] = activePage[PAGE]->getText(&SearchN::SGenreB);
     DATABASE_SEARCH::bdlist.clear();
-    DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist);
-
+    SearchN::nextButton.show(DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist,SearchN::searchIndex*DATABASE_SEARCH::MAX_SEARCH_RESULT));
     std::vector<std::string> searchBookNameList;
     for (int i = 0; i < DATABASE_SEARCH::bdlist.size(); i++)
         searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
     SearchN::searchResultList.setData(searchBookNameList);
-
-    activePage[PAGE]->setText(&SearchN::SNameB, "");
+    /*activePage[PAGE]->setText(&SearchN::SNameB, "");
     activePage[PAGE]->setText(&SearchN::SAuthorB, "");
     activePage[PAGE]->setText(&SearchN::SGenreB, "");
-    activePage[PAGE]->setText(&SearchN::SDateB, "");
+    activePage[PAGE]->setText(&SearchN::SDateB, "");*/
     activePage[PAGE]->setActiveBox(&SearchN::SNameB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);

@@ -581,6 +581,7 @@ public:
 class BookDetail : public GUIcomponent
 {
     std::string bookname;
+    std::string bookpath;
     char mode;
     float bookNamePosX;
     float bookNamePosY;
@@ -662,6 +663,10 @@ public:
     {
         return mode;
     }
+    std::string getBookPath()
+    {
+        return bookpath;
+    }
     std::string getText(TextBox *_box)
     {
         return _box->getText();
@@ -724,6 +729,7 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
     bookDes.push_back(std::to_string(bd.review));
     bookDes.push_back(bookmark);
     bookDes.push_back(std::to_string(bd.noOfReveiws));
+    bookpath = bd.bookPath;
 }
 
 void BookDetail::setButtonAndTextBox()

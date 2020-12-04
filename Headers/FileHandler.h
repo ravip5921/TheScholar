@@ -38,7 +38,7 @@ std::vector<std::string> FileReader::Reader(const int choice){
             path = path + string("\\\\reading.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                getline(fileReader,pages);
+                //getline(fileReader,pages);
                 books.push_back(myText);
                 i++;
             }
@@ -49,7 +49,7 @@ std::vector<std::string> FileReader::Reader(const int choice){
             path = path + string("\\\\completed.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                getline(fileReader,pages);
+                //getline(fileReader,pages);
                 books.push_back(myText);
                 i++;
             }
@@ -70,7 +70,7 @@ std::vector<std::string> FileReader::Reader(const int choice){
             path = path + string("\\\\share.txt");
             fileReader.open(path.c_str());
             while (getline(fileReader, myText)){ // text data from text file stored in vector
-                getline(fileReader,pages);
+                //getline(fileReader,pages);
                 books.push_back(myText);
                 i++;
             }

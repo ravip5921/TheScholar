@@ -20,6 +20,7 @@ void showClock();
 void getSearchResults();
 int windowWidth();
 int windowHeight();
+
 //For pages
 GUIPage loginPage;
 GUIPage signupPage;
@@ -63,16 +64,30 @@ std::vector<GUIBlock *> activeBlock = {&readingB, &completedB, &favouriteB, &sha
 namespace USERS_BOOKS
 {
     std::vector<DATABASE_SEARCH::BookDescriptor> reading;
-    //std::vector<std::string> reading_bookmark;
+    std::vector<std::string> reading_name;
+    std::vector<std::string> reading_bookmark;
     std::vector<DATABASE_SEARCH::BookDescriptor> completed;
-    std::vector<DATABASE_SEARCH::BookDescriptor> shared;
+    std::vector<std::string> completed_name;
+    std::vector<std::string> completed_bookmark;
     std::vector<DATABASE_SEARCH::BookDescriptor> favourite;
+    std::vector<std::string> favourite_name;
+    std::vector<DATABASE_SEARCH::BookDescriptor> shared;
+    std::vector<std::string> share_name;
+    std::vector<std::string> shared_bookmark;
 
     void clearAll()
     {
+        reading_name.clear();
+        completed_name.clear();
+        reading_bookmark.clear();
         reading.clear();
+        completed_bookmark.clear();
+        completed_name.clear();
         completed.clear();
         shared.clear();
+        shared_bookmark.clear();
+        share_name.clear();
+        favourite_name.clear();
         favourite.clear();
     }
 } // namespace USERS_BOOKS
@@ -148,28 +163,79 @@ void mousePressed(int button, int state, int x, int y)
             {
                 PAGE = HOME_P;
                 activePage[HOME_P]->setText(&Home::User, &userName);
-
+                USERS_BOOKS::clearAll();
                 FileReader fr(userName);
                 //reading scroll box
-                dataf = fr.Reader(READING_MP + 1);
-                activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
-
+                    dataf = fr.Reader(READING_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdReading;
+                    int i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdReading.path =*it;
+                            bdReading.readFromFile();
+                            USERS_BOOKS::reading.push_back(bdReading);
+                            USERS_BOOKS::reading_name.push_back(bdReading.name);
+                        }
+                        else{
+                            USERS_BOOKS::reading_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&readingN::BookListReading,USERS_BOOKS::reading_name);
+                    dataf.clear();
                 //completed scroll box
-                dataf = fr.Reader(COMPLETED_MP + 1);
-                activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
-
+                    dataf = fr.Reader(COMPLETED_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdCompleted;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdCompleted.path= *it;
+                            bdCompleted.readFromFile();
+                            USERS_BOOKS::completed.push_back(bdCompleted);
+                            USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                        }
+                        else{
+                            USERS_BOOKS::completed_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted,USERS_BOOKS::completed_name);
+                    dataf.clear();
                 //favourite scroll box
-                dataf = fr.Reader(FAVOURITE_MP + 1);
-                activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
+                    dataf = fr.Reader(FAVOURITE_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdFavourite;
+                    for(auto it:dataf){
+                        bdFavourite.path= it;
+                        bdFavourite.readFromFile();
+                        USERS_BOOKS::favourite.push_back(bdFavourite);
+                        USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
 
+                    }
+                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
+                    dataf.clear();
                 //share scroll box
-                dataf = fr.Reader(SHARED_MP + 1);
-                activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
-            }
-            else
-            {
-                createErrorWindow("User name or password incorrect!");
-            }
+                    dataf = fr.Reader(SHARED_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdShare;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdShare.path= *it;
+                            bdShare.readFromFile();
+                            USERS_BOOKS::shared.push_back(bdShare);
+                            USERS_BOOKS::share_name.push_back(bdShare.name);
+                        }
+                        else{
+                            USERS_BOOKS::shared_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&sharedN::BookListShare,USERS_BOOKS::share_name);
+                    dataf.clear();
+                }
+                else
+                {
+                    createErrorWindow("User name or password incorrect!");
+                }
         }
         else if (activePage[PAGE]->buttonPressed(&LogIn::toSignup))
         {
@@ -208,25 +274,76 @@ void mousePressed(int button, int state, int x, int y)
                     password = passwordN;
                     activePage[HOME_P]->setText(&Home::User, &userNameN);
                     PAGE = HOME_P;
-
-                    FileReader fr(userNameN);
-                    //reading scroll box
+                    USERS_BOOKS::clearAll();
+                    FileReader fr(userName);
+                //reading scroll box
                     dataf = fr.Reader(READING_MP + 1);
-                    activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
-
-                    //completed scroll box
+                    DATABASE_SEARCH::BookDescriptor bdReading;
+                    int i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdReading.path =*it;
+                            bdReading.readFromFile();
+                            USERS_BOOKS::reading.push_back(bdReading);
+                            USERS_BOOKS::reading_name.push_back(bdReading.name);
+                        }
+                        else{
+                            USERS_BOOKS::reading_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&readingN::BookListReading,USERS_BOOKS::reading_name);
+                    dataf.clear();
+                //completed scroll box
                     dataf = fr.Reader(COMPLETED_MP + 1);
-                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
-
-                    //favourite scroll box
+                    DATABASE_SEARCH::BookDescriptor bdCompleted;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdCompleted.path= *it;
+                            bdCompleted.readFromFile();
+                            USERS_BOOKS::completed.push_back(bdCompleted);
+                            USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                        }
+                        else{
+                            USERS_BOOKS::completed_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted,USERS_BOOKS::completed_name);
+                    dataf.clear();
+                //favourite scroll box
                     dataf = fr.Reader(FAVOURITE_MP + 1);
-                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
+                    DATABASE_SEARCH::BookDescriptor bdFavourite;
+                    for(auto it:dataf){
+                        bdFavourite.path= it;
+                        bdFavourite.readFromFile();
+                        USERS_BOOKS::favourite.push_back(bdFavourite);
+                        USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
 
-                    //share scroll box
+                    }
+                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
+                    dataf.clear();
+                //share scroll box
                     dataf = fr.Reader(SHARED_MP + 1);
-                    activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
+                    DATABASE_SEARCH::BookDescriptor bdShare;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdShare.path= *it;
+                            bdShare.readFromFile();
+                            USERS_BOOKS::shared.push_back(bdShare);
+                            USERS_BOOKS::share_name.push_back(bdShare.name);
+                        }
+                        else{
+                            USERS_BOOKS::shared_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&sharedN::BookListShare,USERS_BOOKS::share_name);
+                    dataf.clear();
                 }
-            }
+        }
         }
         else if (activePage[PAGE]->buttonPressed(&SignUp::toLogin))
         {
@@ -258,6 +375,8 @@ void mousePressed(int button, int state, int x, int y)
             activeBlock[BLOCK]->setActiveScrollBox(&completedN::BookListCompleted, false);
             activeBlock[BLOCK]->setActiveScrollBox(&favouriteN::BookListFavourite, false);
             activeBlock[BLOCK]->setActiveScrollBox(&sharedN::BookListShare, false);
+            BLOCK = READING_MP;
+            BookDetails::page.changeMode('R');
         }
         else if (activePage[PAGE]->buttonPressed(&Home::readingButton))
         {
@@ -526,23 +645,75 @@ void keyPressed(unsigned char key, int x, int y)
                     PAGE = HOME_P;
                     activePage[HOME_P]->setText(&Home::User, &userName);
 
+                    USERS_BOOKS::clearAll();
                     FileReader fr(userName);
-                    //reading scroll box
+                //reading scroll box
                     dataf = fr.Reader(READING_MP + 1);
-                    activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
-                    //std::cout<<fr.ReaderPage(1,"reading Book 10")<<endl;
 
-                    //completed scroll box
+                    DATABASE_SEARCH::BookDescriptor bdReading;
+                    int i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdReading.path =*it;
+                            bdReading.readFromFile();
+                            USERS_BOOKS::reading.push_back(bdReading);
+                            USERS_BOOKS::reading_name.push_back(bdReading.name);
+                        }
+                        else{
+                            USERS_BOOKS::reading_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&readingN::BookListReading,USERS_BOOKS::reading_name);
+                    dataf.clear();
+                //completed scroll box
                     dataf = fr.Reader(COMPLETED_MP + 1);
-                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
-
-                    //favourite scroll box
+                    DATABASE_SEARCH::BookDescriptor bdCompleted;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdCompleted.path= *it;
+                            bdCompleted.readFromFile();
+                            USERS_BOOKS::completed.push_back(bdCompleted);
+                            USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                        }
+                        else{
+                            USERS_BOOKS::completed_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted,USERS_BOOKS::completed_name);
+                    dataf.clear();
+                //favourite scroll box
                     dataf = fr.Reader(FAVOURITE_MP + 1);
-                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
+                    DATABASE_SEARCH::BookDescriptor bdFavourite;
+                    for(auto it:dataf){
+                        bdFavourite.path= it;
+                        bdFavourite.readFromFile();
+                        USERS_BOOKS::favourite.push_back(bdFavourite);
+                        USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
 
-                    //share scroll box
+                    }
+                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
+                    dataf.clear();
+                //share scroll box
                     dataf = fr.Reader(SHARED_MP + 1);
-                    activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
+                    DATABASE_SEARCH::BookDescriptor bdShare;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdShare.path= *it;
+                            bdShare.readFromFile();
+                            USERS_BOOKS::shared.push_back(bdShare);
+                            USERS_BOOKS::share_name.push_back(bdShare.name);
+                        }
+                        else{
+                            USERS_BOOKS::shared_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&sharedN::BookListShare,USERS_BOOKS::share_name);
+                    dataf.clear();
                 }
                 else
                 {
@@ -592,24 +763,75 @@ void keyPressed(unsigned char key, int x, int y)
                         password = passwordN;
                         activePage[HOME_P]->setText(&Home::User, &userNameN);
                         PAGE = HOME_P;
-
-                        FileReader fr(userNameN);
-                        //reading scroll box
-                        dataf = fr.Reader(READING_MP + 1);
-                        activeBlock[BLOCK]->setData(&readingN::BookListReading, dataf);
-
-                        //completed scroll box
-                        dataf = fr.Reader(COMPLETED_MP + 1);
-                        activeBlock[BLOCK]->setData(&completedN::BookListCompleted, dataf);
-
-                        //favourite scroll box
-                        dataf = fr.Reader(FAVOURITE_MP + 1);
-                        activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite, dataf);
-
-                        //share scroll box
-                        dataf = fr.Reader(SHARED_MP + 1);
-                        activeBlock[BLOCK]->setData(&sharedN::BookListShare, dataf);
+                        USERS_BOOKS::clearAll();
+                        FileReader fr(userName);
+                //reading scroll box
+                    dataf = fr.Reader(READING_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdReading;
+                    int i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdReading.path =*it;
+                            bdReading.readFromFile();
+                            USERS_BOOKS::reading.push_back(bdReading);
+                            USERS_BOOKS::reading_name.push_back(bdReading.name);
+                        }
+                        else{
+                            USERS_BOOKS::reading_bookmark.push_back(*it);
+                        }
+                        i++;
                     }
+                    activeBlock[BLOCK]->setData(&readingN::BookListReading,USERS_BOOKS::reading_name);
+                    dataf.clear();
+                //completed scroll box
+                    dataf = fr.Reader(COMPLETED_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdCompleted;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdCompleted.path= *it;
+                            bdCompleted.readFromFile();
+                            USERS_BOOKS::completed.push_back(bdCompleted);
+                            USERS_BOOKS::completed_name.push_back(bdCompleted.name);
+                        }
+                        else{
+                            USERS_BOOKS::completed_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&completedN::BookListCompleted,USERS_BOOKS::completed_name);
+                    dataf.clear();
+                //favourite scroll box
+                    dataf = fr.Reader(FAVOURITE_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdFavourite;
+                    for(auto it:dataf){
+                        bdFavourite.path= it;
+                        bdFavourite.readFromFile();
+                        USERS_BOOKS::favourite.push_back(bdFavourite);
+                        USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
+
+                    }
+                    activeBlock[BLOCK]->setData(&favouriteN::BookListFavourite,USERS_BOOKS::favourite_name);
+                    dataf.clear();
+                //share scroll box
+                    dataf = fr.Reader(SHARED_MP + 1);
+                    DATABASE_SEARCH::BookDescriptor bdShare;
+                    i=0;
+                    for(auto it = dataf.begin(); it != dataf.end(); ++it) {
+                        if(i%2 == 0){
+                            bdShare.path= *it;
+                            bdShare.readFromFile();
+                            USERS_BOOKS::shared.push_back(bdShare);
+                            USERS_BOOKS::share_name.push_back(bdShare.name);
+                        }
+                        else{
+                            USERS_BOOKS::shared_bookmark.push_back(*it);
+                        }
+                        i++;
+                    }
+                    activeBlock[BLOCK]->setData(&sharedN::BookListShare,USERS_BOOKS::share_name);
+                    dataf.clear();
+                }
                 }
             }
         }

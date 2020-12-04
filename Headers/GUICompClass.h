@@ -582,6 +582,7 @@ class BookDetail : public GUIcomponent
 {
     std::string bookname;
     std::string bookpath;
+    std::string desPath;
     char mode;
     float bookNamePosX;
     float bookNamePosY;
@@ -632,12 +633,10 @@ public:
         openBookButton = Button("OPEN BOOK", navButtonC, titleTextC, openBookButtonD, CHAR_WIDTH, CHAR_WIDTH);
         openBookButton.setFont(GLUT_BITMAP_9_BY_15);
         removeButton = Button("Remove", navButtonC, titleTextC, Coord_Rect(openBookButtonD, 'x', 4), CHAR_WIDTH * 3, CHAR_WIDTH);
-        setDescription();
         setButtonAndTextBox();
         f1 = GLUT_BITMAP_HELVETICA_18;
         f2 = GLUT_BITMAP_HELVETICA_12;
     }
-    void setDescription();
     void setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark);
     void setButtonAndTextBox();
     void showBookDescription();
@@ -653,12 +652,6 @@ public:
         mode = _mode;
         setButtonAndTextBox();
     }
-    void changeName(std::string _name)
-    {
-        bookname = _name;
-        bookDes.clear();
-        setDescription();
-    }
     char getMode()
     {
         return mode;
@@ -666,6 +659,10 @@ public:
     std::string getBookPath()
     {
         return bookpath;
+    }
+    std::string getDesPath()
+    {
+        return desPath;
     }
     std::string getText(TextBox *_box)
     {
@@ -686,17 +683,6 @@ public:
         return _box->isActive();
     }
 };
-void BookDetail::setDescription()
-{
-    bookDes.push_back(bookname);
-    bookDes.push_back("AName");
-    bookDes.push_back("Genre");
-    bookDes.push_back("Date");
-    bookDes.push_back("Extrades");
-    bookDes.push_back("0.0000000");
-    bookDes.push_back("BookMark");
-    bookDes.push_back("10000");
-}
 void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
     bookDes.clear();
@@ -727,9 +713,18 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
     }
     bookDes.push_back(extdes);
     bookDes.push_back(std::to_string(bd.review));
-    bookDes.push_back(bookmark);
+    if(bookmark=="$")
+    {
+       bookDes.push_back("No Bookmark!");
+    }
+    else
+    {
+        bookDes.push_back(bookmark);
+    }
+
     bookDes.push_back(std::to_string(bd.noOfReveiws));
     bookpath = bd.bookPath;
+    desPath = bd.path;
 }
 
 void BookDetail::setButtonAndTextBox()
@@ -1089,10 +1084,6 @@ public:
     void setText(TextBox *_textB, const char *_text)
     {
         _textB->setText(_text);
-    }
-    void setDetails(BookDetail *_bd, std::string _name)
-    {
-        _bd->changeName(_name);
     }
     void setData(ScrollBox *sb, std::vector<std::string> data)
     {

@@ -210,6 +210,7 @@ namespace SearchN
     Color ButtonsC(1, 0.5, 0.6);
     Color backButtonC(0.1, 0.3, 0.7);
     Color scrollBoxC(0, 1, 0);
+    Color relevantOptionsC(1,0,0);
 
     Coord_Rect BookListD(0.5, -8.1, 8, 14);
     Coord_Rect SNameD(searchX, searchY - gap - 1.5, searchW, searchH);
@@ -239,7 +240,7 @@ namespace SearchN
 
     Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
     ScrollBox searchResultList(dataf, BookListD, 15, scrollBoxC);
-    ScrollBox relevantOptionsList(dataf,BookListD,15,scrollBoxC);
+    ScrollBox relevantOptionsList(dataf,BookListD,15,relevantOptionsC);
 
     void addSearchComponents(GUIPage *_searchPage)
     {

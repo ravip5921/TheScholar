@@ -457,6 +457,7 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "bookmark in completed";
             FileWriter fw(userName);
             fw.updateBookmark(bookNameIndex, 'C', USERS_BOOKS::cBookPath[bookNameIndex], bookmarkT);
+            BookDetails::page.bookDes[6] = bookmarkT;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.completedButton) && (BookDetails::page.getMode() == 'R'))
         {
@@ -479,6 +480,7 @@ void mousePressed(int button, int state, int x, int y)
             std::cout << "bookmark in reading";
             FileWriter fw(userName);
             fw.updateBookmark(bookNameIndex, 'R', BookDetails::page.getDesPath(), bookmarkT);
+            BookDetails::page.bookDes[6] = bookmarkT;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.openBookButton))
         {
@@ -558,6 +560,7 @@ void mousePressed(int button, int state, int x, int y)
             {
                 article_flag = 0;
                 DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
+                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
             }
         }
         else if (SearchN::articleCB.isActive())
@@ -566,6 +569,7 @@ void mousePressed(int button, int state, int x, int y)
             {
                 article_flag = 1;
                 DATABASE_SEARCH::SEARCH_DIRS::setDirsForArticle();
+                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForArticle();
             }
         }
     }
@@ -717,30 +721,33 @@ void keyPressed(unsigned char key, int x, int y)
         {
             if (activePage[PAGE]->isActiveBox(&SearchN::SNameB) && SearchN::SNameB.getText().size() > 0)
             {
-                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
                 RELEVANT_OPTIONS::results.clear();
                 RELEVANT_OPTIONS::result_size = 0;
-                RELEVANT_OPTIONS::getRelevantBookNames(SearchN::SNameB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                RELEVANT_OPTIONS::getRelevantBookNames(Utility::String::getLowerCase(SearchN::SNameB.getText()), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                /*for(int i=0; i< RELEVANT_OPTIONS::results.size(); i++)
+                    Utility::String::manageCase(RELEVANT_OPTIONS::results[i]);*/
                 SearchN::relevantOptionsList.setData(RELEVANT_OPTIONS::results);
                 SearchN::relevantOptionsList.setActive(true);
                 SearchN::searchResultList.setActive(false);
             }
             else if (activePage[PAGE]->isActiveBox(&SearchN::SAuthorB) && SearchN::SAuthorB.getText().size() > 0)
             {
-                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
                 RELEVANT_OPTIONS::results.clear();
                 RELEVANT_OPTIONS::result_size = 0;
-                RELEVANT_OPTIONS::getRelevantBookAuthors(SearchN::SAuthorB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                RELEVANT_OPTIONS::getRelevantBookAuthors(Utility::String::getLowerCase(SearchN::SAuthorB.getText()), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                /*for(int i=0; i< RELEVANT_OPTIONS::results.size(); i++)
+                    Utility::String::manageCase(RELEVANT_OPTIONS::results[i]);*/
                 SearchN::relevantOptionsList.setData(RELEVANT_OPTIONS::results);
                 SearchN::relevantOptionsList.setActive(true);
                 SearchN::searchResultList.setActive(false);
             }
             else if (activePage[PAGE]->isActiveBox(&SearchN::SGenreB) && SearchN::SGenreB.getText().size() > 0)
             {
-                RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
                 RELEVANT_OPTIONS::results.clear();
                 RELEVANT_OPTIONS::result_size = 0;
-                RELEVANT_OPTIONS::getRelevantBookGenres(SearchN::SGenreB.getText(), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                RELEVANT_OPTIONS::getRelevantBookGenres(Utility::String::getLowerCase(SearchN::SGenreB.getText()), RELEVANT_OPTIONS::results, RELEVANT_OPTIONS::result_size);
+                /*for(int i=0; i< RELEVANT_OPTIONS::results.size(); i++)
+                    Utility::String::manageCase(RELEVANT_OPTIONS::results[i]);*/
                 SearchN::relevantOptionsList.setData(RELEVANT_OPTIONS::results);
                 SearchN::relevantOptionsList.setActive(true);
                 SearchN::searchResultList.setActive(false);
@@ -780,15 +787,18 @@ void showClock()
 void getSearchResults()
 {
     //DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
-    DATABASE_SEARCH::keywords[DATABASE_SEARCH::NAME] = activePage[PAGE]->getText(&SearchN::SNameB);
-    DATABASE_SEARCH::keywords[DATABASE_SEARCH::AUTHOR] = activePage[PAGE]->getText(&SearchN::SAuthorB);
-    DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = activePage[PAGE]->getText(&SearchN::SDateB);
-    DATABASE_SEARCH::keywords[DATABASE_SEARCH::GENRE] = activePage[PAGE]->getText(&SearchN::SGenreB);
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::NAME] = Utility::String::getLowerCase(activePage[PAGE]->getText(&SearchN::SNameB));
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::AUTHOR] = Utility::String::getLowerCase(activePage[PAGE]->getText(&SearchN::SAuthorB));
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::DATE] = Utility::String::getLowerCase(activePage[PAGE]->getText(&SearchN::SDateB));
+    DATABASE_SEARCH::keywords[DATABASE_SEARCH::GENRE] = Utility::String::getLowerCase(activePage[PAGE]->getText(&SearchN::SGenreB));
     DATABASE_SEARCH::bdlist.clear();
     SearchN::nextButton.show(DATABASE_SEARCH::FullSearch(DATABASE_SEARCH::keywords, DATABASE_SEARCH::bdlist, SearchN::searchIndex * DATABASE_SEARCH::MAX_SEARCH_RESULT));
     std::vector<std::string> searchBookNameList;
     for (int i = 0; i < DATABASE_SEARCH::bdlist.size(); i++)
+    {
+        Utility::String::manageCase(DATABASE_SEARCH::bdlist[i].name);
         searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
+    }
     SearchN::searchResultList.setData(searchBookNameList);
     /*activePage[PAGE]->setText(&SearchN::SNameB, "");
     activePage[PAGE]->setText(&SearchN::SAuthorB, "");
@@ -815,6 +825,7 @@ void reloadReadingScrollBox()
             bdReading.path = *it;
             bdReading.readFromFile();
             USERS_BOOKS::reading.push_back(bdReading);
+            Utility::String::manageCase(bdReading.name);
             USERS_BOOKS::reading_name.push_back(bdReading.name);
             USERS_BOOKS::rBookPath.push_back(bdReading.bookPath);
         }
@@ -840,6 +851,7 @@ void reloadCompletedScrollBox()
             bdCompleted.path = *it;
             bdCompleted.readFromFile();
             USERS_BOOKS::completed.push_back(bdCompleted);
+            Utility::String::manageCase(bdCompleted.name);
             USERS_BOOKS::completed_name.push_back(bdCompleted.name);
             USERS_BOOKS::cBookPath.push_back(bdCompleted.bookPath);
         }
@@ -862,6 +874,7 @@ void reloadFavouriteScrollBox()
         bdFavourite.path = it;
         bdFavourite.readFromFile();
         USERS_BOOKS::favourite.push_back(bdFavourite);
+        Utility::String::manageCase(bdFavourite.name);
         USERS_BOOKS::favourite_name.push_back(bdFavourite.name);
         USERS_BOOKS::fBookPath.push_back(bdFavourite.bookPath);
     }
@@ -881,6 +894,7 @@ void reloadSharedScrollBox()
             bdShare.path = *it;
             bdShare.readFromFile();
             USERS_BOOKS::shared.push_back(bdShare);
+            Utility::String::manageCase(bdShare.name);
             USERS_BOOKS::share_name.push_back(bdShare.name);
             USERS_BOOKS::sBookPath.push_back(bdShare.bookPath);
         }

@@ -15,7 +15,6 @@ void callBackFun();
 void initColor();
 void ReshapeCallBack(int wid, int heig);
 void createErrorWindow(const char *);
-void setFonts();
 void showClock();
 void getSearchResults();
 void reloadReadingScrollBox();
@@ -109,15 +108,43 @@ namespace USERS_BOOKS
     }
 } // namespace USERS_BOOKS
 
+void changeBackgroundColor()
+{
+    if(PAGE == LOGIN_P)
+    {
+        WC_R = 0.15;
+        WC_G = 0.15;
+        WC_B = 0.15;
+    }
+    else if(PAGE == SIGNUP_P)
+    {
+        WC_R = 0.1;
+        WC_G = 0.1;
+        WC_B = 0.1;
+    }
+    else if(PAGE == BOOK_DETAIL_P)
+    {
+        WC_R = 0.1;
+        WC_G = 0.1;
+        WC_B = 0.082;
+    }
+    else if(PAGE == SEARCH_P)
+    {
+        WC_R = 0.1;
+        WC_G = 0.1;
+        WC_B = 0.082;
+    }
+}
+
 //end blocks
 void callBackFun()
 {
+    initColor();
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-    glColor3f(0, 1, 0);
     WID = windowWidth();
     HEI = windowHeight();
-    setFonts();
+    changeBackgroundColor();
 
     activePage[PAGE]->render();
     if (PAGE == HOME_P)
@@ -140,12 +167,6 @@ void ReshapeCallBack(int wid, int heig)
 void initColor()
 {
     glClearColor(WC_R, WC_G, WC_B, WC_A);
-}
-
-void setFonts()
-{
-    LogIn::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
-    SignUp::userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
 }
 
 void mousePressed(int button, int state, int x, int y)
@@ -872,6 +893,7 @@ void reloadSharedScrollBox()
     activeBlock[BLOCK]->setData(&sharedN::BookListShare, USERS_BOOKS::share_name);
     dataf.clear();
 }
+
 namespace REVIEW
 {
     void updateRatingToFile(std::string bookDesPath, float _rating, std::string reviewedFilePath)
@@ -913,6 +935,8 @@ namespace REVIEW
         }
         tempFile<<noOfReviews<<"\n";
         tempFile<<rating;
+        BookDetails::page.bookDes[5] = std::to_string(rating);
+        BookDetails::page.bookDes[7] = std::to_string(noOfReviews);
         bookdesfile.close();
         tempFile.close();
         remove(bookDesPath.c_str());

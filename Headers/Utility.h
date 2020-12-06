@@ -36,6 +36,26 @@ namespace Utility
             }
             return 0;
         }
+        void manageCase(std::string &str)
+        {
+            bool spaceFlag = false;
+            str[0] = std::toupper(str[0]);
+            for(int i=1; i<str.size(); i++)
+            {
+                if(spaceFlag)
+                    str[i] = std::toupper(str[i]);
+                if(str[i] == ' ')
+                    spaceFlag = true;
+                else
+                    spaceFlag = false;
+            }
+        }
+        std::string getLowerCase(std::string str)
+        {
+            for(int i=1; i<str.size(); i++)
+                str[i] = std::tolower(str[i]);
+            return str;
+        }
     } // namespace String
 
     namespace FileHandler

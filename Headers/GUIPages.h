@@ -3,31 +3,33 @@ namespace welcome
 {
     float devInfoX = -9.1;
     float devInfoY = -4.5;
-    Color titleC(0.7, 0.67, 0.6);
-    Color devInfo(0.9, 0.9, 0.91);
-    Color loginButtonC(0.1, 0.3, 0.7);
+    Color titleC(1, 0.95, 0);
+    Color devInfo(1, 0.95, 0);
+    Color loginButtonC(0, 0, 0.26);
     Color loginButtonTextC(1, 1, 1);
-    Color exitButtonC(0.9, 0.0, 0.0);
-    Color exitButtonTextC(1, 1, 1);
+    Color exitButtonC(0.85, 0.85, 0.85);
+    Color exitButtonTextC(0, 0, 0);
 
     Coord_Rect exitButtonD(8.1, 8.7, 1.4, 0.9);
-    Coord_Rect loginButtonD(2, -8, 3, 1.5);
+    Coord_Rect loginButtonD(2, -8, 2.5, 1.2);
     Coord_Rect signupButtonD(loginButtonD, 'x', 3.4);
 
     Text titleT(-2.5, 2.5, titleC, "THE SCHOLAR", GLUT_BITMAP_TIMES_ROMAN_24);
-    Text subTitleT(-2.2, 1.8, titleC, "E-lib of some sort", GLUT_BITMAP_HELVETICA_18);
+    //Text subTitleT(-2.2, 1.8, titleC, "E-lib of some sort", GLUT_BITMAP_HELVETICA_18);
     Text devInfoA(devInfoX, devInfoY, devInfo, "DEVELOPED BY:", GLUT_BITMAP_TIMES_ROMAN_24);
     Text devInfoB(devInfoX, devInfoY - 1, devInfo, "Ravi Pandey", GLUT_BITMAP_HELVETICA_18);
     Text devInfoC(devInfoX, devInfoY - 2, devInfo, "Rohan Chhetry", GLUT_BITMAP_HELVETICA_18);
     Text devInfoD(devInfoX, devInfoY - 3, devInfo, "Nikesh D.C.", GLUT_BITMAP_HELVETICA_18);
-    Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD);
-    Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD);
+    Button loginButton("Log In", loginButtonC, loginButtonTextC, loginButtonD,CHAR_WIDTH*1.9, 0.45);
+    Button signupButton("Sign Up", loginButtonC, loginButtonTextC, signupButtonD,CHAR_WIDTH*1.2, 0.45);
     Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD, CHAR_WIDTH * 1.1, CHAR_WIDTH * 1.1);
 
     void addWelcomComponents(GUIPage *_welcomePage)
     {
+        loginButton.setFont(GLUT_BITMAP_9_BY_15);
+        signupButton.setFont(GLUT_BITMAP_9_BY_15);
         _welcomePage->addComponent(&titleT);
-        _welcomePage->addComponent(&subTitleT);
+        //_welcomePage->addComponent(&subTitleT);
         _welcomePage->addComponent(&devInfoA);
         _welcomePage->addComponent(&devInfoB);
         _welcomePage->addComponent(&devInfoC);
@@ -40,41 +42,43 @@ namespace welcome
 /**** Login Page *****/
 namespace LogIn
 {
-    Color userNameC(0.978, 0.849, 0.9055);
+    Color userNameC(0.95, 0.95, 0.9);
     Color passwordC = userNameC;
-    Color boxTextC(0.23, 0.17, 0.91);
+    Color boxTextC(0, 0, 0);
     Color logInTextC(1, 1, 0);
-    Color logInButtonTextC(1, 0, 1);
-    Color logInButtonC(0.1, 0.9, 0.43);
+    Color loginButtonC(1, 0.97, 0);
+    Color loginButtonTextC(0, 0, 0);
     Color toSignupC(0.3, 0.9, 0.6);
-    Color pageTextC(1, 0, 0);
-    Color rectBoxC(1, 1, 1);
-    Color TitleC(0.5, 0, 0.5);
+    Color pageTextC(1, 0.95, 0);
+    Color rectBoxC(0.8, 0.9, 0.85);
+    Color TitleC(0.5, 0.95, 0.11);
     Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
 
     Coord_Rect exitButtonD(8.1, 8.7, 1.4, 0.9);
-    Coord_Rect logInButtonD(-2, -6, 3, 1.2);
+    Coord_Rect logInButtonD(-1.4, -6, 2.5, 1.2);
     Coord_Rect userNameD(-5, 0, 9, 1.9);
     Coord_Rect passwordD(userNameD, 'y', -3);
-    Coord_Rect toSignupD(-3.2, -8, 5.5, 1.5);
+    Coord_Rect toSignupD(-2.8, -8, 5.5, 1.5);
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
-    Text logInScreen(-2, 5, pageTextC, "The Scholar", GLUT_BITMAP_TIMES_ROMAN_24);
+    Text logInScreen(-3, 5, pageTextC, "THE SCHOLAR", GLUT_BITMAP_TIMES_ROMAN_24);
     Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
     Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
     PasswordBox passwordB(passwordD, passwordC, boxTextC);
-    CheckBox showPassword(&passwordB, 4.5, -2.8, logInButtonC);
-    Button logInButton("Log In", logInButtonC, logInButtonTextC, logInButtonD);
-    Button toSignup("New to The SCHOLAR?", toSignupC, logInButtonTextC, toSignupD);
+    CheckBox showPassword(&passwordB, 4.5, -2.8, loginButtonC);
+    Button logInButton("Log In", loginButtonC, loginButtonTextC, logInButtonD, CHAR_WIDTH*1.9, 0.45);
+    Button toSignup("New to THE SCHOLAR?", toSignupC, loginButtonTextC, toSignupD);
     rectOutline rectBoxa(rectBoxA, rectBoxC);
     rectOutline rectBoxb(rectBoxB, rectBoxC);
     Button exitButton("EXIT", exitButtonC, exitButtonTextC, exitButtonD, CHAR_WIDTH * 1.1, CHAR_WIDTH * 1.1);
 
     void addlogInComponents(GUIPage *logInPage)
     {
+        userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
+        logInButton.setFont(GLUT_BITMAP_9_BY_15);
         logInPage->addComponent(&logInScreen);
         logInPage->addComponent(&userNameB);
         logInPage->addComponent(&passwordB);
@@ -126,6 +130,7 @@ namespace SignUp
 
     void addsignUpComponents(GUIPage *signUpPage)
     {
+        userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
         signUpPage->addComponent(&signUpScreen);
         signUpPage->addComponent(&userNameB);
         signUpPage->addComponent(&passwordB);

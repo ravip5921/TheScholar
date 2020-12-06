@@ -65,6 +65,12 @@ enum
 };
 std::vector<GUIBlock *> activeBlock = {&readingB, &completedB, &favouriteB, &shareB};
 
+namespace REVIEW
+{
+    void updateRatingToFile(std::string bookDesPath, float _rating, std::string reviewedFilePath);
+    bool hasRated(std::string bookDesPath, std::string reviewedFilePath);
+}
+
 namespace USERS_BOOKS
 {
     std::vector<DATABASE_SEARCH::BookDescriptor> reading;
@@ -369,6 +375,14 @@ void mousePressed(int button, int state, int x, int y)
         {
             reviewT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.reviewNum);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.reviewNum, "");
+            int rating = reviewT[0] - 48;
+            if(rating<=5 && rating >=0)
+            {
+                //must change reviewed.txt to actual path based on user
+                std::string reviewedFilePath = "./users/" + Home::User.getText() + "/reviewed.txt";
+                REVIEW::updateRatingToFile(BookDetails::page.getDesPath(), rating, reviewedFilePath);
+            }
+            std::cout<<rating;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.sharedButton))
         {
@@ -857,4 +871,69 @@ void reloadSharedScrollBox()
     }
     activeBlock[BLOCK]->setData(&sharedN::BookListShare, USERS_BOOKS::share_name);
     dataf.clear();
+}
+namespace REVIEW
+{
+    void updateRatingToFile(std::string bookDesPath, float _rating, std::string reviewedFilePath)
+    {
+        int updateChoice;
+        const int NEW_REVIEW = 1, OVERWRITE_REVIEW =0;
+        if(hasRated(bookDesPath, reviewedFilePath))
+        {
+            updateChoice = OVERWRITE_REVIEW;
+        }
+        else
+        {
+            updateChoice = NEW_REVIEW;
+            std::ofstream reviewedFile(reviewedFilePath.c_str(), std::ios::app);
+            reviewedFile<<bookDesPath<<"\n";
+            reviewedFile.close();
+        }
+        std::ifstream bookdesfile;
+        std::ofstream tempFile("temp.txt");
+        std::string temp;
+        int noOfReviews;
+        float rating;
+        bookdesfile.open(bookDesPath.c_str());
+        for(int i=0; i<6; i++)
+        {
+            std::getline(bookdesfile, temp);
+            tempFile<<temp<<"\n";
+        }
+        bookdesfile>>noOfReviews;
+        bookdesfile>>rating;
+        if(updateChoice == NEW_REVIEW)
+        {
+            rating = (_rating + noOfReviews*rating)/(noOfReviews + 1);
+            noOfReviews++;
+        }
+        else
+        {
+            rating = (_rating + (noOfReviews-1)*rating)/noOfReviews;
+        }
+        tempFile<<noOfReviews<<"\n";
+        tempFile<<rating;
+        bookdesfile.close();
+        tempFile.close();
+        remove(bookDesPath.c_str());
+        rename("temp.txt", bookDesPath.c_str());
+    }
+
+    bool hasRated(std::string bookDesPath, std::string reviewedFilePath)
+    {
+        std::string path;
+        std::ifstream reviewedFile(reviewedFilePath.c_str());
+        if(!reviewedFile.good())
+            return false;
+        while(std::getline(reviewedFile, path))
+        {
+            if(path == bookDesPath)
+            {
+                reviewedFile.close();
+                return true;
+            }
+        }
+        reviewedFile.close();
+        return false;
+    }
 }

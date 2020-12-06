@@ -196,6 +196,10 @@ public:
     {
         text = *_text;
     }
+    std::string getText()
+    {
+        return text;
+    }
     void render()
     {
         if (background)
@@ -745,7 +749,7 @@ void BookDetail::setButtonAndTextBox()
     {
         favouriteButton = Button("Add to favourite", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
         bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
-        reviewButton = Button("Review", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
+        reviewButton = Button("Rate", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
         sharedButton = Button("Share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4.6, 3, 1.0), 1.1, CHAR_WIDTH);
         bookmarkText = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 2.2, 2.9, 1.1), textboxC, textboxTextC);
         reviewNum = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 1.5, 1.1), textboxC, textboxTextC);
@@ -758,7 +762,7 @@ void BookDetail::setButtonAndTextBox()
     else if (mode == 'F')
     {
         readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
-        reviewButton = Button("Review", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
+        reviewButton = Button("Rate", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
         sharedButton = Button("Share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1.0), 1.1, CHAR_WIDTH);
         reviewNum = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 2.2, 1.5, 1.1), textboxC, textboxTextC);
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 2.9, 1.1), textboxC, textboxTextC);

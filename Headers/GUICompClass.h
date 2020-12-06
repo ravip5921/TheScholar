@@ -690,27 +690,33 @@ public:
 void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string bookmark)
 {
     bookDes.clear();
+    Utility::String::manageCase(bd.name);
     bookDes.push_back(bd.name);
     std::string AName = "";
     for (int i = 0; i < bd.authors_display.size(); i++)
     {
+        bd.authors_display[i][0] = std::toupper(bd.authors_display[i][0]);
         AName += bd.authors_display[i];
         if (i < bd.authors_display.size() - 1)
             AName += ", ";
     }
+    Utility::String::manageCase(AName);
     bookDes.push_back(AName);
     std::string genre = "";
     for (int i = 0; i < bd.genres.size(); i++)
     {
+        bd.genres[i][0] = std::toupper(bd.genres[i][0]);
         genre += bd.genres[i];
         if (i < bd.genres.size() - 1)
             genre += ", ";
     }
+    Utility::String::manageCase(genre);
     bookDes.push_back(genre);
     bookDes.push_back(bd.date);
     std::string extdes = "";
     for (int i = 0; i < bd.extrades.size(); i++)
     {
+        bd.extrades[i][0] = std::toupper(bd.extrades[i][0]);
         extdes += bd.extrades[i];
         if (i < bd.extrades.size() - 1)
             extdes += ". ";
@@ -785,21 +791,22 @@ void BookDetail::showBookDescription()
 {
     textboxC.applyColor();
     glDrawP(Coord_Rect(descriptionX, descriptionY - 9.7, 13, 5));
-    printText(bookNamePosX, bookNamePosY, titleTextC, bookDes[0], f1);
-    printText(bookNamePosX + 11, bookNamePosY + 1, titleTextC, "Rating: ", f1);
+    glDrawP(Coord_Rect(-9.4, bookNamePosY-0.5,11.8, 1.4));
+    printText(bookNamePosX, bookNamePosY, Color(1, 0.95, 0), bookDes[0], GLUT_BITMAP_TIMES_ROMAN_24);
+    printText(bookNamePosX + 12, bookNamePosY + 1, titleTextC, "Rating: ", f1);
     printText(descriptionX, descriptionY, titleTextC, "Author Name:", f1);
     printText(descriptionX, descriptionY - 1.5, titleTextC, "Genre:", f1);
     printText(descriptionX, descriptionY - 3, titleTextC, "Published date:", f1);
     printText(descriptionX, descriptionY - 4.5, titleTextC, "Description:", f1);
-    printText(bookNamePosX + 11, bookNamePosY, titleTextC, "Number Of Reviews: ", f1);
+    printText(bookNamePosX + 12, bookNamePosY, titleTextC, "Number Of Reviews: ", f1);
     printText(descriptionX + 5, descriptionY, subTitleTextC, bookDes[1], f2);
     printText(descriptionX + 5, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
     printText(descriptionX + 5, descriptionY - 3, subTitleTextC, bookDes[3], f2);
     printText(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 15, f2);
-    printText(bookNamePosX + 12.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
-    printText(bookNamePosX + 16, bookNamePosY, subTitleTextC, bookDes[7], f1);
+    printText(bookNamePosX + 13.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
+    printText(bookNamePosX + 17, bookNamePosY, subTitleTextC, bookDes[7], f1);
     glColor3f(WC_R, WC_G, WC_B);
-    glDrawP(bookNamePosX + 13.5, bookNamePosY + 0.8, 2, 1);
+    glDrawP(bookNamePosX + 14.5, bookNamePosY + 0.8, 2, 1);
     if(mode != 'F' && mode !='O')
     {
         printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark:", f1);

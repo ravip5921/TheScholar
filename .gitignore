@@ -2,10 +2,8 @@
 *.exe
 #ignoring all .o outputs 
 *.o
-#ignoring Users, data, search and .vscode directories
+#ignoring Users and .vscode directories
 Users/*
-data/*
-search/*
 .vscode/*
 #Ignoring errors.txt file
 errors.txt

@@ -2,7 +2,7 @@
 namespace readingN
 {
     Color userNameC(1, 1, 1);
-    Color scrollBoxC(0, 1, 0);
+    Color scrollBoxC(0.9, 0.9, 0.9);
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
@@ -24,7 +24,7 @@ namespace readingN
 namespace completedN
 {
     Color userNameC(1, 1, 1);
-    Color scrollBoxC(0, 1, 0);
+    Color scrollBoxC(0.9, 0.9, 0.9);
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
@@ -44,7 +44,7 @@ namespace completedN
 namespace favouriteN
 {
     Color userNameC(1, 1, 1);
-    Color scrollBoxC(0, 1, 0);
+    Color scrollBoxC(0.9, 0.9, 0.9);
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 
@@ -64,7 +64,7 @@ namespace favouriteN
 namespace sharedN
 {
     Color userNameC(1, 1, 1);
-    Color scrollBoxC(0, 1, 0);
+    Color scrollBoxC(0.9, 0.9, 0.9);
     Color refreshButtonC(0.1, 0.3, 0.7);
     Color refreshButtonTextC(1, 1, 1);
 

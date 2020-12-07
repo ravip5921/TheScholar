@@ -69,6 +69,7 @@ void getRelevantBookNames(std::string keyword, std::vector<std::string> &books, 
         std::cout<<"\nNull keyword";
         return;
     }
+    keyword = Utility::String::getLowerCase(keyword);
     std::string path;
     std::vector<std::string> names;
     std::string baseName = "";
@@ -91,7 +92,7 @@ void getRelevantBookNames(std::string keyword, std::vector<std::string> &books, 
     readdir(dir); //reading ..
     while(((ent = readdir(dir))!= NULL) && result_size < MAX_RELEVANT_RESULT)
     {
-        if(Utility::String::compStringWithLength(ent->d_name, names.back()) == 0)
+        if(Utility::String::compStringWithLength(Utility::String::getLowerCase(ent->d_name), names.back()) == 0)
             getMaxBookNames(path + DIRECTORY_SEPERATOR + ent->d_name, books, std::string(ent->d_name) + " ", result_size);
     }
     closedir(dir);
@@ -109,6 +110,7 @@ void getRelevantBookGenres(std::string keyword, std::vector<std::string> &genres
         std::cout<<"\nNull keyword";
         return;
     }
+    keyword = Utility::String::getLowerCase(keyword);
     std::string path;
     DIR *dir;
     struct dirent *ent;
@@ -123,7 +125,7 @@ void getRelevantBookGenres(std::string keyword, std::vector<std::string> &genres
     readdir(dir); //reading ..
     while(((ent = readdir(dir))!= NULL) && result_size < MAX_RELEVANT_RESULT)
     {
-        if(Utility::String::compStringWithLength(ent->d_name, keyword) == 0)
+        if(Utility::String::compStringWithLength(Utility::String::getLowerCase(ent->d_name), keyword) == 0)
             genres.push_back(ent->d_name);
         result_size++;
     }
@@ -142,13 +144,14 @@ void getString(std::ifstream& pf, std::string& str, const int MAX_STRSIZE, const
         str.push_back(r);
     }
 }
-void getRelevantBookAuthors(const std::string keyword, std::vector<std::string> &authors, int &result_size)
+void getRelevantBookAuthors(std::string keyword, std::vector<std::string> &authors, int &result_size)
 {
     if(keyword.size() == 0)
     {
         std::cout<<"\nNull keyword";
         return;
     }
+    keyword = Utility::String::getLowerCase(keyword);
     std::string headerFilepath = SEARCH_DIRS::AUTHOR + keyword[0] + DIRECTORY_SEPERATOR + FILE_AUTHOR_HEADER;
     std::ifstream headerFile(headerFilepath.c_str());
     if(!headerFile.good())
@@ -177,7 +180,7 @@ void getRelevantBookAuthors(const std::string keyword, std::vector<std::string> 
                 {
                     headerFile.seekg(i*MAX_AUTHOR_NAME, std::ios::beg);
                     getString(headerFile, readAuthor, MAX_AUTHOR_NAME);
-                    if(Utility::String::compStringWithLength(keyword, readAuthor) != 0)
+                    if(Utility::String::compStringWithLength(keyword, Utility::String::getLowerCase(readAuthor)) != 0)
                         break;
                     authors.push_back(readAuthor);
                     result_size++;
@@ -186,7 +189,7 @@ void getRelevantBookAuthors(const std::string keyword, std::vector<std::string> 
                 {
                     headerFile.seekg(i*MAX_AUTHOR_NAME, std::ios::beg);
                     getString(headerFile, readAuthor, MAX_AUTHOR_NAME);
-                    if(Utility::String::compStringWithLength(keyword, readAuthor) != 0)
+                    if(Utility::String::compStringWithLength(keyword, Utility::String::getLowerCase(readAuthor)) != 0)
                         break;
                     authors.push_back(readAuthor);
                     result_size++;

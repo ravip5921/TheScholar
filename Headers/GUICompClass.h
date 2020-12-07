@@ -623,7 +623,7 @@ public:
     TextBox shareUser;
     TextBox bookmarkText;
 
-    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.1, 0.3, 0.7), Color _featureButtonC = Color(0.6, 0.5, 0.8), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(1, 1, 0), Color _textboxC = Color(0.23, 0.17, 0.91), Color _textboxTextC = Color(0.978, 0.849, 0.9055), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox)
+    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.15, 0.18, 0.7), Color _featureButtonC = Color(0.25, 0.28, 0.8), Color _titleTextC = Color(0, 0, 0), Color _subTitleTextC = Color(1, 0.95, 0), Color _textboxC = Color(0.23, 0.17, 0.91), Color _textboxTextC = Color(0.978, 0.849, 0.9055), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox)
     {
         mode = _mode;
         bookname = _bookname;
@@ -700,7 +700,7 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
         if (i < bd.authors_display.size() - 1)
             AName += ", ";
     }
-    Utility::String::manageCase(AName);
+    Utility::String::manageCase(AName, " -.");
     bookDes.push_back(AName);
     std::string genre = "";
     for (int i = 0; i < bd.genres.size(); i++)

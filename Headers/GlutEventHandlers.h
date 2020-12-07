@@ -124,8 +124,8 @@ void changeBackgroundColor()
     }
     else if(PAGE == BOOK_DETAIL_P)
     {
-        WC_R = 0.45;
-        WC_G = 0.45;
+        WC_R = 0.55;
+        WC_G = 0.55;
         WC_B = 0.5;
     }
     else if(PAGE == HOME_P)

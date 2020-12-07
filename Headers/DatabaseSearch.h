@@ -23,6 +23,7 @@ namespace DATABASE_SEARCH
     const std::string PATH_FILE = "#.txt";
 
     std::string keywords[SEARCH_KEYWORDS_SIZE];
+    std::vector<int> date_search_lines;
 
     namespace SEARCH_DIRS
     {
@@ -93,7 +94,7 @@ namespace DATABASE_SEARCH
         Utility::String::breakString(author, authors_search, "$ ");
         Utility::String::breakString(author, authors_display, "$");
         getline(inStream, genre);
-        Utility::String::breakString(genre, genres, "$ ");
+        Utility::String::breakString(genre, genres, "$");
         getline(inStream, date);
         getline(inStream, extrade);
         Utility::String::breakString(extrade, extrades, "$");
@@ -133,6 +134,8 @@ namespace DATABASE_SEARCH
             {
                 if (pribdlist[i].name != keyword)
                     pribdlist.erase(pribdlist.begin() + i);
+                //std::cout<<"\nDES_NAME: "<<pribdlist[i].name;
+                //std::cout<<"\nKN: "<<keyword;
             }
             break;
             case DATE:
@@ -226,6 +229,11 @@ namespace DATABASE_SEARCH
         break;
         case DATE:
         {
+            if(date_search_lines.size() == 0)
+                date_search_lines.push_back(0);
+            int pageIndex = searchIndex_start/MAX_SEARCH_RESULT;
+            searchIndex_start = date_search_lines[pageIndex];
+
             searchPath = SEARCH_DIRS::DATE + keywords[DATE];
             reader.open(searchPath);
             if (!reader.good())
@@ -233,6 +241,7 @@ namespace DATABASE_SEARCH
             for (int b = 0; b < searchIndex_start; b++)
                 std::getline(reader, bookDesPath);
             int prevResCount;
+            int noOfLinesRead = 0;
 
             while (!fullResultRead && resultCount <= MAX_SEARCH_RESULT)
             {
@@ -240,6 +249,10 @@ namespace DATABASE_SEARCH
                 {
                     fullResultRead = true;
                     break;
+                }
+                else
+                {
+                    noOfLinesRead++;
                 }
                 bd.path = bookDesPath;
                 bd.readFromFile();
@@ -251,6 +264,14 @@ namespace DATABASE_SEARCH
             }
             if (resultCount == MAX_SEARCH_RESULT + 1)
                 pribdlist.pop_back(); //extra element is kept at end just to be sure that more result can be found
+            if(pageIndex == date_search_lines.size()-1)
+            {
+                date_search_lines.push_back(date_search_lines[pageIndex]+ noOfLinesRead);
+            }
+            else if(pageIndex > date_search_lines.size()-1)
+            {
+                std::cout<<"some error in page index";
+            }
             return !fullResultRead;
         }
         break;

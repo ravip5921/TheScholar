@@ -36,7 +36,7 @@ namespace Utility
             }
             return 0;
         }
-        void manageCase(std::string &str)
+        void manageCase(std::string &str, std::string delim = " ")
         {
             bool spaceFlag = false;
             str[0] = std::toupper(str[0]);
@@ -44,10 +44,16 @@ namespace Utility
             {
                 if(spaceFlag)
                     str[i] = std::toupper(str[i]);
-                if(str[i] == ' ')
-                    spaceFlag = true;
-                else
-                    spaceFlag = false;
+                for(int j=0; j<delim.size(); j++)
+                {
+                    if(str[i] == delim[j])
+                    {
+                        spaceFlag = true;
+                        break;
+                    }
+                    else
+                        spaceFlag = false;
+                }
             }
         }
         std::string getLowerCase(std::string str)

@@ -5,7 +5,7 @@ namespace welcome
     float devInfoY = -4.5;
     Color titleC(1, 0.95, 0);
     Color devInfo(1, 0.95, 0);
-    Color loginButtonC(0, 0, 0.26);
+    Color loginButtonC(0, 0, 0.46);
     Color loginButtonTextC(1, 1, 1);
     Color exitButtonC(0.85, 0.85, 0.85);
     Color exitButtonTextC(0, 0, 0);
@@ -50,7 +50,7 @@ namespace LogIn
     Color loginButtonTextC(0, 0, 0);
     Color toSignupC(0.3, 0.9, 0.6);
     Color pageTextC(1, 0.95, 0);
-    Color rectBoxC(0.8, 0.9, 0.85);
+    Color rectBoxC(1, 0.97, 0);
     Color TitleC(0.5, 0.95, 0.11);
     Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
@@ -95,16 +95,16 @@ namespace LogIn
 /***** Sign Up Page *******/
 namespace SignUp
 {
-    Color userNameC(0.978, 0.849, 0.9055);
+    Color userNameC(0.95, 0.95, 0.9);
     Color passwordC = userNameC;
-    Color boxTextC(0.23, 0.17, 0.91);
-    Color signUpTextC(1, 1, 0);
-    Color signUpButtonTextC(1, 0, 1);
-    Color signUpButtonC(0.1, 0.9, 0.43);
-    Color pageTextC(1, 0, 0);
-    Color toLoginC(0.3, 0.9, 0.6);
-    Color rectBoxC(1, 1, 1);
-    Color TitleC(0.5, 0, 0.5);
+    Color boxTextC(0,0,0);
+    //Color signUpTextC(0, 0, 0);
+    Color signUpButtonTextC(0, 0, 0);
+    Color signUpButtonC(1, 0.97, 0);
+    Color pageTextC(1, 0.95, 0);
+    Color toLoginC(0.3, 1, 0.2);
+    Color rectBoxC(1, 0.97, 0);
+    Color TitleC(0.5, 0.95, 0.11);
     Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);
 
@@ -116,7 +116,7 @@ namespace SignUp
     Coord_Rect rectBoxA(-6.5, -3.5, 12.5, 7);
     Coord_Rect rectBoxB(-6.3, -3.3, 12.1, 6.6);
 
-    Text signUpScreen(-2, 5, pageTextC, "The Scholar", GLUT_BITMAP_TIMES_ROMAN_24);
+    Text signUpScreen(-3, 5, pageTextC, "THE SCHOLAR", GLUT_BITMAP_TIMES_ROMAN_24);
     Text userNameT(-4.8, 2.2, TitleC, "Enter User-name:", GLUT_BITMAP_HELVETICA_18);
     Text passwordT(-4.8, -0.8, TitleC, "Enter Password:", GLUT_BITMAP_HELVETICA_18);
     TextBox userNameB(userNameD, userNameC, boxTextC);
@@ -131,6 +131,7 @@ namespace SignUp
     void addsignUpComponents(GUIPage *signUpPage)
     {
         userNameB.setFont(GLUT_BITMAP_HELVETICA_18);
+        signUpButton.setFont(GLUT_BITMAP_9_BY_15);
         signUpPage->addComponent(&signUpScreen);
         signUpPage->addComponent(&userNameB);
         signUpPage->addComponent(&passwordB);
@@ -147,11 +148,11 @@ namespace SignUp
 /********* Home page **********/
 namespace Home
 {
-    Color userNameC(1, 1, 1);
-    Color logoutButtonC(0.1, 0.3, 0.7);
+    Color userNameC(0, 0, 0);
+    Color logoutButtonC(0.02, 0.23, 0.61);
     Color logoutButtonTextC(1, 1, 1);
-    Color miniButtonsC(1, 0.5, 0.6);
-    Color searchBoxC(0.9, 0.9, 0.8);
+    Color miniButtonsC(0.02, 0.23, 0.61);
+    Color searchBoxC(1, 1, 1);
 
     Coord_Rect logoutButtonD(7.3, 7.5, 2.2, 1.1);
     Coord_Rect backgroundD(-9, -8, 18, 13.65);
@@ -163,17 +164,18 @@ namespace Home
 
     Text User(3.5, 8, userNameC, userName, GLUT_BITMAP_HELVETICA_18);
 
-    rectBox background(backgroundD, miniButtonsC);
-    Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
+    rectBox background(backgroundD, Color(0, 0.46, 0.4));
+    Button logoutButton("Log Out", logoutButtonC, logoutButtonTextC, logoutButtonD, CHAR_WIDTH * 1, CHAR_WIDTH * 1.5);
     Button readingButton("Reading", miniButtonsC, logoutButtonTextC, reading, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button completedButton("Completed", miniButtonsC, logoutButtonTextC, completed, CHAR_WIDTH * 1.5, CHAR_WIDTH);
     Button favouriteButton("Favourite", miniButtonsC, logoutButtonTextC, favourite, CHAR_WIDTH * 1.5, CHAR_WIDTH);
-    Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.5, CHAR_WIDTH);
-    Button searchButton("Search", miniButtonsC, logoutButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
+    Button sharedButton("Shared", miniButtonsC, logoutButtonTextC, shared, CHAR_WIDTH * 1.4, CHAR_WIDTH);
+    Button searchButton("Search", Color(0, 0.46, 0.4),  logoutButtonTextC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
 
     void addHomeComponents(GUIPage *_homePage)
     {
         searchButton.setFont(GLUT_BITMAP_HELVETICA_18);
+        logoutButton.setFont(GLUT_BITMAP_9_BY_15);
 
         _homePage->addComponent(&logoutButton);
         _homePage->addComponent(&User);
@@ -207,9 +209,9 @@ namespace SearchN
     Color userNameC(1, 1, 1);
     Color searchBoxC(0.9, 0.9, 0.8);
     Color searchBoxTextC(0, 0, 0);
-    Color searchButtonC(0.1, 0.3, 0.7);
-    Color ButtonsC(1, 0.5, 0.6);
-    Color backButtonC(0.1, 0.3, 0.7);
+    Color searchButtonC(1, 1, 1);
+    Color ButtonsC(0, 0.1, 0.6);
+    Color backButtonC(0, 0.1, 0.6);
     Color scrollBoxC(0, 1, 0);
     Color relevantOptionsC(1,0,0);
 
@@ -241,7 +243,7 @@ namespace SearchN
 
     Button searchButton("Search", ButtonsC, searchButtonC, SBoxD, CHAR_WIDTH * 1.5, CHAR_WIDTH * 1.5);
     ScrollBox searchResultList(dataf, BookListD, 15, scrollBoxC);
-    ScrollBox relevantOptionsList(dataf,BookListD,15,relevantOptionsC);
+    ScrollBox relevantOptionsList(dataf,BookListD,15,searchBoxC);
 
     void addSearchComponents(GUIPage *_searchPage)
     {
@@ -252,6 +254,7 @@ namespace SearchN
         articleCB.setTwin(&bookCB);
         bookCB.setActive(true);
         nextButton.show(false);
+        searchButton.setFont(GLUT_BITMAP_9_BY_15);
         _searchPage->addComponent(&PageTitle);
         _searchPage->addComponent(&SNameT);
         _searchPage->addComponent(&SAuthorT);

@@ -18,7 +18,7 @@ namespace DATABASE_SEARCH
     };
     const int SEARCH_KEYWORDS_SIZE = 4;
     const int MAX_RELEVANT_RESULT = 10;
-    const int MAX_SEARCH_RESULT = 20;
+    const int MAX_SEARCH_RESULT = 1;
     const char DIRECTORY_SEPERATOR = '/';
     const std::string PATH_FILE = "#.txt";
 
@@ -266,7 +266,7 @@ namespace DATABASE_SEARCH
                 pribdlist.pop_back(); //extra element is kept at end just to be sure that more result can be found
             if(pageIndex == date_search_lines.size()-1)
             {
-                date_search_lines.push_back(date_search_lines[pageIndex]+ noOfLinesRead);
+                date_search_lines.push_back(date_search_lines[pageIndex]+ noOfLinesRead-1);
             }
             else if(pageIndex > date_search_lines.size()-1)
             {

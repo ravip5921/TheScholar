@@ -354,7 +354,7 @@ public:
     }
     bool isActive()
     {
-        if(showB)
+        if (showB)
             return active;
         return false;
     }
@@ -599,6 +599,7 @@ class BookDetail : public GUIcomponent
     Color featureButtonC;
     Color titleTextC;
     Color subTitleTextC;
+    Color buttonTextC;
     Color textboxC;
     Color textboxTextC;
 
@@ -623,7 +624,7 @@ public:
     TextBox shareUser;
     TextBox bookmarkText;
 
-    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.15, 0.18, 0.7), Color _featureButtonC = Color(0.25, 0.28, 0.8), Color _titleTextC = Color(0, 0, 0), Color _subTitleTextC = Color(1, 0.95, 0), Color _textboxC = Color(0.23, 0.17, 0.91), Color _textboxTextC = Color(0.978, 0.849, 0.9055), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox)
+    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.15, 0.18, 0.7), Color _featureButtonC = Color(0.25, 0.28, 0.8), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(0, 0, 0), Color _textboxC = Color(0.7, 0.7, 0.72), Color _textboxTextC = Color(0, 0, 0), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox), buttonTextC(Color(1, 1, 1))
     {
         mode = _mode;
         bookname = _bookname;
@@ -723,9 +724,9 @@ void BookDetail::setDescription(DATABASE_SEARCH::BookDescriptor &bd, std::string
     }
     bookDes.push_back(extdes);
     bookDes.push_back(std::to_string(bd.review));
-    if(bookmark=="$")
+    if (bookmark == "$")
     {
-       bookDes.push_back("No Bookmark!");
+        bookDes.push_back("No Bookmark!");
     }
     else
     {
@@ -741,10 +742,10 @@ void BookDetail::setButtonAndTextBox()
 {
     if (mode == 'R')
     {
-        completedButton = Button("Add to read", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
-        favouriteButton = Button("Add to favourite", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
-        bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
-        sharedButton = Button("Share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4.6, 3, 1.0), 1.1, CHAR_WIDTH);
+        completedButton = Button("Add to read", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
+        favouriteButton = Button("Add to favourite", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        bookmarkButton = Button("Add bookmark", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        sharedButton = Button("Share", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 4.6, 3, 1.0), 1.1, CHAR_WIDTH);
         bookmarkText = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 2.9, 1.1), textboxC, textboxTextC);
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 4.6, 2.9, 1.1), textboxC, textboxTextC);
         bookmarkText.setPadding(0.25);
@@ -753,10 +754,10 @@ void BookDetail::setButtonAndTextBox()
     }
     else if (mode == 'C')
     {
-        favouriteButton = Button("Add to favourite", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
-        bookmarkButton = Button("Add bookmark", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
-        reviewButton = Button("Rate", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
-        sharedButton = Button("Share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 4.6, 3, 1.0), 1.1, CHAR_WIDTH);
+        favouriteButton = Button("Add to favourite", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        bookmarkButton = Button("Add bookmark", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1.0), CHAR_WIDTH * 1.5, CHAR_WIDTH);
+        reviewButton = Button("Rate", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
+        sharedButton = Button("Share", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 4.6, 3, 1.0), 1.1, CHAR_WIDTH);
         bookmarkText = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 2.2, 2.9, 1.1), textboxC, textboxTextC);
         reviewNum = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 1.5, 1.1), textboxC, textboxTextC);
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 4.6, 2.9, 1.1), textboxC, textboxTextC);
@@ -767,9 +768,9 @@ void BookDetail::setButtonAndTextBox()
     }
     else if (mode == 'F')
     {
-        readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
-        reviewButton = Button("Rate", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
-        sharedButton = Button("Share", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1.0), 1.1, CHAR_WIDTH);
+        readingButton = Button("Add to reading", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
+        reviewButton = Button("Rate", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 2.2, 3, 1), CHAR_WIDTH * 2, CHAR_WIDTH);
+        sharedButton = Button("Share", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 3.4, 3, 1.0), 1.1, CHAR_WIDTH);
         reviewNum = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 2.2, 1.5, 1.1), textboxC, textboxTextC);
         shareUser = TextBox(Coord_Rect(featureButtonX - 3, featureButtonY - 3.4, 2.9, 1.1), textboxC, textboxTextC);
         shareUser.setPadding(0.25);
@@ -778,12 +779,12 @@ void BookDetail::setButtonAndTextBox()
     }
     else if (mode == 'S')
     {
-        readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
+        readingButton = Button("Add to reading", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
         removeButton.show(true);
     }
     else if (mode == 'O')
     {
-        readingButton = Button("Add to reading", featureButtonC, titleTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
+        readingButton = Button("Add to reading", featureButtonC, buttonTextC, Coord_Rect(featureButtonX, featureButtonY - 1, 3, 1), CHAR_WIDTH * 1, CHAR_WIDTH);
         removeButton.show(false);
     }
 }
@@ -791,8 +792,8 @@ void BookDetail::showBookDescription()
 {
     textboxC.applyColor();
     glDrawP(Coord_Rect(descriptionX, descriptionY - 9.7, 13, 5));
-    glDrawP(Coord_Rect(-9.4, bookNamePosY-0.5,11.8, 1.4));
-    printText(bookNamePosX, bookNamePosY, Color(1, 0.95, 0), bookDes[0], GLUT_BITMAP_TIMES_ROMAN_24);
+    glDrawP(Coord_Rect(-9.4, bookNamePosY - 0.5, 11.8, 1.4));
+    printText(bookNamePosX, bookNamePosY, Color(0.1, 0.25, 0.88), bookDes[0], GLUT_BITMAP_TIMES_ROMAN_24);
     printText(bookNamePosX + 12, bookNamePosY + 1, titleTextC, "Rating: ", f1);
     printText(descriptionX, descriptionY, titleTextC, "Author Name:", f1);
     printText(descriptionX, descriptionY - 1.5, titleTextC, "Genre:", f1);
@@ -802,12 +803,13 @@ void BookDetail::showBookDescription()
     printText(descriptionX + 5, descriptionY, subTitleTextC, bookDes[1], f2);
     printText(descriptionX + 5, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
     printText(descriptionX + 5, descriptionY - 3, subTitleTextC, bookDes[3], f2);
+    subTitleTextC.applyColor();
     printText(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 15, f2);
     printText(bookNamePosX + 13.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
     printText(bookNamePosX + 17, bookNamePosY, subTitleTextC, bookDes[7], f1);
     glColor3f(WC_R, WC_G, WC_B);
     glDrawP(bookNamePosX + 14.5, bookNamePosY + 0.8, 2, 1);
-    if(mode != 'F' && mode !='O')
+    if (mode != 'F' && mode != 'O')
     {
         printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark:", f1);
         printText(descriptionX + 5, descriptionY - 11, subTitleTextC, bookDes[6], f2);

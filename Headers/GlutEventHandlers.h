@@ -112,9 +112,9 @@ void changeBackgroundColor()
 {
     if(PAGE == LOGIN_P)
     {
-        WC_R = 0.15;
-        WC_G = 0.15;
-        WC_B = 0.15;
+        WC_R = 0.1;
+        WC_G = 0.1;
+        WC_B = 0.1;
     }
     else if(PAGE == SIGNUP_P)
     {
@@ -124,15 +124,21 @@ void changeBackgroundColor()
     }
     else if(PAGE == BOOK_DETAIL_P)
     {
-        WC_R = 0.1;
-        WC_G = 0.1;
-        WC_B = 0.082;
+        WC_R = 0.45;
+        WC_G = 0.45;
+        WC_B = 0.5;
+    }
+    else if(PAGE == HOME_P)
+    {
+        WC_R = 0.87;
+        WC_G = 0.67;
+        WC_B = 0.29;
     }
     else if(PAGE == SEARCH_P)
     {
-        WC_R = 0.1;
-        WC_G = 0.1;
-        WC_B = 0.082;
+        WC_R = 0;
+        WC_G = 0.46;
+        WC_B = 0.4;
     }
 }
 
@@ -512,6 +518,8 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressed(&SearchN::searchButton))
         {
+            DATABASE_SEARCH::date_search_lines.clear();
+            SearchN::searchIndex = 0;
             getSearchResults();
         }
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::searchResultList))

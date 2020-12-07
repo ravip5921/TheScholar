@@ -120,7 +120,7 @@ namespace DATABASE_SEARCH
                 eraseflag = 1;
                 for (int k = 0; k < pribdlist[i].authors_search.size(); k++)
                 {
-                    if (pribdlist[i].authors_search[k] == keyword)
+                    if (Utility::String::getLowerCase(pribdlist[i].authors_search[k]) == keyword)
                     {
                         eraseflag = 0;
                         break;
@@ -132,7 +132,7 @@ namespace DATABASE_SEARCH
             break;
             case NAME:
             {
-                if (pribdlist[i].name != keyword)
+                if (Utility::String::getLowerCase(pribdlist[i].name) != keyword)
                     pribdlist.erase(pribdlist.begin() + i);
                 //std::cout<<"\nDES_NAME: "<<pribdlist[i].name;
                 //std::cout<<"\nKN: "<<keyword;
@@ -149,7 +149,7 @@ namespace DATABASE_SEARCH
                 eraseflag = 1;
                 for (int k = 0; k < pribdlist[i].genres.size(); k++)
                 {
-                    if (pribdlist[i].genres[k] == keyword)
+                    if (Utility::String::getLowerCase(pribdlist[i].genres[k]) == keyword)
                     {
                         eraseflag = 0;
                         break;
@@ -176,6 +176,8 @@ namespace DATABASE_SEARCH
         BookDescriptor bd;
         int resultCount = 0;
         bool fullResultRead = false;
+         for (i = 0; i < SEARCH_KEYWORDS_SIZE; i++)
+            keywords[i] =  Utility::String::getLowerCase(keywords[i]);
         for (i = 0; i < SEARCH_KEYWORDS_SIZE; i++)
             if (keywords[i].size() > 0)
                 break;

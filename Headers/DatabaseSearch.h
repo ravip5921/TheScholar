@@ -18,7 +18,7 @@ namespace DATABASE_SEARCH
     };
     const int SEARCH_KEYWORDS_SIZE = 4;
     const int MAX_RELEVANT_RESULT = 10;
-    const int MAX_SEARCH_RESULT = 1;
+    const int MAX_SEARCH_RESULT = 20;
     const char DIRECTORY_SEPERATOR = '/';
     const std::string PATH_FILE = "#.txt";
 

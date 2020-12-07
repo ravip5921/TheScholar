@@ -100,10 +100,10 @@ namespace SignUp
     Color boxTextC(0,0,0);
     //Color signUpTextC(0, 0, 0);
     Color signUpButtonTextC(0, 0, 0);
-    Color signUpButtonC(1, 0.97, 0);
-    Color pageTextC(1, 0.95, 0);
+    Color signUpButtonC(0.3, 0.9, 0.6);
+    Color pageTextC(0.3, 0.9, 0.6);
     Color toLoginC(0.3, 1, 0.2);
-    Color rectBoxC(1, 0.97, 0);
+    Color rectBoxC(0.3, 0.9, 0.6);
     Color TitleC(0.5, 0.95, 0.11);
     Color exitButtonC(0.9, 0.0, 0.0);
     Color exitButtonTextC(1, 1, 1);

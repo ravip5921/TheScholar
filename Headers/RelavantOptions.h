@@ -96,7 +96,10 @@ void getRelevantBookNames(std::string keyword, std::vector<std::string> &books, 
     }
     closedir(dir);
     for(int i=0;i<books.size();i++)
+    {
+        books[i].pop_back();  //removing extra space at the end
         books[i] = baseName + books[i];
+    }
 }
 
 void getRelevantBookGenres(std::string keyword, std::vector<std::string> &genres, int &result_size)

@@ -31,6 +31,8 @@ int main(int argc, char **argv) //default arguments of main
     BookDetails::addBookDetailComponents(&bookDetailPage);
     /*********** Search Page ***************/
     SearchN::addSearchComponents(&searchingPage);
+    DATABASE_SEARCH::SEARCH_DIRS::setDirsForBook();
+    RELEVANT_OPTIONS::SEARCH_DIRS::setDirsForBook();
 
     glutDisplayFunc(callBackFun);
     glutReshapeFunc(ReshapeCallBack);

@@ -52,7 +52,7 @@ namespace Utility
         }
         std::string getLowerCase(std::string str)
         {
-            for(int i=1; i<str.size(); i++)
+            for(int i=0; i<str.size(); i++)
                 str[i] = std::tolower(str[i]);
             return str;
         }

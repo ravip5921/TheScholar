@@ -624,7 +624,7 @@ public:
     TextBox shareUser;
     TextBox bookmarkText;
 
-    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0.15, 0.18, 0.7), Color _featureButtonC = Color(0.25, 0.28, 0.8), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(0, 0, 0), Color _textboxC = Color(0.7, 0.7, 0.72), Color _textboxTextC = Color(0, 0, 0), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox), buttonTextC(Color(1, 1, 1))
+    BookDetail(char _mode, std::string _bookname = "", Color _navButtonC = Color(0, 0.18, 0.6), Color _featureButtonC = Color(0.1, 0.28, 0.5), Color _titleTextC = Color(0, 1, 0), Color _subTitleTextC = Color(0, 0, 0), Color _textboxC = Color(0.7, 0.7, 0.72), Color _textboxTextC = Color(0, 0, 0), Coord_Rect _backButtonD = Coord_Rect(7, 8, 2, 1), Coord_Rect _openBookButtonD = Coord_Rect(2.5, -7.5, 3, 1.1), float _bookNamePosX = -9, float _bookNamePosY = 6, float _descriptionX = -8, float _descriptionY = 4, float _featureButtonX = 6.0, float _featureButtonY = 5, Button _tempButton = Button("", Color(0, 0, 0), Color(0, 0, 0), Coord_Rect(0, 0, 0, 0)), TextBox _tempTextBox = TextBox(Coord_Rect(0, 0, 0, 0), Color(0, 0, 0), Color(0, 0, 0))) : navButtonC(_navButtonC), featureButtonC(_featureButtonC), titleTextC(_titleTextC), subTitleTextC(_subTitleTextC), textboxC(_textboxC), textboxTextC(_textboxTextC), backButtonD(_backButtonD), openBookButtonD(_openBookButtonD), backButton(_tempButton), openBookButton(_tempButton), readingButton(_tempButton), completedButton(_tempButton), sharedButton(_tempButton), favouriteButton(_tempButton), reviewButton(_tempButton), bookmarkButton(_tempButton), removeButton(_tempButton), reviewNum(_tempTextBox), shareUser(_tempTextBox), bookmarkText(_tempTextBox), buttonTextC(Color(1, 1, 1))
     {
         mode = _mode;
         bookname = _bookname;
@@ -634,10 +634,10 @@ public:
         descriptionY = _descriptionY;
         featureButtonX = _featureButtonX;
         featureButtonY = _featureButtonY;
-        backButton = Button("Back", navButtonC, titleTextC, backButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.2);
-        openBookButton = Button("OPEN BOOK", navButtonC, titleTextC, openBookButtonD, CHAR_WIDTH, CHAR_WIDTH);
+        backButton = Button("Back", navButtonC, buttonTextC, backButtonD, CHAR_WIDTH * 1.2, CHAR_WIDTH * 1.2);
+        openBookButton = Button("OPEN BOOK", navButtonC, buttonTextC, openBookButtonD, CHAR_WIDTH, CHAR_WIDTH);
         openBookButton.setFont(GLUT_BITMAP_9_BY_15);
-        removeButton = Button("Remove", navButtonC, titleTextC, Coord_Rect(openBookButtonD, 'x', 4), CHAR_WIDTH * 3, CHAR_WIDTH);
+        removeButton = Button("Remove", navButtonC, buttonTextC, Coord_Rect(openBookButtonD, 'x', 4), CHAR_WIDTH * 3, CHAR_WIDTH);
         setButtonAndTextBox();
         f1 = GLUT_BITMAP_HELVETICA_18;
         f2 = GLUT_BITMAP_HELVETICA_12;
@@ -800,9 +800,9 @@ void BookDetail::showBookDescription()
     printText(descriptionX, descriptionY - 3, titleTextC, "Published date:", f1);
     printText(descriptionX, descriptionY - 4.5, titleTextC, "Description:", f1);
     printText(bookNamePosX + 12, bookNamePosY, titleTextC, "Number Of Reviews: ", f1);
-    printText(descriptionX + 5, descriptionY, subTitleTextC, bookDes[1], f2);
-    printText(descriptionX + 5, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
-    printText(descriptionX + 5, descriptionY - 3, subTitleTextC, bookDes[3], f2);
+    printText(descriptionX + 3.5, descriptionY, subTitleTextC, bookDes[1], f2);
+    printText(descriptionX + 2, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
+    printText(descriptionX + 4, descriptionY - 3, subTitleTextC, bookDes[3], f2);
     subTitleTextC.applyColor();
     printText(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 15, f2);
     printText(bookNamePosX + 13.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
@@ -812,7 +812,7 @@ void BookDetail::showBookDescription()
     if (mode != 'F' && mode != 'O')
     {
         printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark:", f1);
-        printText(descriptionX + 5, descriptionY - 11, subTitleTextC, bookDes[6], f2);
+        printText(descriptionX + 3, descriptionY - 11, subTitleTextC, bookDes[6], f2);
     }
 }
 void BookDetail::render()

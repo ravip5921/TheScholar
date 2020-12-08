@@ -445,12 +445,12 @@ void mousePressed(int button, int state, int x, int y)
             fw.Writer(1, BookDetails::page.getDesPath());
             if (BookDetails::page.getMode() == 'S')
             {
-                fw.Writer(1, USERS_BOOKS::sBookPath[bookNameIndex]);
+                //fw.Writer(1, USERS_BOOKS::sBookPath[bookNameIndex]);
                 fw.maskBookName(bookNameIndex, 'S');
             }
             else if (BookDetails::page.getMode() == 'F')
             {
-                fw.Writer(1, USERS_BOOKS::fBookPath[bookNameIndex]);
+                //fw.Writer(1, USERS_BOOKS::fBookPath[bookNameIndex]);
                 fw.maskBookName(bookNameIndex, 'F');
             }
             else if (BookDetails::page.getMode() == 'O')

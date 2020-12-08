@@ -421,8 +421,10 @@ void mousePressed(int button, int state, int x, int y)
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            //bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
-            bookmarkT = Home::User.getText();
+            if(bookmarkT.size()==0)
+                bookmarkT = Home::User.getText()+ " with no Bookmark";
+            else
+                bookmarkT = Home::User.getText()+ " with Bookmark: " + bookmarkT;
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             //write in share of another user
             FileWriter shareWriter(shareT);

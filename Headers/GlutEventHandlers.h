@@ -290,6 +290,12 @@ void mousePressed(int button, int state, int x, int y)
             BLOCK = READING_MP;
             userName = "";
             password = "";
+            activePage[PAGE]->setText(&SearchN::SNameB, "");
+            activePage[PAGE]->setText(&SearchN::SAuthorB, "");
+            activePage[PAGE]->setText(&SearchN::SGenreB, "");
+            activePage[PAGE]->setText(&SearchN::SDateB, "");
+            SearchN::relevantOptionsList.setData(std::vector<std::string>());
+            SearchN::searchResultList.setData(std::vector<std::string>());
             activePage[LOGIN_P]->setText(&LogIn::userNameB, &userName);
             activePage[LOGIN_P]->setText(&LogIn::passwordB, &userName);
             activePage[LOGIN_P]->setActiveBox(&LogIn::userNameB);
@@ -415,7 +421,8 @@ void mousePressed(int button, int state, int x, int y)
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            //bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+            bookmarkT = Home::User.getText();
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             //write in share of another user
             FileWriter shareWriter(shareT);
@@ -808,10 +815,6 @@ void getSearchResults()
         searchBookNameList.push_back(DATABASE_SEARCH::bdlist[i].name);
     }
     SearchN::searchResultList.setData(searchBookNameList);
-    /*activePage[PAGE]->setText(&SearchN::SNameB, "");
-    activePage[PAGE]->setText(&SearchN::SAuthorB, "");
-    activePage[PAGE]->setText(&SearchN::SGenreB, "");
-    activePage[PAGE]->setText(&SearchN::SDateB, "");*/
     activePage[PAGE]->setActiveBox(&SearchN::SNameB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SAuthorB, false);
     activePage[PAGE]->setActiveBox(&SearchN::SGenreB, false);

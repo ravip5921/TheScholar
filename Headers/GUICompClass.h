@@ -809,7 +809,12 @@ void BookDetail::showBookDescription()
     printText(bookNamePosX + 17, bookNamePosY, subTitleTextC, bookDes[7], f1);
     glColor3f(WC_R, WC_G, WC_B);
     glDrawP(bookNamePosX + 14.5, bookNamePosY + 0.8, 2, 1);
-    if (mode != 'F' && mode != 'O')
+    if(mode == 'S')
+    {
+        printText(descriptionX, descriptionY - 11, titleTextC, "Shared by:", f1);
+        printText(descriptionX + 3, descriptionY - 11, subTitleTextC, bookDes[6], f2);
+    }
+    else if (mode != 'F' && mode != 'O')
     {
         printText(descriptionX, descriptionY - 11, titleTextC, "Bookmark:", f1);
         printText(descriptionX + 3, descriptionY - 11, subTitleTextC, bookDes[6], f2);

@@ -24,6 +24,7 @@ GUIPage BookAdderPage;
 
 BookDescriptor bd;
 std::string dbookname;
+int book_flag = 0;
 
 int main(int argc, char **argv) //default arguments of main
 {
@@ -34,6 +35,8 @@ int main(int argc, char **argv) //default arguments of main
     mainWindowIndex = glutCreateWindow("Book Database");
 
     BookAdder::addBookAdderComponents(&BookAdderPage);
+    REQ_DIRS::setDirsForArticle();
+    REQ_DIRS::create();
     REQ_DIRS::setDirsForBook();
     REQ_DIRS::create();
 
@@ -85,6 +88,32 @@ void mousePressed(int button, int state, int x, int y)
     else if(BookAdderPage.buttonPressed(&BookAdder::finalSortButton))
     {
         finalSortF();
+    }
+    else if(BookAdderPage.buttonPressed(&BookAdder::clearButton))
+    {
+        BookAdderPage.setText(&BookAdder::NameB, "");
+        BookAdderPage.setText(&BookAdder::AuthorB, "");
+        BookAdderPage.setText(&BookAdder::GenreB, "");
+        BookAdderPage.setText(&BookAdder::DateB, "");
+        BookAdderPage.setText(&BookAdder::ExtraDesB, "");
+        BookAdderPage.setText(&BookAdder::NameDataB, "");
+        BookAdderPage.setActiveBox(&BookAdder::NameB, true);
+    }
+    else if(BookAdder::bookCB.isActive())
+    {
+        if (book_flag == 1)
+            {
+                article_flag = 0;
+                REQ_DIRS::setDirsForBook();
+            }
+    }
+    else if(BookAdder::articleCB.isActive())
+    {
+            if (book_flag == 0)
+            {
+                article_flag = 1;
+                REQ_DIRS::setDirsForArticle();
+            }
     }
 }
 void keyPressed(unsigned char key, int x, int y)
@@ -138,12 +167,6 @@ void getValues(BookDescriptor bd)
     BookAdderPage.setActiveBox(&BookAdder::NameDataB, false);
     BookAdderPage.setActiveBox(&BookAdder::NameB, true);
 
-    /*BookAdderPage.setText(&BookAdder::NameB, "");
-    BookAdderPage.setText(&BookAdder::AuthorB, "");
-    BookAdderPage.setText(&BookAdder::GenreB, "");
-    BookAdderPage.setText(&BookAdder::DateB, "");
-    BookAdderPage.setText(&BookAdder::ExtraDesB, "");
-    BookAdderPage.setText(&BookAdder::NameDataB, "");*/
 }
 void sortF()
 {

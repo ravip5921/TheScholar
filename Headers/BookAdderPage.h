@@ -8,8 +8,8 @@ namespace BookAdder
     Color boxC(0.324, 0.678, 0.9);
     Color boxTextC(0.45, 0.05, 0.17);
     Color textC(1, 1, 1);
-    Color titleC(0, 1, 0);
-    Color addButtonC(0.7, 0.1, 0.9);
+    Color titleC(1, 1, 1);
+    Color addButtonC(0.5,0.5,0.5);
 
     Coord_Rect NameD(X, Y, W, H);
     Coord_Rect AuthorD(NameD, 'y', -gap);
@@ -40,6 +40,7 @@ namespace BookAdder
     Button AddBookButton("Add Book ", addButtonC, textC, addBookButtonD);
     Button sortButton("Sort ", addButtonC, textC,sortButtonD,CHAR_WIDTH*3.5,CHAR_WIDTH);
     Button finalSortButton("Final Sort", addButtonC, textC,finalSortButtonD,CHAR_WIDTH,CHAR_WIDTH);
+    Button clearButton("Clear", addButtonC, textC, Coord_Rect(X+4,Y-(7.5*gap),3,1),CHAR_WIDTH*3,CHAR_WIDTH);
 
     CheckBox bookCB(-7.3,-7,titleC,true);
     CheckBox articleCB(-4.3,-7,titleC);
@@ -49,6 +50,7 @@ namespace BookAdder
         AddBookButton.setFont(GLUT_BITMAP_HELVETICA_18);
         sortButton.setFont(GLUT_BITMAP_9_BY_15);
         finalSortButton.setFont(GLUT_BITMAP_9_BY_15);
+        clearButton.setFont(GLUT_BITMAP_9_BY_15);
         bookCB.setTwin(&articleCB);
         articleCB.setTwin(&bookCB);
         _page->addComponent(&titleT);
@@ -71,6 +73,7 @@ namespace BookAdder
         _page->addComponent(&articleCB);
         _page->addComponent(&Book_Article);
         _page->addComponent(&finalSortButton);
+        _page->addComponent(&clearButton);
     }
 
 } // namespace BookAdder

@@ -14,7 +14,7 @@ void getString(std::fstream& pf, std::string& str, const int MAX_STRSIZE,int ind
         r = pf.get();
         if(r == delim)
             break;
-        str.push_back(r);
+        str.push_back(std::tolower(r));
     }
 }
 void putString(std::fstream& pf, std::string& str, const int MAX_STRSIZE,int ind = -1,int basepos = 0, char delim = ' ')
@@ -24,7 +24,7 @@ void putString(std::fstream& pf, std::string& str, const int MAX_STRSIZE,int ind
     for(int i=0; i<MAX_STRSIZE; i++)
     {
         if(i<str.size())
-            pf.put(str[i]);
+            pf.put(std::tolower(str[i]));
         else
             pf.put(delim);
     }

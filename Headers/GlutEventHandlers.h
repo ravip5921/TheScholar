@@ -1,3 +1,6 @@
+#ifndef GLUT_EVENT_HANDLER
+#define GLUT_EVENT_HANDLER
+
 #include "./vars.h"
 #include "./GUICompClass.h"
 #include "./FileHandler.h"
@@ -68,8 +71,7 @@ namespace REVIEW
 {
     void updateRatingToFile(std::string bookDesPath, float _rating, std::string reviewedFilePath);
     bool hasRated(std::string bookDesPath, std::string reviewedFilePath);
-}
-
+} // namespace REVIEW
 namespace USERS_BOOKS
 {
     std::vector<DATABASE_SEARCH::BookDescriptor> reading;
@@ -110,31 +112,31 @@ namespace USERS_BOOKS
 
 void changeBackgroundColor()
 {
-    if(PAGE == LOGIN_P)
+    if (PAGE == LOGIN_P)
     {
         WC_R = 0.1;
         WC_G = 0.1;
         WC_B = 0.1;
     }
-    else if(PAGE == SIGNUP_P)
+    else if (PAGE == SIGNUP_P)
     {
         WC_R = 0.1;
         WC_G = 0.1;
         WC_B = 0.1;
     }
-    else if(PAGE == BOOK_DETAIL_P)
+    else if (PAGE == BOOK_DETAIL_P)
     {
         WC_R = 0.55;
         WC_G = 0.55;
         WC_B = 0.5;
     }
-    else if(PAGE == HOME_P)
+    else if (PAGE == HOME_P)
     {
         WC_R = 0.87;
         WC_G = 0.67;
         WC_B = 0.29;
     }
-    else if(PAGE == SEARCH_P)
+    else if (PAGE == SEARCH_P)
     {
         WC_R = 0;
         WC_G = 0.46;
@@ -200,7 +202,7 @@ void mousePressed(int button, int state, int x, int y)
         {
             userName = activePage[PAGE]->getText(&LogIn::userNameB);
             password = activePage[PAGE]->getText(&LogIn::passwordB);
-            std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
+            //std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
             logIn LogInObject(userName, password);
 
             if (LogInObject.IsLogedIn())
@@ -236,7 +238,7 @@ void mousePressed(int button, int state, int x, int y)
         {
             userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
             passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-            std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+            //std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
             if (userNameN == "" || passwordN == "")
             {
                 createErrorWindow("UserName and Password required!");
@@ -369,7 +371,6 @@ void mousePressed(int button, int state, int x, int y)
             PAGE = BOOK_DETAIL_P;
             PREV_PAGE = HOME_P;
             //PREV_BLOCK = BLOCK;
-
         }
         else if (activeBlock[BLOCK]->buttonPressed(button, state, x, y, &favouriteN::BookListFavourite))
         {
@@ -402,29 +403,29 @@ void mousePressed(int button, int state, int x, int y)
             reloadFavouriteScrollBox();
             //share scroll box
             reloadSharedScrollBox();
-           // BLOCK = PREV_BLOCK;
+            // BLOCK = PREV_BLOCK;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.reviewButton))
         {
             reviewT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.reviewNum);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.reviewNum, "");
             int rating = reviewT[0] - 48;
-            if(rating<=5 && rating >=0)
+            if (rating <= 5 && rating >= 0)
             {
                 //must change reviewed.txt to actual path based on user
                 std::string reviewedFilePath = "./users/" + Home::User.getText() + "/reviewed.txt";
                 REVIEW::updateRatingToFile(BookDetails::page.getDesPath(), rating, reviewedFilePath);
             }
-            std::cout<<rating;
+            //std::cout<<rating;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.sharedButton))
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            if(bookmarkT.size()==0)
-                bookmarkT = Home::User.getText()+ " with no Bookmark";
+            if (bookmarkT.size() == 0)
+                bookmarkT = Home::User.getText() + " with no Bookmark";
             else
-                bookmarkT = Home::User.getText()+ " with Bookmark: " + bookmarkT;
+                bookmarkT = Home::User.getText() + " with Bookmark: " + bookmarkT;
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             //write in share of another user
             FileWriter shareWriter(shareT);
@@ -434,13 +435,13 @@ void mousePressed(int button, int state, int x, int y)
             }
             else
             {
-                shareWriter.Writer(4,BookDetails::page.getDesPath(),bookmarkT);
+                shareWriter.Writer(4, BookDetails::page.getDesPath(), bookmarkT);
             }
-            std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
+            //std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.readingButton))
         {
-            std::cout << "Reading Button Pressed. in share";
+            //std::cout << "Reading Button Pressed. in share";
             FileWriter fw(userName);
             fw.Writer(1, BookDetails::page.getDesPath());
             if (BookDetails::page.getMode() == 'S')
@@ -460,7 +461,7 @@ void mousePressed(int button, int state, int x, int y)
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'C'))
         {
-            std::cout << "Fav Button Pressed in completed";
+            //std::cout << "Fav Button Pressed in completed";
             FileWriter fw(userName);
             fw.Writer(3, BookDetails::page.getDesPath());
             fw.maskBookName(bookNameIndex, 'C');
@@ -469,21 +470,21 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
-            std::cout << "bookmark in completed";
+            //std::cout << "bookmark in completed";
             FileWriter fw(userName);
             fw.updateBookmark(bookNameIndex, 'C', USERS_BOOKS::cBookPath[bookNameIndex], bookmarkT);
             BookDetails::page.bookDes[6] = bookmarkT;
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.completedButton) && (BookDetails::page.getMode() == 'R'))
         {
-            std::cout << "Read Button Pressed in reading";
+            //std::cout << "Read Button Pressed in reading";
             FileWriter fw(userName);
             fw.Writer(2, BookDetails::page.getDesPath());
             fw.maskBookName(bookNameIndex, 'R');
         }
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.favouriteButton) && (BookDetails::page.getMode() == 'R'))
         {
-            std::cout << "Fav Button Pressed in reading";
+            //std::cout << "Fav Button Pressed in reading";
             FileWriter fw(userName);
             fw.Writer(3, BookDetails::page.getDesPath());
             fw.maskBookName(bookNameIndex, 'R');
@@ -492,7 +493,7 @@ void mousePressed(int button, int state, int x, int y)
         {
             bookmarkT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
-            std::cout << "bookmark in reading";
+            //std::cout << "bookmark in reading";
             FileWriter fw(userName);
             fw.updateBookmark(bookNameIndex, 'R', BookDetails::page.getDesPath(), bookmarkT);
             BookDetails::page.bookDes[6] = bookmarkT;
@@ -534,7 +535,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::searchResultList))
         {
             bindex = activePage[PAGE]->getButtonIndex(button, state, x, y, &SearchN::searchResultList);
-            std::cout << bindex;
+            //std::cout << bindex;
             BookDetails::page.setDescription(DATABASE_SEARCH::bdlist[bindex], "page 1");
             PAGE = BOOK_DETAIL_P;
             BookDetails::page.changeMode('O');
@@ -542,7 +543,7 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[SEARCH_P]->buttonPressed(button, state, x, y, &SearchN::relevantOptionsList))
         {
             std::string bText = activePage[PAGE]->getButtonText(button, state, x, y, &SearchN::relevantOptionsList);
-            std::cout << bText;
+            //std::cout << bText;
             if (activePage[PAGE]->isActiveBox(&SearchN::SNameB))
             {
                 SearchN::SNameB.setText(bText);
@@ -612,7 +613,7 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 userName = activePage[PAGE]->getText(&LogIn::userNameB);
                 password = activePage[PAGE]->getText(&LogIn::passwordB);
-                std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
+                //std::cout << "\nUser = " << userName << "\nPass = " << password << "\n";
                 logIn LogInObject(userName, password);
 
                 if (LogInObject.IsLogedIn())
@@ -654,7 +655,7 @@ void keyPressed(unsigned char key, int x, int y)
             {
                 userNameN = activePage[PAGE]->getText(&SignUp::userNameB);
                 passwordN = activePage[PAGE]->getText(&SignUp::passwordB);
-                std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
+                //std::cout << "\nUser = " << userNameN << "\nPass = " << passwordN << "\n";
                 if (userNameN == "" || passwordN == "")
                 {
                     createErrorWindow("UserName and Password required!");
@@ -707,7 +708,7 @@ void keyPressed(unsigned char key, int x, int y)
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
             activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
+            //std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }
     }
     else if (PAGE == SEARCH_P)
@@ -775,7 +776,7 @@ void keyPressed(unsigned char key, int x, int y)
 void mouseMotion(int x, int y)
 {
     activeBlock[BLOCK]->mouseMotionHandler(x, y);
-    std::cout << "x= " << x << " y= " << y << '\n';
+    //std::cout << "x= " << x << " y= " << y << '\n';
 }
 void createErrorWindow(const char *err)
 {
@@ -926,8 +927,8 @@ namespace REVIEW
     void updateRatingToFile(std::string bookDesPath, float _rating, std::string reviewedFilePath)
     {
         int updateChoice;
-        const int NEW_REVIEW = 1, OVERWRITE_REVIEW =0;
-        if(hasRated(bookDesPath, reviewedFilePath))
+        const int NEW_REVIEW = 1, OVERWRITE_REVIEW = 0;
+        if (hasRated(bookDesPath, reviewedFilePath))
         {
             updateChoice = OVERWRITE_REVIEW;
         }
@@ -935,7 +936,7 @@ namespace REVIEW
         {
             updateChoice = NEW_REVIEW;
             std::ofstream reviewedFile(reviewedFilePath.c_str(), std::ios::app);
-            reviewedFile<<bookDesPath<<"\n";
+            reviewedFile << bookDesPath << "\n";
             reviewedFile.close();
         }
         std::ifstream bookdesfile;
@@ -944,24 +945,24 @@ namespace REVIEW
         int noOfReviews;
         float rating;
         bookdesfile.open(bookDesPath.c_str());
-        for(int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
         {
             std::getline(bookdesfile, temp);
-            tempFile<<temp<<"\n";
+            tempFile << temp << "\n";
         }
-        bookdesfile>>noOfReviews;
-        bookdesfile>>rating;
-        if(updateChoice == NEW_REVIEW)
+        bookdesfile >> noOfReviews;
+        bookdesfile >> rating;
+        if (updateChoice == NEW_REVIEW)
         {
-            rating = (_rating + noOfReviews*rating)/(noOfReviews + 1);
+            rating = (_rating + noOfReviews * rating) / (noOfReviews + 1);
             noOfReviews++;
         }
         else
         {
-            rating = (_rating + (noOfReviews-1)*rating)/noOfReviews;
+            rating = (_rating + (noOfReviews - 1) * rating) / noOfReviews;
         }
-        tempFile<<noOfReviews<<"\n";
-        tempFile<<rating;
+        tempFile << noOfReviews << "\n";
+        tempFile << rating;
         BookDetails::page.bookDes[5] = std::to_string(rating);
         BookDetails::page.bookDes[7] = std::to_string(noOfReviews);
         bookdesfile.close();
@@ -974,11 +975,11 @@ namespace REVIEW
     {
         std::string path;
         std::ifstream reviewedFile(reviewedFilePath.c_str());
-        if(!reviewedFile.good())
+        if (!reviewedFile.good())
             return false;
-        while(std::getline(reviewedFile, path))
+        while (std::getline(reviewedFile, path))
         {
-            if(path == bookDesPath)
+            if (path == bookDesPath)
             {
                 reviewedFile.close();
                 return true;
@@ -987,4 +988,5 @@ namespace REVIEW
         reviewedFile.close();
         return false;
     }
-}
+} // namespace REVIEW
+#endif // GLUT_EVENT_HANDLER

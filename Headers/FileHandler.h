@@ -1,3 +1,6 @@
+#ifndef FILE_HANDLER
+#define FILE_HANDLER
+
 #include "logIn.h"
 #include<stdio.h>
 /******
@@ -361,3 +364,4 @@ void FileWriter::updateBookmark(int position,char choice,std::string bookName,st
         rename((path+"\\\\tempS.txt").c_str(),(path+"\\\\share.txt").c_str());
     }
 }
+#endif // FILE_HANDLER

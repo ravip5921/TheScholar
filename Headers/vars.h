@@ -1,3 +1,6 @@
+#ifndef VARS
+#define VARS
+
 const int WID_INI = 700;
 const int HEI_INI = 650;
 const int INI_X = 350;
@@ -38,3 +41,4 @@ std::string bookmarkT;
 std::string reviewT;
 std::string shareT;
 int bookNameIndex;
+#endif // VARS

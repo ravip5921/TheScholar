@@ -1,3 +1,6 @@
+#ifndef RENDERING_FUNCTIONS
+#define RENDERING_FUNCTIONS
+
 #include "./Classes.h"
 #include <cmath>
 
@@ -140,6 +143,11 @@ float toFloatX(int x)
     }
     return tx;
 }
+inline float pixToFloat(int wid)
+{
+    //(10+toFloatX(wid))%10;
+    return (wid / WID) * (2 * COORD_X);
+}
 float toFloatY(int y)
 {
     float ty = static_cast<float>(y) / (HEI / (2 * COORD_Y));
@@ -206,3 +214,4 @@ void glDrawRecOutlineCoordBox(Coord_Rect pos)
     glVertex2f(pos.getx(), pos.gety());
     glEnd();
 }
+#endif // RENDERING_FUNCTIONS

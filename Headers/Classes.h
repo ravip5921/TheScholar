@@ -1,3 +1,6 @@
+#ifndef CLASSES
+#define CLASSES
+
 #include <iostream>
 #include <ctime>
 class Coord_Rect
@@ -271,3 +274,4 @@ public:
         glutBitmapCharacter(font, static_cast<char>(d2 + 48));
     }
 };
+#endif // CLASSES

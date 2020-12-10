@@ -1,3 +1,6 @@
+#ifndef GUI_COMP_CLASS
+#define GUI_COMP_CLASS
+
 #include "./RenderingFunction.h"
 #include "DatabaseSearch.h"
 class GUIcomponent
@@ -809,7 +812,7 @@ void BookDetail::showBookDescription()
     printText(bookNamePosX + 17, bookNamePosY, subTitleTextC, bookDes[7], f1);
     glColor3f(WC_R, WC_G, WC_B);
     glDrawP(bookNamePosX + 14.5, bookNamePosY + 0.8, 2, 1);
-    if(mode == 'S')
+    if (mode == 'S')
     {
         printText(descriptionX, descriptionY - 11, titleTextC, "Shared by:", f1);
         printText(descriptionX + 3, descriptionY - 11, subTitleTextC, bookDes[6], f2);
@@ -1144,3 +1147,4 @@ public:
             components[i]->mouseMotionHandler(x, y);
     }
 };
+#endif // GUI_COMP_CLASS

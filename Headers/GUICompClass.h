@@ -807,7 +807,7 @@ void BookDetail::showBookDescription()
     printText(descriptionX + 2, descriptionY - 1.5, subTitleTextC, bookDes[2], f2);
     printText(descriptionX + 4, descriptionY - 3, subTitleTextC, bookDes[3], f2);
     subTitleTextC.applyColor();
-    printText(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 15, f2);
+    printTextForDes(bookDes[4], descriptionX + 0.5, descriptionY - 5.2, descriptionX + 12, f2);
     printText(bookNamePosX + 13.8, bookNamePosY + 1, subTitleTextC, bookDes[5], f1);
     printText(bookNamePosX + 17, bookNamePosY, subTitleTextC, bookDes[7], f1);
     glColor3f(WC_R, WC_G, WC_B);

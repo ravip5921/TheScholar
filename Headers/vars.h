@@ -19,6 +19,7 @@ const int TAB_KEY = 9;
 const int lx = -0.7;
 const int ly = -8;
 const float CHAR_WIDTH = 0.2667;
+const float CHAR_HEIGHT = 0.3;
 const float DIM_FACTOR = 0.2;
 const float CHECK_BOX_DIMENSION = 0.5;
 int mainWindowIndex;

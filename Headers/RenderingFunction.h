@@ -81,6 +81,27 @@ void printText(std::string tex, double x, double y, float max_x, void *font)
     glColor3f(0, 0, 0);
     glutPostRedisplay();
 }
+inline float pixToFloat(int wid);
+void printTextForDes(std::string text, double x, double y, float max_x, void *font)
+{
+    glRasterPos2d(x, y);
+    float cur_x =x;
+    const float gap_y = CHAR_HEIGHT*2;
+    for (int i = 0; i < text.size(); i++)
+    {
+        if(cur_x >= max_x)
+        {
+            //std::cout<<"\nX;"<<cur_x<<"Y:"<<y;
+            y-=gap_y;
+            cur_x = x;
+            glRasterPos2d(x, y);
+        }
+        //std::cout<<"\nX;"<<cur_x<<"Y:"<<y;
+        glutBitmapCharacter(font, text[i]);
+        cur_x += pixToFloat(glutBitmapWidth(font, text[i]));
+    }
+    glutPostRedisplay();
+}
 void printTextInBox(std::string tex, Coord_Rect pos, void *font, float GAP = CHAR_WIDTH * 2)
 {
     float x = pos.getx() + GAP;
@@ -146,7 +167,7 @@ float toFloatX(int x)
 inline float pixToFloat(int wid)
 {
     //(10+toFloatX(wid))%10;
-    return (wid / WID) * (2 * COORD_X);
+    return (static_cast<float>(wid) / WID) * (2 * COORD_X);
 }
 float toFloatY(int y)
 {

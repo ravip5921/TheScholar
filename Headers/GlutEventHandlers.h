@@ -421,12 +421,17 @@ void mousePressed(int button, int state, int x, int y)
         else if (activePage[PAGE]->buttonPressedBD(&BookDetails::page, &BookDetails::page.sharedButton))
         {
             shareT = activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.shareUser);
-            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
-            if (bookmarkT.size() == 0)
-                bookmarkT = Home::User.getText() + " with no Bookmark";
+            if(shareT == Home::User.getText())
+            {
+                createErrorWindow("Can't share to yourself!");
+            }
             else
-                bookmarkT = Home::User.getText() + " with Bookmark: " + bookmarkT;
-            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
+            {
+            activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.shareUser, "");
+          //  bookmarkT= activePage[PAGE]->getTextBD(&BookDetails::page, &BookDetails::page.bookmarkText);
+
+                bookmarkT = Home::User.getText();
+            //activePage[PAGE]->setTextBD(&BookDetails::page, &BookDetails::page.bookmarkText, "");
             //write in share of another user
             FileWriter shareWriter(shareT);
             if (!shareWriter.UserExists())
@@ -436,6 +441,7 @@ void mousePressed(int button, int state, int x, int y)
             else
             {
                 shareWriter.Writer(4, BookDetails::page.getDesPath(), bookmarkT);
+            }
             }
             //std::cout << bookmarkT << " " << reviewT << " " << shareT << "\n";
         }

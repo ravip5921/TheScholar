@@ -5,6 +5,5 @@
 #ignoring Users and .vscode directories
 Users/*
 .vscode/*
-#Ignoring errors.txt file
-errors.txt
+tsFiles/*
 THE_SCHOLAR.pptx

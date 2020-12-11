@@ -316,6 +316,7 @@ class Button : public GUIcomponent
     Coord_Rect buttonDimension;
     Color buttonColor;
     Color textColor;
+    bool forScrollBox;
     float gapX;
     float gapY;
     void *f;
@@ -325,6 +326,7 @@ public:
     {
         showB = true;
         pressed = false;
+        forScrollBox = false;
         buttonText = std::string(_text);
         f = GLUT_BITMAP_HELVETICA_12;
         gapX = _x;
@@ -342,6 +344,10 @@ public:
     void setText(std::string _text)
     {
         buttonText = _text;
+    }
+    void setForScrollBox(bool val = true)
+    {
+        forScrollBox = val;
     }
     std::string getText()
     {
@@ -376,7 +382,11 @@ public:
             }
             glDrawP(buttonDimension);
             textColor.applyColor();
-            printTextInButton(buttonText, buttonDimension, f, gapX, gapY);
+            if(!forScrollBox)
+                printTextInButton(buttonText, buttonDimension, f, gapX, gapY);
+            else
+                printMaxTextInButton(buttonText, buttonDimension, f, gapX, gapY);
+
         }
     }
     void mouseHandler(int button, int state, int x, int y)
@@ -443,8 +453,10 @@ public:
         for (int i = 0; i < (maxN < data.size() ? maxN : data.size()); i++)
         {
             Button button(data[i], bgColor, textC, bDim[i], 0.1, 0.1);
+            button.setForScrollBox();
             dataB.push_back(button);
         }
+
     }
     bool buttonPressed(int button, int state, int x, int y)
     {
@@ -796,7 +808,9 @@ void BookDetail::showBookDescription()
     textboxC.applyColor();
     glDrawP(Coord_Rect(descriptionX, descriptionY - 9.7, 13, 5));
     glDrawP(Coord_Rect(-9.4, bookNamePosY - 0.5, 11.8, 1.4));
-    printText(bookNamePosX, bookNamePosY, Color(0.1, 0.25, 0.88), bookDes[0], GLUT_BITMAP_TIMES_ROMAN_24);
+    glColor3f(0.1, 0.25, 0.88);
+    printMaxTextInButton(bookDes[0],Coord_Rect(-9.4, bookNamePosY - 0.5, 11.8, 1.4),GLUT_BITMAP_TIMES_ROMAN_24);
+    textboxC.applyColor();
     printText(bookNamePosX + 12, bookNamePosY + 1, titleTextC, "Rating: ", f1);
     printText(descriptionX, descriptionY, titleTextC, "Author Name:", f1);
     printText(descriptionX, descriptionY - 1.5, titleTextC, "Genre:", f1);

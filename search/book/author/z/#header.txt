@@ -1,1 +1,1 @@
-Zig            Ziglar         zinovia        zobel          
+zig            ziglar         zinovia        zobel          

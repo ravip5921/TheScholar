@@ -106,16 +106,23 @@ void printTextInBox(std::string tex, Coord_Rect pos, void *font, float GAP = CHA
 {
     float x = pos.getx() + GAP;
     float y = pos.gety() + GAP;
-    float max_x = pos.getxw();
+    float max_x = pos.getxw() - GAP;
     glRasterPos2d(x, y);
     int i = 0, a;
     float tsize = (tex.size()) * CHAR_WIDTH;
+    //float cur_x = x;
+    /*for(a = tex.size()-1; a>=0; a--)
+    {
+        cur_x+= pixToFloat(glutBitmapWidth(font, tex[a]));
+        if(cur_x >= max_x)
+            break;
+    }*/
     if (tsize < (max_x - x))
         a = 0;
     else
         a = (tex.size() - (int)((max_x - x) / CHAR_WIDTH));
 
-    for (i = a; tex[i] != '\0'; i++)
+    for (i = a; i<tex.size(); i++)
     {
         glutBitmapCharacter(font, tex[i]);
     }
@@ -134,6 +141,45 @@ void printTextPass(std::string tex, Coord_Rect pos, void *font)
     }
     glutPostRedisplay();
 }
+void printMaxTextInButton(std::string text, Coord_Rect dim, void *font = GLUT_BITMAP_HELVETICA_12, float GAP_X = CHAR_WIDTH * 2, float GAP_Y = CHAR_WIDTH * 2)
+{
+    float cur_x =dim.getx();
+    float max_x = dim.getxw() - pixToFloat(glutBitmapWidth(font, '.')) * 8;
+    glRasterPos2f(dim.getx() + GAP_X, dim.gety() + GAP_Y);
+    for (int i=0; i<text.size(); i++)
+    {
+        if(cur_x >= max_x)
+        {
+            glutBitmapCharacter(font, '.');
+            glutBitmapCharacter(font, '.');
+            glutBitmapCharacter(font, '.');
+            break;
+        }
+        glutBitmapCharacter(font, text[i]);
+        cur_x+= pixToFloat(glutBitmapWidth(font, text[i]));
+    }
+    glutPostRedisplay();
+}
+void printMaxTextInButton(std::string text, float x, float y,float _max_x, void *font = GLUT_BITMAP_HELVETICA_12, float GAP_X = CHAR_WIDTH * 2, float GAP_Y = CHAR_WIDTH * 2)
+{
+    float cur_x =x;
+    float max_x = max_x - pixToFloat(glutBitmapWidth(font, '.')) * 8;
+    glRasterPos2f(x + GAP_X, y + GAP_Y);
+    for (int i=0; i<text.size(); i++)
+    {
+        if(cur_x >= max_x)
+        {
+            glutBitmapCharacter(font, '.');
+            glutBitmapCharacter(font, '.');
+            glutBitmapCharacter(font, '.');
+            break;
+        }
+        glutBitmapCharacter(font, text[i]);
+        cur_x+= pixToFloat(glutBitmapWidth(font, text[i]));
+    }
+    glutPostRedisplay();
+}
+
 void printTextInButton(std::string text, Coord_Rect dim, void *font = GLUT_BITMAP_HELVETICA_12, float GAP_X = CHAR_WIDTH * 2, float GAP_Y = CHAR_WIDTH * 2)
 {
     char *c;
@@ -147,6 +193,8 @@ void printTextInButton(std::string text, Coord_Rect dim, void *font = GLUT_BITMA
     glColor3f(1.0, 1.0, 0.0);
     glutPostRedisplay();
 }
+
+
 
 float toFloatX(int x)
 {
